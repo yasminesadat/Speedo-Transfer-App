@@ -40,7 +40,7 @@ class NavigationItemsSource {
                     route = CARDS_ROUTE,
                     selectedIcon = R.drawable.mycards_selected,
                     unselectedIcon = R.drawable.mycards,
-                    iconText = "My Cards"
+                    iconText = "My cards"
                 )
             )
             add(
