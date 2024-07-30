@@ -11,8 +11,8 @@ import com.ys.speedotransferapp.R
 
 // Define your custom font family
 val customFontFamily = FontFamily(
-    Font(R.font.inter, FontWeight.Normal),
-    Font(R.font.inter, FontWeight.Bold)
+    Font(R.font.inter_semibold, FontWeight.Normal),
+    Font(R.font.inter_semibold, FontWeight.Bold)
 )
 val additionalFontFamily =  FontFamily(
     Font(R.font.poppins_medium, FontWeight.Normal),
@@ -25,6 +25,11 @@ val appTypography = Typography(
         fontFamily = customFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 30.sp
+    ),
+    headlineLarge = TextStyle(
+        fontFamily = customFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp
     ),
     //header for page
     headlineMedium = TextStyle(

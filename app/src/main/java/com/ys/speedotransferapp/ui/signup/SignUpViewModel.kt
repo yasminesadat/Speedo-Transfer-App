@@ -17,6 +17,18 @@ class SignUpViewModel: ViewModel() {
     private val _password = MutableStateFlow("")
     val password = _password.asStateFlow()
 
+    private val _country = MutableStateFlow("")
+    val country = _country.asStateFlow()
+
+    private val _dateOfBirth = MutableStateFlow("")
+    val dateOfBirth = _dateOfBirth.asStateFlow()
+
+    fun signUp() {
+        viewModelScope.launch(Dispatchers.IO) {
+            // Call the API to sign up the user
+        }
+    }
+
 
     fun setFullName(fullName: String) {
             _fullName.value = fullName
@@ -28,6 +40,14 @@ class SignUpViewModel: ViewModel() {
 
     fun setPassword(password: String) {
         _password.value = password
+    }
+
+    fun setCountry(country: String) {
+        _country.value = country
+    }
+
+    fun setDateOfBirth(dateOfBirth: String) {
+        _dateOfBirth.value = dateOfBirth
     }
 
 

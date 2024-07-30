@@ -1,24 +1,19 @@
 package com.ys.speedotransferapp.ui.common
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -28,11 +23,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ys.speedotransferapp.R
-import com.ys.speedotransferapp.ui.signup.SignUpViewModel
-import com.ys.speedotransferapp.ui.theme.D300
-import com.ys.speedotransferapp.ui.theme.G10
-import com.ys.speedotransferapp.ui.theme.G70
-import com.ys.speedotransferapp.ui.theme.G700
+import com.ys.speedotransferapp.ui.theme.*
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,11 +34,16 @@ fun InputField(
     hint: String,
     onValueChanged: (String) -> Unit,
     isPassword: Boolean = false,
+    isClickable: Boolean = false,
+    clickAction: (() -> Unit)? = null,
     @DrawableRes trailingIcon: Int,
     iconDescription: String,
-    modifier: Modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp)
+    modifier: Modifier = Modifier
+        .fillMaxWidth()
+        .padding(start = 16.dp, end = 16.dp)
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
+    var showBottomSheet by remember { mutableStateOf(false) }
 
     Column {
         Text(text = label, modifier = modifier)
@@ -55,7 +52,14 @@ fun InputField(
             label = { Text(text = hint) },
             onValueChange = onValueChanged,
             trailingIcon = {
-                if (isPassword) {
+                if (isClickable && clickAction != null) {
+                    IconButton(onClick = { showBottomSheet = true }) {
+                        Icon(
+                            painter = painterResource(id = trailingIcon),
+                            contentDescription = iconDescription
+                        )
+                    }
+                } else if (isPassword) {
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
                         Icon(
                             painter = painterResource(id = if (passwordVisible) R.drawable.open_eye else R.drawable.close_eye),
@@ -86,18 +90,67 @@ fun InputField(
             modifier = modifier,
         )
     }
+
+    if (showBottomSheet) {
+        BottomSheet(
+            showBottomSheet = showBottomSheet,
+            onDismiss = { showBottomSheet = false }
+        )
+    }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BottomSheet(
+    modifier: Modifier = Modifier,
+    showBottomSheet: Boolean,
+    onDismiss: () -> Unit
+) {
+    val sheetState = rememberModalBottomSheetState()
+    val scope = rememberCoroutineScope()
+
+    if (showBottomSheet) {
+        ModalBottomSheet(
+            onDismissRequest = onDismiss,
+            sheetState = sheetState,
+            modifier = modifier
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Text(
+                    "Bottom Sheet Content",
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+                // Add your list items or other content here
+                Button(
+                    onClick = {
+                        scope.launch {
+                            sheetState.hide()
+                            onDismiss()
+                        }
+                    },
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                ) {
+                    Text("Close Bottom Sheet")
+                }
+            }
+        }
+    }
+}
+
 @Composable
 fun SpeedoTransferText(modifier: Modifier = Modifier) {
     Text(
         text = "Speedo Transfer",
-        modifier = Modifier.padding(16.dp),
+        modifier = modifier.padding(16.dp),
         textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.headlineSmall
+        style = appTypography.headlineLarge
     )
-
 }
-
 
 @Preview(showBackground = true)
 @Composable
