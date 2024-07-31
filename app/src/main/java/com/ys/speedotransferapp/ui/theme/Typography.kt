@@ -1,12 +1,11 @@
 package com.ys.speedotransferapp.ui.theme
 
 import androidx.compose.material3.Typography
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import com.ys.speedotransferapp.R
 
 // Define your custom font family
@@ -31,13 +30,13 @@ val appTypography = Typography(
         fontFamily = customFontFamily,
         fontWeight = FontWeight.ExtraBold,
         fontSize = 20.sp,
-        color = Color(0xff24221e)
+        color = Black
     ),
     // gray options
     titleMedium = TextStyle(
         fontFamily = additionalFontFamily,
         fontSize = 16.sp,
         fontWeight = FontWeight.Medium,
-        color = Color(0xff7c7a78)
+        color = DarkGrey
     )
 )
