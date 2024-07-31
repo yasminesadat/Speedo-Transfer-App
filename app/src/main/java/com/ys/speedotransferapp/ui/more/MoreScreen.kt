@@ -90,7 +90,7 @@ fun Option(
                 contentDescription = null,
                 modifier = Modifier
                     .padding(end = 8.dp)
-                    .size(20.dp),
+                    .size(24.dp),
                 tint = DarkGrey
             )
 
