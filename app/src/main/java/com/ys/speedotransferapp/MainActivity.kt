@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.ys.speedotransferapp.ui.signup.ExtraSignUpScreen
+import com.ys.speedotransferapp.ui.signup.SignUpScreen
 import com.ys.speedotransferapp.ui.signup.SignUpViewModel
 import com.ys.speedotransferapp.ui.theme.SpeedoTransferAppTheme
 

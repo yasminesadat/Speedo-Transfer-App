@@ -1,5 +1,6 @@
 package com.ys.speedotransferapp.ui.signin
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,6 +30,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
@@ -45,6 +47,7 @@ import com.ys.speedotransferapp.ui.theme.Pink20
 fun SignInScreen(viewModel: SignInViewModel, modifier: Modifier =  Modifier) {
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
+    var isPassError: Boolean = false
     Scaffold(
         modifier = Modifier.fillMaxSize()
             .background(
@@ -89,7 +92,7 @@ fun SignInScreen(viewModel: SignInViewModel, modifier: Modifier =  Modifier) {
                 iconDescription = "Email icon"
             )
             Spacer(modifier = Modifier.padding(8.dp))
-            InputField(
+            isPassError = InputField(
                 value = password,
                 label = "Password",
                 hint = "Enter your password",
@@ -107,9 +110,10 @@ fun SignInScreen(viewModel: SignInViewModel, modifier: Modifier =  Modifier) {
                 colors = ButtonDefaults.buttonColors(containerColor = P300),
                 shape = RoundedCornerShape(6.dp),
                 contentPadding = PaddingValues(16.dp),
-                enabled = email.isNotBlank() && password.isNotBlank()
+                enabled = email.isNotBlank() && (password.isNotBlank() || !isPassError)
 
             ) {
+                Log.d("SignInScreen", "isPassError: $isPassError")
                 Text(
                     text = "Sign In",
                     style = TextStyle(
@@ -142,4 +146,10 @@ fun SignInScreen(viewModel: SignInViewModel, modifier: Modifier =  Modifier) {
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun SignInScreenPreview() {
+    SignInScreen(SignInViewModel())
 }
