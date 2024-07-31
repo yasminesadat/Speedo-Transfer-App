@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ys.speedotransferapp.R
-import com.ys.speedotransferapp.common.Header
+import com.ys.speedotransferapp.ui.common.Header
 import com.ys.speedotransferapp.data.OptionsSource
 import com.ys.speedotransferapp.navigation.AppRoutes.FAVOURITES_ROUTE
 import com.ys.speedotransferapp.ui.theme.Black

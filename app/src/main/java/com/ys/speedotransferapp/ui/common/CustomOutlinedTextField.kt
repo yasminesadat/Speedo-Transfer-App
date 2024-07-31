@@ -1,0 +1,63 @@
+package com.ys.speedotransferapp.ui.common
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.ys.speedotransferapp.ui.theme.Black
+
+@Composable
+fun CustomOutlinedTextField(
+    header: String,
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    modifier: Modifier = Modifier,
+    borderColor: Color = Color.Gray,
+    unfocusedBorderColor: Color = Color.LightGray,
+    textColor: Color = Color.Black,
+    labelColor: Color = Color.Gray,
+    fontSize: Int = 18,
+    shape: RoundedCornerShape = RoundedCornerShape(8.dp)
+) {
+    Column(modifier = modifier.fillMaxWidth()) {
+        Text(
+            text = header,
+            style = TextStyle(color = Color.Gray, fontSize = 18.sp), // Customize header style
+            modifier = Modifier.padding(top = 4.dp),
+            color = Black
+        )
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            label = {
+                Text(
+                    text = label,
+                    color = labelColor
+                )
+            },
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp),
+            textStyle = TextStyle(color = textColor, fontSize = fontSize.sp),
+            colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = borderColor,
+                unfocusedBorderColor = unfocusedBorderColor
+            ),
+            keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+            shape = shape,
+            singleLine = true
+        )
+    }
+}
