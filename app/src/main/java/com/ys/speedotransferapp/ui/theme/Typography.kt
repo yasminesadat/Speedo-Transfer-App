@@ -1,0 +1,48 @@
+package com.ys.speedotransferapp.ui.theme
+
+import androidx.compose.material3.Typography
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.font.FontWeight
+import com.ys.speedotransferapp.R
+
+// Define your custom font family
+val customFontFamily = FontFamily(
+    Font(R.font.inter_semibold, FontWeight.Normal),
+    Font(R.font.inter_semibold, FontWeight.Bold)
+)
+val additionalFontFamily =  FontFamily(
+    Font(R.font.poppins_medium, FontWeight.Normal),
+    Font(R.font.poppins_medium, FontWeight.Bold)
+)
+
+// Define typography
+val appTypography = Typography(
+    displayLarge = TextStyle(
+        fontFamily = customFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 30.sp
+    ),
+    headlineLarge = TextStyle(
+        fontFamily = customFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp
+    ),
+    //header for page
+    headlineMedium = TextStyle(
+        fontFamily = customFontFamily,
+        fontWeight = FontWeight.ExtraBold,
+        fontSize = 20.sp,
+        color = Color(0xff24221e)
+    ),
+    // gray options
+    titleMedium = TextStyle(
+        fontFamily = additionalFontFamily,
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Medium,
+        color = Color(0xff7c7a78)
+    )
+)
