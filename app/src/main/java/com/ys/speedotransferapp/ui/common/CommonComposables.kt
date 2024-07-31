@@ -24,8 +24,10 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowInsetsCompat
 import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.ui.theme.*
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,33 +39,41 @@ fun InputField(
     onValueChanged: (String) -> Unit,
     isPassword: Boolean = false,
     isClickable: Boolean = false,
-    clickAction: (() -> Unit)? = null,
+    readOnly: Boolean = false,
+    clickAction:  (() -> Unit)? = null,
     @DrawableRes trailingIcon: Int,
     iconDescription: String,
+    keyboardType: KeyboardType = KeyboardType.Text,
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .padding(start = 16.dp, end = 16.dp)
 ): Boolean {
     var passwordVisible by remember { mutableStateOf(false) }
-    var showBottomSheet by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
-    var selectedLabel by remember { mutableStateOf(label) }
+    var lastInputTime by remember { mutableStateOf(0L) }
+    val coroutineScope = rememberCoroutineScope()
 
     Column {
         Text(text = label, modifier = modifier)
-        OutlinedTextField(
 
+        OutlinedTextField(
             value = value,
             label = { Text(text = hint) },
             onValueChange = { newValue ->
                 onValueChanged(newValue)
+                lastInputTime = System.currentTimeMillis()
                 if (isPassword) {
-                    errorMessage = validatePassword(newValue)
+                    coroutineScope.launch {
+                        delay(700)
+                        if (System.currentTimeMillis() - lastInputTime >= 700) {
+                            errorMessage = validatePassword(newValue)
+                        }
+                    }
                 }
             },
             trailingIcon = {
                 if (isClickable && clickAction != null) {
-                    IconButton(onClick = { showBottomSheet = true }) {
+                    IconButton(onClick = { clickAction() }) {
                         Icon(
                             painter = painterResource(id = trailingIcon),
                             contentDescription = iconDescription
@@ -85,7 +95,7 @@ fun InputField(
             },
             visualTransformation = if (isPassword && !passwordVisible) PasswordVisualTransformation() else VisualTransformation.None,
             keyboardOptions = KeyboardOptions(
-                keyboardType = if (isPassword) KeyboardType.Password else KeyboardType.Text
+                keyboardType = if (isPassword) KeyboardType.Password else keyboardType
             ),
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 containerColor = G10,
@@ -107,17 +117,12 @@ fun InputField(
                     )
                 }
             },
+            readOnly = readOnly,
             modifier = modifier,
         )
     }
 
-    if (showBottomSheet) {
-        BottomSheet(
-            showBottomSheet = showBottomSheet,
-            onDismiss = { showBottomSheet = false },
-            clickAction = { selectedLabel = it }
-        )
-    }
+
     return errorMessage == null
 }
 
@@ -152,14 +157,17 @@ fun BottomSheet(
         ModalBottomSheet(
             onDismissRequest = onDismiss,
             sheetState = sheetState,
-            modifier = modifier
+            modifier = modifier,
+            containerColor = Color.White,
+            windowInsets = WindowInsets.systemBars, // Adjust insets as needed
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .fillMaxHeight() // This makes the sheet cover the entire height
                     .padding(16.dp)
             ) {
-                Row(modifier = Modifier.clickable { clickAction("Egypt") }) {
+                Row(modifier = Modifier.clickable { clickAction("Egypt"); onDismiss() }.fillMaxWidth(). padding(top = 16.dp, bottom = 16.dp)) {
                     Image(
                         painter = painterResource(id = R.drawable.egypt),
                         contentDescription = "Egypt flag"
@@ -167,8 +175,7 @@ fun BottomSheet(
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(text = "Egypt")
                 }
-                Spacer(modifier = Modifier.height(8.dp))
-                Row(modifier = Modifier.clickable { clickAction("United States") }) {
+                Row(modifier = Modifier.clickable { clickAction("United States"); onDismiss() }.fillMaxWidth().padding(top = 16.dp, bottom = 16.dp)) {
                     Image(
                         painter = painterResource(id = R.drawable.united_states),
                         contentDescription = "United States flag"
