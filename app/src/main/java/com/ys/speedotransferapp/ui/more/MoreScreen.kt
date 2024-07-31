@@ -16,9 +16,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -26,6 +29,7 @@ import androidx.navigation.compose.rememberNavController
 import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.data.OptionsSource
 import com.ys.speedotransferapp.ui.theme.CosmicLatte
+import com.ys.speedotransferapp.ui.theme.DarkGrey
 import com.ys.speedotransferapp.ui.theme.LightRose
 
 @Composable
@@ -68,12 +72,12 @@ fun Header() {
             .padding(bottom = 48.dp)
     ) {
         Icon(
-            painter = painterResource(id = R.drawable.back_chevron),
+            painter = painterResource(id = R.drawable.back),
             contentDescription = null,
             modifier = Modifier
                 .size(16.dp)
                 .align(Alignment.CenterStart),
-            tint = Color.Unspecified
+            tint = Color.Black
         )
         Text(
             text = "More",
@@ -96,12 +100,12 @@ fun Option(
             modifier = Modifier.padding(8.dp)
         ) {
             Icon(
-                painter = painterResource(id = icon),
+                imageVector = ImageVector.vectorResource(icon),
                 contentDescription = null,
                 modifier = Modifier
                     .padding(end = 8.dp)
                     .size(20.dp),
-                tint = Color.Unspecified
+                tint = DarkGrey
             )
 
             Text(
@@ -112,10 +116,12 @@ fun Option(
 
             if (!isLast) {
                 Icon(
-                    painter = painterResource(id = R.drawable.chevron),
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp),
-                    tint = Color.Unspecified
+                    imageVector = ImageVector.vectorResource(R.drawable.chevron_down),
+                    contentDescription = "click to choose option",
+                    tint = DarkGrey,
+                    modifier = Modifier
+                        .size(24.dp)
+                        .rotate(-90f)
                 )
             }
         }
