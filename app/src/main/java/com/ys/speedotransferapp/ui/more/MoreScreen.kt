@@ -1,6 +1,7 @@
 package com.ys.speedotransferapp.ui.more
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,14 +22,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.ys.speedotransferapp.R
+import com.ys.speedotransferapp.common.Header
 import com.ys.speedotransferapp.data.OptionsSource
+import com.ys.speedotransferapp.navigation.AppRoutes.FAVOURITES_ROUTE
 import com.ys.speedotransferapp.ui.theme.Black
 import com.ys.speedotransferapp.ui.theme.DarkGrey
 import com.ys.speedotransferapp.ui.theme.LightGrey
 
 @Composable
-fun MoreScreen() {
+fun MoreScreen(
+    navController: NavController
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -36,41 +43,19 @@ fun MoreScreen() {
             .padding(top = 32.dp)
 
     ) {
-        Header()
+        Header("More", navController)
+
         val options = OptionsSource().getOptions()
         for (option in options) {
             Option(
                 icon = option.icon,
                 title = option.title,
-                isLast = option.isLast
+                isLast = option.isLast,
+                navController = navController
             )
         }
     }
 
-}
-
-@Composable
-fun Header() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 32.dp)
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.back),
-            contentDescription = null,
-            modifier = Modifier
-                .size(32.dp)
-                .align(Alignment.CenterStart)
-                .padding(start = 8.dp),
-            tint = Black
-        )
-        Text(
-            text = "More",
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.align(Alignment.Center)
-        )
-    }
 }
 
 
@@ -78,12 +63,23 @@ fun Header() {
 fun Option(
     @DrawableRes icon: Int,
     title: String,
-    isLast: Boolean = false
+    isLast: Boolean = false,
+    navController: NavController
 ) {
     Column {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier
+                .padding(8.dp)
+                .clickable {
+                    when (title) {
+                        "Transfer From Website" -> {}
+                        "Favourites" -> navController.navigate(FAVOURITES_ROUTE)
+                        "Profile" -> {}
+                        "Help" -> {}
+                        "logout" -> {}
+                    }
+                }
         ) {
             Icon(
                 imageVector = ImageVector.vectorResource(icon),
@@ -123,5 +119,5 @@ fun Option(
 @Preview(showBackground = true)
 @Composable
 private fun MoreScreenPreview() {
-    MoreScreen()
+    MoreScreen(rememberNavController())
 }

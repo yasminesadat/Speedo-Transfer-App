@@ -29,8 +29,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ys.speedotransferapp.data.BottomNavigationItemsSource
+import com.ys.speedotransferapp.navigation.AppRoutes.FAVOURITES_ROUTE
 import com.ys.speedotransferapp.navigation.AppRoutes.HOME_ROUTE
 import com.ys.speedotransferapp.navigation.AppRoutes.MORE_ROUTE
+import com.ys.speedotransferapp.ui.favourite.FavouriteScreen
 import com.ys.speedotransferapp.ui.home.HomeScreen
 import com.ys.speedotransferapp.ui.more.MoreScreen
 import com.ys.speedotransferapp.ui.theme.CosmicLatte
@@ -97,7 +99,8 @@ fun MainScreen() {
                 startDestination = HOME_ROUTE,
             ) {
                 composable(HOME_ROUTE) { HomeScreen() }
-                composable(MORE_ROUTE) { MoreScreen() }
+                composable(MORE_ROUTE) { MoreScreen(navController) }
+                composable(FAVOURITES_ROUTE) {FavouriteScreen(navController)}
             }
         }
     }
