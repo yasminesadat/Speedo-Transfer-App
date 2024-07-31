@@ -52,7 +52,8 @@ fun InputField(
     Column {
         Text(text = label, modifier = modifier)
         OutlinedTextField(
-            value = selectedLabel,
+
+            value = value,
             label = { Text(text = hint) },
             onValueChange = { newValue ->
                 onValueChanged(newValue)
