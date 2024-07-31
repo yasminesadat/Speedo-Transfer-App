@@ -5,7 +5,9 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -41,16 +43,23 @@ fun InputField(
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .padding(start = 16.dp, end = 16.dp)
-) {
+): Boolean {
     var passwordVisible by remember { mutableStateOf(false) }
     var showBottomSheet by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
+    var selectedLabel by remember { mutableStateOf(label) }
 
     Column {
         Text(text = label, modifier = modifier)
         OutlinedTextField(
-            value = value,
+            value = selectedLabel,
             label = { Text(text = hint) },
-            onValueChange = onValueChanged,
+            onValueChange = { newValue ->
+                onValueChanged(newValue)
+                if (isPassword) {
+                    errorMessage = validatePassword(newValue)
+                }
+            },
             trailingIcon = {
                 if (isClickable && clickAction != null) {
                     IconButton(onClick = { showBottomSheet = true }) {
@@ -87,6 +96,16 @@ fun InputField(
                 errorTrailingIconColor = D300,
                 errorSupportingTextColor = D300
             ),
+            isError = errorMessage != null,
+            supportingText = {
+                if (errorMessage != null) {
+                    Text(
+                        text = errorMessage!!,
+                        color = D300,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+            },
             modifier = modifier,
         )
     }
@@ -94,9 +113,27 @@ fun InputField(
     if (showBottomSheet) {
         BottomSheet(
             showBottomSheet = showBottomSheet,
-            onDismiss = { showBottomSheet = false }
+            onDismiss = { showBottomSheet = false },
+            clickAction = { selectedLabel = it }
         )
     }
+    return errorMessage == null
+}
+
+fun validatePassword(password: String): String? {
+    if (password.length < 6) {
+        return "Password must be at least 6 characters long"
+    }
+    if (!password.any { it.isUpperCase() }) {
+        return "Password must contain at least one uppercase letter"
+    }
+    if (!password.any { it.isLowerCase() }) {
+        return "Password must contain at least one lowercase letter"
+    }
+    if (!password.any { it in "!@#$%^&*()_+-=[]{}|;:,.<>?" }) {
+        return "Password must contain at least one special character"
+    }
+    return null // Password is valid
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -104,7 +141,8 @@ fun InputField(
 fun BottomSheet(
     modifier: Modifier = Modifier,
     showBottomSheet: Boolean,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    clickAction: (String) -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
@@ -120,22 +158,22 @@ fun BottomSheet(
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                Text(
-                    "Bottom Sheet Content",
-                    style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                )
-                // Add your list items or other content here
-                Button(
-                    onClick = {
-                        scope.launch {
-                            sheetState.hide()
-                            onDismiss()
-                        }
-                    },
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                ) {
-                    Text("Close Bottom Sheet")
+                Row(modifier = Modifier.clickable { clickAction("Egypt") }) {
+                    Image(
+                        painter = painterResource(id = R.drawable.egypt),
+                        contentDescription = "Egypt flag"
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(text = "Egypt")
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(modifier = Modifier.clickable { clickAction("United States") }) {
+                    Image(
+                        painter = painterResource(id = R.drawable.united_states),
+                        contentDescription = "United States flag"
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(text = "United States")
                 }
             }
         }
@@ -160,6 +198,7 @@ private fun InputFieldPreview() {
         label = "First Name",
         hint = "Enter your name",
         onValueChanged = { },
+        isPassword = true,
         trailingIcon = R.drawable.user,
         iconDescription = "User icon"
     )

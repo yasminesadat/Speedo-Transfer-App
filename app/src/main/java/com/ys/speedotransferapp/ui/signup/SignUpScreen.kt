@@ -56,7 +56,7 @@ fun SignUpScreen(viewModel: SignUpViewModel, modifier: Modifier = Modifier) {
     val fullName by viewModel.fullName.collectAsState()
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
-
+    var isPassError: Boolean = false
     Scaffold(
         modifier = Modifier.fillMaxSize()
             .background(
@@ -108,11 +108,12 @@ fun SignUpScreen(viewModel: SignUpViewModel, modifier: Modifier = Modifier) {
                 iconDescription = "Email icon"
             )
             Spacer(modifier = Modifier.padding(8.dp))
-            InputField(
+            isPassError = InputField(
                 value = password,
                 label = "Password",
                 hint = "Enter your password",
                 onValueChanged = { viewModel.setPassword(it) },
+                isPassword = true,
                 trailingIcon = R.drawable.close_eye,
                 iconDescription = "User icon"
             )
@@ -125,7 +126,7 @@ fun SignUpScreen(viewModel: SignUpViewModel, modifier: Modifier = Modifier) {
                 colors = ButtonDefaults.buttonColors(containerColor = P300),
                 shape = RoundedCornerShape(6.dp),
                 contentPadding = PaddingValues(16.dp),
-                enabled = fullName.isNotBlank() && email.isNotBlank() && password.isNotBlank()
+                enabled = fullName.isNotBlank() && email.isNotBlank() && (password.isNotBlank() || isPassError)
 
             ) {
                 Text(
