@@ -16,11 +16,15 @@ class CommonComposableViewModel : ViewModel() {
 
     fun onValueChanged(fieldId: String, newValue: String, isPassword: Boolean) {
         lastInputTimes[fieldId] = System.currentTimeMillis()
-        if (isPassword) {
-            validatePasswordAfterDelay(fieldId, newValue)
-        } else {
-            // Clear error for non-password fields
+        if (newValue.isEmpty()) {
             errorMessages[fieldId] = null
+        } else {
+            if (isPassword) {
+                validatePasswordAfterDelay(fieldId, newValue)
+            } else {
+                // Clear error for non-password fields
+                errorMessages[fieldId] = null
+            }
         }
     }
 
@@ -36,7 +40,6 @@ class CommonComposableViewModel : ViewModel() {
     fun togglePasswordVisibility() {
         passwordVisible = !passwordVisible
     }
-
 
     private fun validatePassword(password: String): String? {
         if (password.length < 6) {
