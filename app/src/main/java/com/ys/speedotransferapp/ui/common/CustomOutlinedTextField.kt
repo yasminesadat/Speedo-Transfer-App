@@ -14,7 +14,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ys.speedotransferapp.ui.theme.Black
+import com.ys.speedotransferapp.ui.theme.G900
 
 @Composable
 fun CustomOutlinedTextField(
@@ -36,7 +36,7 @@ fun CustomOutlinedTextField(
             text = header,
             style = TextStyle(color = Color.Gray, fontSize = 16.sp),
             modifier = Modifier.padding(top = 4.dp),
-            color = Black
+            color = G900
         )
         OutlinedTextField(
             value = value,

@@ -15,7 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ys.speedotransferapp.R
-import com.ys.speedotransferapp.ui.theme.Black
+import com.ys.speedotransferapp.ui.theme.G900
 
 @Composable
 fun Header(
@@ -38,7 +38,7 @@ fun Header(
                     navController.popBackStack()
                 }
             ,
-            tint = Black
+            tint = G900
         )
         Text(
             text = text,
