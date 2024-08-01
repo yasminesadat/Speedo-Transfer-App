@@ -28,13 +28,13 @@ fun CustomOutlinedTextField(
     unfocusedBorderColor: Color = Color.LightGray,
     textColor: Color = Color.Black,
     labelColor: Color = Color.Gray,
-    fontSize: Int = 18,
+    fontSize: Int = 16,
     shape: RoundedCornerShape = RoundedCornerShape(8.dp)
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
             text = header,
-            style = TextStyle(color = Color.Gray, fontSize = 18.sp), // Customize header style
+            style = TextStyle(color = Color.Gray, fontSize = 16.sp),
             modifier = Modifier.padding(top = 4.dp),
             color = Black
         )
@@ -48,8 +48,7 @@ fun CustomOutlinedTextField(
                 )
             },
             modifier = modifier
-                .fillMaxWidth()
-                .padding(vertical = 4.dp),
+                .fillMaxWidth(),
             textStyle = TextStyle(color = textColor, fontSize = fontSize.sp),
             colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = borderColor,

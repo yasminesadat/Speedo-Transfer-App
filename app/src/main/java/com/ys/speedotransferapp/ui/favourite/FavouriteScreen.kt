@@ -121,7 +121,7 @@ fun FavouritesItem(favourite: FavouriteItem, viewModel: FavouriteViewModel) {
         colors = CardDefaults.cardColors(containerColor = SoftPink),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(4.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(16.dp)
@@ -150,13 +150,13 @@ fun FavouritesItem(favourite: FavouriteItem, viewModel: FavouriteViewModel) {
                     text = favourite.name,
                     color = Black,
                     fontWeight = FontWeight.Medium,
-                    fontSize = 18.sp
+                    fontSize = 16.sp
                 )
                 Text(
                     text = favourite.accountNumber,
                     color = CharcoalGrey,
                     modifier = Modifier.padding(top = 8.dp),
-                    fontSize = 18.sp
+                    fontSize = 16.sp
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
@@ -201,7 +201,7 @@ fun BottomSheet(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
-                .heightIn((screenHeight).dp,screenHeight.dp)
+                .heightIn((screenHeight).dp, screenHeight.dp)
         ) {
             Row(
                 horizontalArrangement = Arrangement.Center,
@@ -233,14 +233,17 @@ fun BottomSheet(
             )
 
             CustomOutlinedTextField(
-                header = "Recipient Account Number",
+                header = "Recipient Account",
                 value = accountNumber,
-                onValueChange = { accountNumber = it },
+                onValueChange = { accountNumber = it.filter { field -> field.isDigit() } },
                 label = "Enter Cardholder Account Number",
                 keyboardType = KeyboardType.Number
             )
             Button(
-                onClick = { onSave(favourite, FavouriteItem(name,accountNumber)) },
+                onClick = {
+                    onSave(favourite, FavouriteItem(name, accountNumber))
+                    onDismiss()
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 24.dp),
@@ -251,6 +254,7 @@ fun BottomSheet(
             ) {
                 Text(
                     text = "Save",
+                    fontSize = 16.sp,
                     style = TextStyle(
                         color = Color.White,
                         fontStyle = FontStyle.Normal,
