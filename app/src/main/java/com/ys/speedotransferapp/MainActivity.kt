@@ -12,7 +12,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            //hi1
             SpeedoTransferAppTheme {
                     MainScreen()
             }
