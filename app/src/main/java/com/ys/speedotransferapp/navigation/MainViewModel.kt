@@ -1,10 +1,10 @@
-package com.ys.speedotransferapp.ui.home
+package com.ys.speedotransferapp.navigation
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class HomeViewModel: ViewModel() {
+class MainViewModel: ViewModel() {
 
     private var _selectedItemIndex = MutableStateFlow(0)
     val selectedItemIndex = _selectedItemIndex.asStateFlow()

@@ -7,7 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.ys.speedotransferapp.navigation.AppNavHost
+import com.ys.speedotransferapp.navigation.MainScreen
+import com.ys.speedotransferapp.ui.favourite.FavouriteScreen
 import com.ys.speedotransferapp.ui.landing.LandingPageScreen
 import com.ys.speedotransferapp.ui.signup.ExtraSignUpScreen
 import com.ys.speedotransferapp.ui.signup.SignUpScreen
@@ -23,10 +24,9 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize()
                 ) { _ ->
-                    SignUpScreen(SignUpViewModel())
+                    MainScreen()
                 }
             }
         }
     }
 }
-

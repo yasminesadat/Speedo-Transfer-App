@@ -8,7 +8,7 @@ class OptionsSource {
         val options = mutableListOf<OptionItem>().apply {
             add(OptionItem(R.drawable.website, "Transfer From Website"))
             add(OptionItem(R.drawable.favorite, "Favourites"))
-            add(OptionItem(R.drawable.profile, "Profile"))
+            add(OptionItem(R.drawable.user, "Profile"))
             add(OptionItem(R.drawable.help, "Help"))
             add(OptionItem(R.drawable.logout, "logout", isLast = true))
         }

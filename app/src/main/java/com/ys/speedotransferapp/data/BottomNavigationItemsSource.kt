@@ -8,50 +8,44 @@ import com.ys.speedotransferapp.navigation.AppRoutes.MORE_ROUTE
 import com.ys.speedotransferapp.navigation.AppRoutes.TRANSACTIONS_ROUTE
 import com.ys.speedotransferapp.navigation.AppRoutes.TRANSFER_ROUTE
 
-class NavigationItemsSource {
+class BottomNavigationItemsSource {
     fun get(): List<BottomNavigationItem> {
         val destinations = mutableListOf<BottomNavigationItem>().apply {
             add(
                 BottomNavigationItem(
                     route = HOME_ROUTE,
-                    selectedIcon = R.drawable.home_selected,
-                    unselectedIcon = R.drawable.home,
-                    iconText = "Home"
+                    icon = R.drawable.home,
+                    label = "Home"
                 )
             )
             add(
                 BottomNavigationItem(
                     route = TRANSFER_ROUTE,
-                    selectedIcon = R.drawable.transfer_selected,
-                    unselectedIcon = R.drawable.transfer,
-                    iconText = "Transfer"
+                    icon = R.drawable.transfer,
+                    label = "Transfer"
                 )
             )
             add(
                 BottomNavigationItem(
                     route = TRANSACTIONS_ROUTE,
-                    selectedIcon = R.drawable.transactions_selected,
-                    unselectedIcon = R.drawable.transactions,
-                    iconText = "Transactions"
+                    icon = R.drawable.transaction,
+                    label = "Transactions"
                 )
             )
             add(
                 BottomNavigationItem(
                     route = CARDS_ROUTE,
-                    selectedIcon = R.drawable.mycards_selected,
-                    unselectedIcon = R.drawable.mycards,
-                    iconText = "My cards"
+                    icon = R.drawable.my_cards,
+                    label = "My cards"
                 )
             )
             add(
                 BottomNavigationItem(
                     route = MORE_ROUTE,
-                    selectedIcon = R.drawable.more_selected,
-                    unselectedIcon = R.drawable.more,
-                    iconText = "More"
+                    icon = R.drawable.more,
+                    label = "More"
                 )
             )
-
         }
 
         return destinations
