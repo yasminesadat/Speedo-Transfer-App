@@ -8,6 +8,7 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -16,6 +17,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -49,7 +51,7 @@ fun InputField(
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .padding(start = 16.dp, end = 16.dp)
-):Boolean {
+): Boolean {
     val colors = OutlinedTextFieldDefaults.colors(
         unfocusedContainerColor = G10,
         unfocusedLabelColor = G70,
@@ -60,12 +62,13 @@ fun InputField(
         errorTrailingIconColor = D300,
         errorSupportingTextColor = D300
     )
+
     Column {
         Text(text = label, modifier = modifier)
-
+        var isFocused by remember { mutableStateOf(false) }
         OutlinedTextField(
             value = value,
-            label = { Text(text = hint) },
+            label = { if (value.isEmpty() && !isFocused) Text(text = hint) },
             onValueChange = { newValue ->
                 onValueChanged(newValue)
                 viewModel.onValueChanged(fieldId, newValue, isPassword)
@@ -108,28 +111,13 @@ fun InputField(
                 }
             },
             readOnly = readOnly,
-            modifier = modifier,
+            modifier = modifier.onFocusChanged { isFocused = it.isFocused },
         )
     }
 
     return viewModel.errorMessages[fieldId] == null
 }
 
-fun validatePassword(password: String): String? {
-    if (password.length < 6) {
-        return "Password must be at least 6 characters long"
-    }
-    if (!password.any { it.isUpperCase() }) {
-        return "Password must contain at least one uppercase letter"
-    }
-    if (!password.any { it.isLowerCase() }) {
-        return "Password must contain at least one lowercase letter"
-    }
-    if (!password.any { it in "!@#$%^&*()_+-=[]{}|;:,.<>?" }) {
-        return "Password must contain at least one special character"
-    }
-    return null // Password is valid
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -140,7 +128,6 @@ fun BottomSheet(
     clickAction: (String) -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState()
-    val scope = rememberCoroutineScope()
 
     if (showBottomSheet) {
         ModalBottomSheet(

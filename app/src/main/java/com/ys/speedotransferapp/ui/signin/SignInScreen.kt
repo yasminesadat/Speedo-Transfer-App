@@ -2,6 +2,7 @@ package com.ys.speedotransferapp.ui.signin
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -48,13 +49,18 @@ import com.ys.speedotransferapp.ui.theme.P20
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignInScreen(navController: NavController, viewModel: SignInViewModel = SignInViewModel(), modifier: Modifier =  Modifier) {
+fun SignInScreen(
+    navController: NavController,
+    viewModel: SignInViewModel = SignInViewModel(),
+    modifier: Modifier = Modifier
+) {
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
     var isPassError: Boolean = false
     val view_model = remember { CommonComposableViewModel() }
     Scaffold(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .background(
                 brush = Brush.linearGradient(
                     colors = listOf(G0, P20)
@@ -112,7 +118,7 @@ fun SignInScreen(navController: NavController, viewModel: SignInViewModel = Sign
             )
             Spacer(modifier = Modifier.padding(8.dp))
             Button(
-                onClick = {navController.navigate(AppRoutes.HOME_ROUTE)},
+                onClick = { navController.navigate(AppRoutes.HOME_ROUTE) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
@@ -143,7 +149,9 @@ fun SignInScreen(navController: NavController, viewModel: SignInViewModel = Sign
                     color = Color(0xff898886),
                     lineHeight = 9.38.em,
                     style = TextStyle(
-                        fontSize = 16.sp))
+                        fontSize = 16.sp
+                    )
+                )
                 Text(
                     text = "Sign Up",
                     color = Color(0xff871e35),
@@ -151,7 +159,9 @@ fun SignInScreen(navController: NavController, viewModel: SignInViewModel = Sign
                     lineHeight = 8.12.em,
                     style = TextStyle(
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium))
+                        fontWeight = FontWeight.Medium
+                    ),
+                    modifier = Modifier.clickable { navController.navigate(AppRoutes.SIGN_UP_ROUTE) })
             }
         }
     }
