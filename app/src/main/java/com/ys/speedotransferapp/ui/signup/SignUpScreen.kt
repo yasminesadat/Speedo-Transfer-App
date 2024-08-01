@@ -37,7 +37,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.ys.speedotransferapp.R
+import com.ys.speedotransferapp.navigation.AppRoutes
 import com.ys.speedotransferapp.ui.common.CommonComposableViewModel
 import com.ys.speedotransferapp.ui.common.InputField
 import com.ys.speedotransferapp.ui.common.SpeedoTransferText
@@ -54,7 +56,7 @@ import com.ys.speedotransferapp.ui.theme.P20
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignUpScreen(viewModel: SignUpViewModel, modifier: Modifier = Modifier) {
+fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = SignUpViewModel(), modifier: Modifier = Modifier) {
     val fullName by viewModel.fullName.collectAsState()
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
@@ -128,7 +130,7 @@ fun SignUpScreen(viewModel: SignUpViewModel, modifier: Modifier = Modifier) {
             )
             Spacer(modifier = Modifier.padding(8.dp))
             Button(
-                onClick = {},
+                onClick = { if(view_model.errorMessages["password"] == null) navController.navigate(AppRoutes.EXTRA_SIGN_UP_ROUTE)},
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
@@ -165,7 +167,8 @@ fun SignUpScreen(viewModel: SignUpViewModel, modifier: Modifier = Modifier) {
                     lineHeight = 8.12.em,
                     style = TextStyle(
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium))
+                        fontWeight = FontWeight.Medium),
+                    modifier = Modifier.clickable { navController.navigate(AppRoutes.SIGN_IN_ROUTE) })
             }
         }
         }
@@ -176,6 +179,6 @@ fun SignUpScreen(viewModel: SignUpViewModel, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 private fun SignUpScreenPreview() {
-    SignUpScreen(SignUpViewModel())
+    //SignUpScreen(SignUpViewModel())
 }
 

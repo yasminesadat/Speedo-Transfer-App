@@ -2,30 +2,39 @@ package com.ys.speedotransferapp.ui.landing
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
-import com.ys.speedotransferapp.ui.theme.G0
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.ys.speedotransferapp.navigation.AppRoutes
 import com.ys.speedotransferapp.ui.theme.P300
-import com.ys.speedotransferapp.ui.theme.P20
 import com.ys.speedotransferapp.ui.theme.appTypography
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun LandingPageScreen(modifier: Modifier = Modifier) {
+fun LandingPageScreen(navController: NavController, modifier: Modifier = Modifier) {
     Scaffold(
         topBar = {},
         modifier = Modifier
             .fillMaxSize()
-            .background(color = P300),
+            .background(color = P300)
+            .pointerInput(Unit) {
+                detectHorizontalDragGestures { change, dragAmount ->
+                    if (dragAmount > 0) {
+                        navController.navigate(AppRoutes.SIGN_UP_ROUTE)
+                    }
+                }
+            }.clickable { navController.navigate(AppRoutes.SIGN_UP_ROUTE) },
         containerColor = Color.Transparent
     ) {
         Box(
@@ -40,5 +49,6 @@ fun LandingPageScreen(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun LandingScreenPagePreview() {
-    LandingPageScreen()
+    // Provide a dummy NavController for preview
+    LandingPageScreen(navController = rememberNavController())
 }

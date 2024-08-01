@@ -25,6 +25,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -41,7 +42,7 @@ import com.ys.speedotransferapp.ui.theme.G200
 import com.ys.speedotransferapp.ui.theme.P20
 
 @Composable
-fun MainScreen() {
+fun MainScreen(navController: NavController) {
     val navController = rememberNavController()
     val viewModel: MainViewModel = viewModel()
     val selectedItemIndex by viewModel.selectedItemIndex.collectAsState()

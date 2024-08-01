@@ -35,7 +35,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.ys.speedotransferapp.R
+import com.ys.speedotransferapp.navigation.AppRoutes
 import com.ys.speedotransferapp.ui.common.CommonComposableViewModel
 import com.ys.speedotransferapp.ui.common.InputField
 import com.ys.speedotransferapp.ui.common.SpeedoTransferText
@@ -46,7 +48,7 @@ import com.ys.speedotransferapp.ui.theme.P20
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignInScreen(viewModel: SignInViewModel, modifier: Modifier =  Modifier) {
+fun SignInScreen(navController: NavController, viewModel: SignInViewModel = SignInViewModel(), modifier: Modifier =  Modifier) {
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
     var isPassError: Boolean = false
@@ -110,7 +112,7 @@ fun SignInScreen(viewModel: SignInViewModel, modifier: Modifier =  Modifier) {
             )
             Spacer(modifier = Modifier.padding(8.dp))
             Button(
-                onClick = {},
+                onClick = {navController.navigate(AppRoutes.HOME_ROUTE)},
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
@@ -143,7 +145,7 @@ fun SignInScreen(viewModel: SignInViewModel, modifier: Modifier =  Modifier) {
                     style = TextStyle(
                         fontSize = 16.sp))
                 Text(
-                    text = "Sign In",
+                    text = "Sign Up",
                     color = Color(0xff871e35),
                     textDecoration = TextDecoration.Underline,
                     lineHeight = 8.12.em,
@@ -158,5 +160,5 @@ fun SignInScreen(viewModel: SignInViewModel, modifier: Modifier =  Modifier) {
 @Preview(showBackground = true)
 @Composable
 private fun SignInScreenPreview() {
-    SignInScreen(SignInViewModel())
+    //SignInScreen(SignInViewModel())
 }
