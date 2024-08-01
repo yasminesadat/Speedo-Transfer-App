@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
@@ -32,27 +31,21 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.toRect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.model.FavouriteItem
 import com.ys.speedotransferapp.ui.common.CustomOutlinedTextField
@@ -77,7 +70,8 @@ fun FavouriteScreen(
         BottomSheet(
             favourite = selectedFavourite!!,
             onDismiss = { viewModel.showBottomSheet(false) },
-            onSave = { old, new -> viewModel.updateFavourite(old, new) }
+            onSave = { old, new -> viewModel.updateFavourite(old, new) },
+            viewModel = viewModel
         )
     }
     Column(
@@ -168,7 +162,7 @@ fun FavouritesItem(favourite: FavouriteItem, viewModel: FavouriteViewModel) {
                     .size(24.dp)
                     .clickable {
                         viewModel.showBottomSheet(true)
-                        viewModel.setSelectedFavorite(favourite)
+                        viewModel.setSelectedFavourite(favourite)
                     })
             Icon(imageVector = ImageVector.vectorResource(R.drawable.delete),
                 contentDescription = "delete icon",
@@ -185,7 +179,8 @@ fun FavouritesItem(favourite: FavouriteItem, viewModel: FavouriteViewModel) {
 fun BottomSheet(
     favourite: FavouriteItem,
     onDismiss: () -> Unit,
-    onSave: (FavouriteItem, FavouriteItem) -> Unit
+    onSave: (FavouriteItem, FavouriteItem) -> Unit,
+    viewModel: FavouriteViewModel
 ) {
     val sheetState = rememberModalBottomSheetState()
     ModalBottomSheet(
@@ -194,14 +189,11 @@ fun BottomSheet(
         containerColor = Color.White,
         windowInsets = WindowInsets.systemBars
     ) {
-        // not working bottom sheet height
-        val screenHeight = LocalConfiguration.current.screenHeightDp
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
-                .heightIn((screenHeight).dp, screenHeight.dp)
         ) {
             Row(
                 horizontalArrangement = Arrangement.Center,
@@ -222,20 +214,20 @@ fun BottomSheet(
                 )
 
             }
-            var name by remember { mutableStateOf("") }
-            var accountNumber by remember { mutableStateOf("") }
+            val name by viewModel.name.collectAsState()
+            val accountNumber by viewModel.accountNumber.collectAsState()
 
             CustomOutlinedTextField(
                 header = "Recipient Name",
                 value = name,
-                onValueChange = { name = it },
+                onValueChange = { viewModel.setName(it) },
                 label = "Enter Cardholder Name",
             )
 
             CustomOutlinedTextField(
                 header = "Recipient Account",
                 value = accountNumber,
-                onValueChange = { accountNumber = it.filter { field -> field.isDigit() } },
+                onValueChange = {viewModel.setAccountNumber(it)},
                 label = "Enter Cardholder Account Number",
                 keyboardType = KeyboardType.Number
             )
@@ -265,11 +257,4 @@ fun BottomSheet(
         }
 
     }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-private fun FavouriteScreenPreview() {
-    FavouriteScreen(rememberNavController())
 }
