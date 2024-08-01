@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.ui.common.BottomSheet
+import com.ys.speedotransferapp.ui.common.CommonComposableViewModel
 import com.ys.speedotransferapp.ui.common.InputField
 import com.ys.speedotransferapp.ui.common.SpeedoTransferText
 import com.ys.speedotransferapp.ui.theme.G0
@@ -59,7 +60,7 @@ fun ExtraSignUpScreen(viewModel: SignUpViewModel, modifier: Modifier = Modifier)
     val dateOfBirth by viewModel.dateOfBirth.collectAsState()
     var showBottomSheet by remember { mutableStateOf(false) }
     var selectedLabel by remember { mutableStateOf("") }
-
+    val view_model = remember { CommonComposableViewModel() }
 
     Scaffold(
         modifier = Modifier
@@ -97,8 +98,10 @@ fun ExtraSignUpScreen(viewModel: SignUpViewModel, modifier: Modifier = Modifier)
             Text(text = "Let's Complete your Profile")
             Spacer(modifier = Modifier.padding(8.dp))
             InputField(
+                viewModel = view_model,
                 value = selectedLabel,
                 label = "Country",
+                fieldId = "country",
                 hint = "Select your country",
                 onValueChanged = { viewModel.setCountry(it) },
                 isClickable = true,
@@ -115,8 +118,10 @@ fun ExtraSignUpScreen(viewModel: SignUpViewModel, modifier: Modifier = Modifier)
 
             Spacer(modifier = Modifier.padding(8.dp))
             InputField(
+                viewModel = view_model,
                 value = dateOfBirth,
                 label = "Date of Birth",
+                fieldId = "dateOfBirth",
                 hint = "DD/MM/YYYY",
                 keyboardType = KeyboardType.Uri,
                 onValueChanged = { viewModel.setDateOfBirth(it) },

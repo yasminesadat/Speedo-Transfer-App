@@ -33,25 +33,23 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InputField(
+    viewModel: CommonComposableViewModel,
     value: String,
+    fieldId: String,
     label: String,
     hint: String,
     onValueChanged: (String) -> Unit,
     isPassword: Boolean = false,
     isClickable: Boolean = false,
     readOnly: Boolean = false,
-    clickAction:  (() -> Unit)? = null,
+    clickAction: (() -> Unit)? = null,
     @DrawableRes trailingIcon: Int,
     iconDescription: String,
     keyboardType: KeyboardType = KeyboardType.Text,
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .padding(start = 16.dp, end = 16.dp)
-): Boolean {
-    var passwordVisible by remember { mutableStateOf(false) }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
-    var lastInputTime by remember { mutableStateOf(0L) }
-    val coroutineScope = rememberCoroutineScope()
+):Boolean {
     val colors = OutlinedTextFieldDefaults.colors(
         unfocusedContainerColor = G10,
         unfocusedLabelColor = G70,
@@ -70,15 +68,7 @@ fun InputField(
             label = { Text(text = hint) },
             onValueChange = { newValue ->
                 onValueChanged(newValue)
-                lastInputTime = System.currentTimeMillis()
-                if (isPassword) {
-                    coroutineScope.launch {
-                        delay(700)
-                        if (System.currentTimeMillis() - lastInputTime >= 700) {
-                            errorMessage = validatePassword(newValue)
-                        }
-                    }
-                }
+                viewModel.onValueChanged(fieldId, newValue, isPassword)
             },
             trailingIcon = {
                 if (isClickable && clickAction != null) {
@@ -89,10 +79,10 @@ fun InputField(
                         )
                     }
                 } else if (isPassword) {
-                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                    IconButton(onClick = { viewModel.togglePasswordVisibility() }) {
                         Icon(
-                            painter = painterResource(id = if (passwordVisible) R.drawable.open_eye else R.drawable.close_eye),
-                            contentDescription = if (passwordVisible) "Hide password" else "Show password"
+                            painter = painterResource(id = if (viewModel.passwordVisible) R.drawable.open_eye else R.drawable.close_eye),
+                            contentDescription = if (viewModel.passwordVisible) "Hide password" else "Show password"
                         )
                     }
                 } else {
@@ -102,16 +92,16 @@ fun InputField(
                     )
                 }
             },
-            visualTransformation = if (isPassword && !passwordVisible) PasswordVisualTransformation() else VisualTransformation.None,
+            visualTransformation = if (isPassword && !viewModel.passwordVisible) PasswordVisualTransformation() else VisualTransformation.None,
             keyboardOptions = KeyboardOptions(
                 keyboardType = if (isPassword) KeyboardType.Password else keyboardType
             ),
             colors = colors,
-            isError = errorMessage != null,
+            isError = viewModel.errorMessages[fieldId] != null,
             supportingText = {
-                if (errorMessage != null) {
+                viewModel.errorMessages[fieldId]?.let { error ->
                     Text(
-                        text = errorMessage!!,
+                        text = error,
                         color = D300,
                         style = MaterialTheme.typography.bodySmall
                     )
@@ -122,8 +112,7 @@ fun InputField(
         )
     }
 
-
-    return errorMessage == null
+    return viewModel.errorMessages[fieldId] == null
 }
 
 fun validatePassword(password: String): String? {
@@ -203,7 +192,10 @@ fun SpeedoTransferText(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 private fun InputFieldPreview() {
+    val viewModel = remember { CommonComposableViewModel() }
     InputField(
+        viewModel = viewModel,
+        fieldId = "firstName",
         value = "",
         label = "First Name",
         hint = "Enter your name",

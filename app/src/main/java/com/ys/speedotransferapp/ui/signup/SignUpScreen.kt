@@ -22,6 +22,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -37,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.ys.speedotransferapp.R
+import com.ys.speedotransferapp.ui.common.CommonComposableViewModel
 import com.ys.speedotransferapp.ui.common.InputField
 import com.ys.speedotransferapp.ui.common.SpeedoTransferText
 import com.ys.speedotransferapp.ui.signin.SignInScreen
@@ -57,6 +59,7 @@ fun SignUpScreen(viewModel: SignUpViewModel, modifier: Modifier = Modifier) {
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
     var isPassError: Boolean = false
+    val view_model = remember { CommonComposableViewModel() }
     Scaffold(
         modifier = Modifier.fillMaxSize()
             .background(
@@ -91,8 +94,10 @@ fun SignUpScreen(viewModel: SignUpViewModel, modifier: Modifier = Modifier) {
         ) {
             SpeedoTransferText()
             InputField(
+                viewModel = view_model,
                 value = fullName,
                 label = "Full Name",
+                fieldId = "fullName",
                 hint = "Enter your Full Name",
                 onValueChanged = { viewModel.setFullName(it) },
                 trailingIcon = R.drawable.user,
@@ -100,8 +105,10 @@ fun SignUpScreen(viewModel: SignUpViewModel, modifier: Modifier = Modifier) {
             )
             Spacer(modifier = Modifier.padding(8.dp))
             InputField(
+                viewModel = view_model,
                 value = email,
                 label = "Email",
+                fieldId = "email",
                 hint = "Enter your email address",
                 onValueChanged = { viewModel.setEmail(it) },
                 trailingIcon = R.drawable.email,
@@ -109,8 +116,10 @@ fun SignUpScreen(viewModel: SignUpViewModel, modifier: Modifier = Modifier) {
             )
             Spacer(modifier = Modifier.padding(8.dp))
             isPassError = InputField(
+                viewModel = view_model,
                 value = password,
                 label = "Password",
+                fieldId = "password",
                 hint = "Enter your password",
                 onValueChanged = { viewModel.setPassword(it) },
                 isPassword = true,
