@@ -15,7 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.ys.speedotransferapp.ui.theme.G0
 import com.ys.speedotransferapp.ui.theme.P300
-import com.ys.speedotransferapp.ui.theme.Pink20
+import com.ys.speedotransferapp.ui.theme.P20
 import com.ys.speedotransferapp.ui.theme.appTypography
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

@@ -40,7 +40,7 @@ import com.ys.speedotransferapp.ui.common.SpeedoTransferText
 import com.ys.speedotransferapp.ui.signup.SignUpViewModel
 import com.ys.speedotransferapp.ui.theme.G0
 import com.ys.speedotransferapp.ui.theme.P300
-import com.ys.speedotransferapp.ui.theme.Pink20
+import com.ys.speedotransferapp.ui.theme.P20
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,7 +52,7 @@ fun SignInScreen(viewModel: SignInViewModel, modifier: Modifier =  Modifier) {
         modifier = Modifier.fillMaxSize()
             .background(
                 brush = Brush.linearGradient(
-                    colors = listOf(G0, Pink20)
+                    colors = listOf(G0, P20)
                 )
             ),
         topBar = {

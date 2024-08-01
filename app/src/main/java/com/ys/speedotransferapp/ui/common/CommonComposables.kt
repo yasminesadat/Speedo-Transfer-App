@@ -52,7 +52,16 @@ fun InputField(
     var errorMessage by remember { mutableStateOf<String?>(null) }
     var lastInputTime by remember { mutableStateOf(0L) }
     val coroutineScope = rememberCoroutineScope()
-
+    val colors = OutlinedTextFieldDefaults.colors(
+        unfocusedContainerColor = G10,
+        unfocusedLabelColor = G70,
+        unfocusedBorderColor = G70,
+        unfocusedTrailingIconColor = G70,
+        focusedBorderColor = G700,
+        errorBorderColor = D300,
+        errorTrailingIconColor = D300,
+        errorSupportingTextColor = D300
+    )
     Column {
         Text(text = label, modifier = modifier)
 
@@ -97,16 +106,7 @@ fun InputField(
             keyboardOptions = KeyboardOptions(
                 keyboardType = if (isPassword) KeyboardType.Password else keyboardType
             ),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                containerColor = G10,
-                unfocusedLabelColor = G70,
-                unfocusedBorderColor = G70,
-                unfocusedTrailingIconColor = G70,
-                focusedBorderColor = G700,
-                errorBorderColor = D300,
-                errorTrailingIconColor = D300,
-                errorSupportingTextColor = D300
-            ),
+            colors = colors,
             isError = errorMessage != null,
             supportingText = {
                 if (errorMessage != null) {
@@ -197,6 +197,8 @@ fun SpeedoTransferText(modifier: Modifier = Modifier) {
         style = appTypography.headlineLarge
     )
 }
+
+
 
 @Preview(showBackground = true)
 @Composable

@@ -31,8 +31,8 @@ val Grey = Color(0xFF898886)
 val GarlicBeige = Color(0xFF3C3A37)
 
 // Additional colors from Development
-val Pink20 = Color(0xFFFFEAEE)
-
+val P20 = Color(0xFFFFEAEE)
+val P50 = Color(0xFFF3E9EB)
 val P300 = Color(0xFF871E35)
 val D300 = Color(0xFFD80027)
 
@@ -41,6 +41,7 @@ val G0 = Color(0xFFFFFFFF)
 val G10 = Color(0xFFFBFBFB)
 val G20 = Color(0xFFF6F6F6)
 val G30 = Color(0xFFEDEDED)
+val G40 = Color(0xFFF6F6F6)
 val G50 = Color(0xFFC8C8C7)
 val G60 = Color(0xFFBBBAB9)
 val G70 = Color(0xFFB0AFAE)

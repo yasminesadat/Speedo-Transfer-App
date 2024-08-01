@@ -48,7 +48,7 @@ import com.ys.speedotransferapp.ui.theme.G700
 import com.ys.speedotransferapp.ui.theme.G900
 import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.P300
-import com.ys.speedotransferapp.ui.theme.Pink20
+import com.ys.speedotransferapp.ui.theme.P20
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -61,7 +61,7 @@ fun SignUpScreen(viewModel: SignUpViewModel, modifier: Modifier = Modifier) {
         modifier = Modifier.fillMaxSize()
             .background(
                 brush = Brush.linearGradient(
-                    colors = listOf(G0, Pink20)
+                    colors = listOf(G0, P20)
                 )
             ),
         topBar = {
