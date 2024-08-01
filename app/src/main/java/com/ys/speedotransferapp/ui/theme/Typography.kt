@@ -30,13 +30,13 @@ val appTypography = Typography(
         fontFamily = customFontFamily,
         fontWeight = FontWeight.ExtraBold,
         fontSize = 22.sp,
-        color = Black
+        color = G900
     ),
     // gray options
     titleMedium = TextStyle(
         fontFamily = additionalFontFamily,
         fontSize = 16.sp,
         fontWeight = FontWeight.Medium,
-        color = DarkGrey
+        color = G200
     )
 )

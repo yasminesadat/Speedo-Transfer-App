@@ -50,14 +50,13 @@ import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.model.FavouriteItem
 import com.ys.speedotransferapp.ui.common.CustomOutlinedTextField
 import com.ys.speedotransferapp.ui.common.Header
-import com.ys.speedotransferapp.ui.theme.Black
-import com.ys.speedotransferapp.ui.theme.CharcoalGrey
-import com.ys.speedotransferapp.ui.theme.DarkCherry
-import com.ys.speedotransferapp.ui.theme.GarlicBeige
-import com.ys.speedotransferapp.ui.theme.Grey
-import com.ys.speedotransferapp.ui.theme.LightGrey
-import com.ys.speedotransferapp.ui.theme.Red
-import com.ys.speedotransferapp.ui.theme.SoftPink
+import com.ys.speedotransferapp.ui.theme.G900
+import com.ys.speedotransferapp.ui.theme.G100
+import com.ys.speedotransferapp.ui.theme.P300
+import com.ys.speedotransferapp.ui.theme.G700
+import com.ys.speedotransferapp.ui.theme.G40
+import com.ys.speedotransferapp.ui.theme.D300
+import com.ys.speedotransferapp.ui.theme.P50
 
 @Composable
 fun FavouriteScreen(
@@ -112,7 +111,7 @@ fun FavouriteList(viewModel: FavouriteViewModel) {
 @Composable
 fun FavouritesItem(favourite: FavouriteItem, viewModel: FavouriteViewModel) {
     Card(
-        colors = CardDefaults.cardColors(containerColor = SoftPink),
+        colors = CardDefaults.cardColors(containerColor = P50),
         modifier = Modifier
             .fillMaxWidth()
             .padding(4.dp)
@@ -126,12 +125,12 @@ fun FavouritesItem(favourite: FavouriteItem, viewModel: FavouriteViewModel) {
                     .clip(GenericShape { size, _ ->
                         addOval(size.toRect())
                     })
-                    .background(LightGrey)
+                    .background(G40)
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.bank),
                     contentDescription = "bank icon",
-                    tint = GarlicBeige,
+                    tint = G700,
                     modifier = Modifier
                         .align(Alignment.Center)
                         .size(36.dp)
@@ -142,13 +141,13 @@ fun FavouritesItem(favourite: FavouriteItem, viewModel: FavouriteViewModel) {
             ) {
                 Text(
                     text = favourite.name,
-                    color = Black,
+                    color = G900,
                     fontWeight = FontWeight.Medium,
                     fontSize = 16.sp
                 )
                 Text(
                     text = favourite.accountNumber,
-                    color = CharcoalGrey,
+                    color = G100,
                     modifier = Modifier.padding(top = 8.dp),
                     fontSize = 16.sp
                 )
@@ -156,7 +155,7 @@ fun FavouritesItem(favourite: FavouriteItem, viewModel: FavouriteViewModel) {
             Spacer(modifier = Modifier.weight(1f))
             Icon(imageVector = ImageVector.vectorResource(R.drawable.edit),
                 contentDescription = "edit icon",
-                tint = Grey,
+                tint = G100,
                 modifier = Modifier
                     .padding(end = 12.dp)
                     .size(24.dp)
@@ -166,7 +165,7 @@ fun FavouritesItem(favourite: FavouriteItem, viewModel: FavouriteViewModel) {
                     })
             Icon(imageVector = ImageVector.vectorResource(R.drawable.delete),
                 contentDescription = "delete icon",
-                tint = Red,
+                tint = D300,
                 modifier = Modifier
                     .size(24.dp)
                     .clickable { viewModel.deleteFavourite(favourite) })
@@ -203,7 +202,7 @@ fun BottomSheet(
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.edit),
                     contentDescription = "edit icon",
-                    tint = DarkCherry,
+                    tint = P300,
                     modifier = Modifier
                         .size(32.dp)
                         .padding(end = 8.dp)
@@ -239,7 +238,7 @@ fun BottomSheet(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 24.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = DarkCherry),
+                colors = ButtonDefaults.buttonColors(containerColor = P300),
                 shape = RoundedCornerShape(6.dp),
                 contentPadding = PaddingValues(16.dp),
                 enabled = name.isNotBlank() && accountNumber.isNotBlank()

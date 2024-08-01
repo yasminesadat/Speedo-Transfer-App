@@ -47,11 +47,11 @@ import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.data.OptionsSource
 import com.ys.speedotransferapp.navigation.AppRoutes.FAVOURITES_ROUTE
 import com.ys.speedotransferapp.ui.common.Header
-import com.ys.speedotransferapp.ui.theme.Black
-import com.ys.speedotransferapp.ui.theme.DarkCherry
-import com.ys.speedotransferapp.ui.theme.DarkGrey
-import com.ys.speedotransferapp.ui.theme.LightGrey
-import com.ys.speedotransferapp.ui.theme.SoftPink
+import com.ys.speedotransferapp.ui.theme.G900
+import com.ys.speedotransferapp.ui.theme.P300
+import com.ys.speedotransferapp.ui.theme.G200
+import com.ys.speedotransferapp.ui.theme.G40
+import com.ys.speedotransferapp.ui.theme.P50
 
 @Composable
 fun MoreScreen(
@@ -62,7 +62,7 @@ fun MoreScreen(
     val showHelpBottomSheet by viewModel.showHelpBottomSheet.collectAsState()
 
     if (showHelpBottomSheet) {
-        showHelp(viewModel, context)
+        ShowHelp(viewModel, context)
     }
     Column(
         modifier = Modifier
@@ -120,7 +120,7 @@ fun Option(
                 modifier = Modifier
                     .padding(end = 8.dp)
                     .size(24.dp),
-                tint = DarkGrey
+                tint = G200
             )
 
             Text(
@@ -133,7 +133,7 @@ fun Option(
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.chevron_down),
                     contentDescription = null,
-                    tint = DarkGrey,
+                    tint = G200,
                     modifier = Modifier
                         .size(32.dp)
                         .rotate(-90f)
@@ -143,7 +143,7 @@ fun Option(
         if (!isLast) {
             HorizontalDivider(
                 Modifier.padding(all = 8.dp),
-                color = LightGrey
+                color = G40
             )
         }
     }
@@ -151,7 +151,7 @@ fun Option(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun showHelp(
+fun ShowHelp(
     viewModel: MoreViewModel,
     context: Context
 ) {
@@ -193,13 +193,13 @@ fun showHelp(
                         modifier = Modifier
                             .size(64.dp)
                             .clip(RoundedCornerShape(6.dp))
-                            .background(SoftPink)
+                            .background(P50)
                             .align(Alignment.CenterHorizontally)
                     ) {
                         Icon(
                             imageVector = ImageVector.vectorResource(R.drawable.email),
                             contentDescription = "mail icon",
-                            tint = DarkCherry,
+                            tint = P300,
                             modifier = Modifier
                                 .align(Alignment.Center)
                                 .size(36.dp)
@@ -208,7 +208,7 @@ fun showHelp(
                     }
                     Text(
                         text = "Send Email",
-                        color = Black,
+                        color = G900,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Medium,
                         modifier = Modifier
@@ -241,13 +241,13 @@ fun showHelp(
                         modifier = Modifier
                             .size(64.dp)
                             .clip(RoundedCornerShape(6.dp))
-                            .background(SoftPink)
+                            .background(P50)
                             .align(Alignment.CenterHorizontally)
                     ) {
                         Icon(
                             imageVector = ImageVector.vectorResource(R.drawable.call),
                             contentDescription = "call icon",
-                            tint = DarkCherry,
+                            tint = P300,
                             modifier = Modifier
                                 .align(Alignment.Center)
                                 .size(36.dp)
@@ -256,7 +256,7 @@ fun showHelp(
                     }
                     Text(
                         text = "Call Us",
-                        color = Black,
+                        color = G900,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Medium,
                         modifier = Modifier
@@ -265,7 +265,7 @@ fun showHelp(
                     )
                     Text(
                         text = "1234",
-                        color = DarkCherry,
+                        color = P300,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Medium,
                         modifier = Modifier.align(Alignment.CenterHorizontally)

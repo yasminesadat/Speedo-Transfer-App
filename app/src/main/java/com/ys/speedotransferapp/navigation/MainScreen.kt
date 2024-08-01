@@ -36,9 +36,9 @@ import com.ys.speedotransferapp.ui.favourite.FavouriteScreen
 import com.ys.speedotransferapp.ui.home.HomeScreen
 import com.ys.speedotransferapp.ui.more.MoreScreen
 import com.ys.speedotransferapp.ui.theme.CosmicLatte
-import com.ys.speedotransferapp.ui.theme.DarkCherry
-import com.ys.speedotransferapp.ui.theme.DarkGrey
-import com.ys.speedotransferapp.ui.theme.LightRose
+import com.ys.speedotransferapp.ui.theme.P300
+import com.ys.speedotransferapp.ui.theme.G200
+import com.ys.speedotransferapp.ui.theme.P20
 
 @Composable
 fun MainScreen() {
@@ -64,7 +64,7 @@ fun MainScreen() {
                             label = {
                                 Text(
                                     text = item.label,
-                                    color = if (selectedItemIndex == index) DarkCherry else DarkGrey,
+                                    color = if (selectedItemIndex == index) P300 else G200,
                                     fontSize =  9.sp
                                 )
                             },
@@ -73,7 +73,7 @@ fun MainScreen() {
                                     imageVector = ImageVector.vectorResource(id = item.icon),
                                     contentDescription = item.label,
                                     modifier = Modifier.size(24.dp),
-                                    tint = if (selectedItemIndex == index) DarkCherry else DarkGrey
+                                    tint = if (selectedItemIndex == index) P300 else G200
                                 )
                             },
                             interactionSource = MutableInteractionSource(),
@@ -89,7 +89,7 @@ fun MainScreen() {
             modifier = Modifier
                 .background(
                     brush = Brush.verticalGradient(
-                        colors = listOf(CosmicLatte, LightRose)
+                        colors = listOf(CosmicLatte, P20)
                     )
                 )
                 .padding(innerPadding)
