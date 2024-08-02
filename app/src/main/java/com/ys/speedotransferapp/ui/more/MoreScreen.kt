@@ -42,6 +42,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ys.speedotransferapp.R
+import com.ys.speedotransferapp.data.Constants.EMAIL
+import com.ys.speedotransferapp.data.Constants.NUMBER
 import com.ys.speedotransferapp.data.OptionsSource
 import com.ys.speedotransferapp.navigation.AppRoutes.FAVOURITES_ROUTE
 import com.ys.speedotransferapp.ui.common.Header
@@ -179,7 +181,7 @@ fun ShowHelp(
                     .weight(1f)
                     .clickable {
                         val intent = Intent(Intent.ACTION_SENDTO).apply {
-                            data = Uri.parse("mailto:help@speedo.com")
+                            data = Uri.parse("mailto: $EMAIL")
                         }
                         context.startActivity(intent)
                     }
@@ -227,7 +229,7 @@ fun ShowHelp(
                     .weight(1f)
                     .clickable {
                         val intent = Intent(Intent.ACTION_DIAL).apply {
-                            data = Uri.parse("tel:1234")
+                            data = Uri.parse("tel: $NUMBER")
                         }
                         context.startActivity(intent)
                     },
@@ -266,7 +268,7 @@ fun ShowHelp(
                             .padding(top = 8.dp)
                     )
                     Text(
-                        text = "1234",
+                        text = NUMBER.toString(),
                         color = P300,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Medium,
