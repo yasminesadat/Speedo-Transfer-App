@@ -8,13 +8,18 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.data.ServicesSource
+import com.ys.speedotransferapp.data.TransactionsSource
 import com.ys.speedotransferapp.model.ServiceItem
 import com.ys.speedotransferapp.ui.theme.G0
 import com.ys.speedotransferapp.ui.theme.G10
@@ -51,23 +57,26 @@ import com.ys.speedotransferapp.ui.theme.S400
 fun HomeScreen(
     viewModel: HomeViewModel = HomeViewModel()
 ) {
+    val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 32.dp)
             .padding(horizontal = 12.dp)
+            .verticalScroll(scrollState)
     ) {
         ScreenHeader(viewModel)
-        Spacer(modifier = Modifier.padding(5.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         Card(
             colors = CardDefaults.cardColors(containerColor = P300),
+            elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
             modifier = Modifier
                 .fillMaxWidth()
         ) {
             Text(
                 text = "Current Balance",
                 color = G0,
-                modifier = Modifier.padding(top = 24.dp, start = 12.dp, bottom =4.dp)
+                modifier = Modifier.padding(top = 24.dp, start = 12.dp, bottom = 4.dp)
             )
             Text(
                 text = viewModel.profile.balance,
@@ -77,11 +86,12 @@ fun HomeScreen(
                 fontSize = 28.sp
             )
         }
-        Spacer(modifier = Modifier.padding(5.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         Card(
             colors = CardDefaults.cardColors(containerColor = G0),
+            elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
             modifier = Modifier.fillMaxWidth()
-        ){
+        ) {
             Text(
                 text = "Services",
                 color = G700,
@@ -93,12 +103,12 @@ fun HomeScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp)
-            ){
-              for(service in ServicesSource().getServices())
-                  Service(service)
-              }
+            ) {
+                for (service in ServicesSource().getServices())
+                    Service(service)
             }
-        Spacer(modifier = Modifier.padding(5.dp))
+        }
+        Spacer(modifier = Modifier.height(8.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -115,9 +125,10 @@ fun HomeScreen(
                 fontWeight = FontWeight.Medium
             )
         }
-        }
+        Spacer(modifier = Modifier.height(8.dp))
+        TransactionList()
     }
-
+}
 
 @Composable
 fun ScreenHeader(viewModel: HomeViewModel) {
@@ -127,7 +138,7 @@ fun ScreenHeader(viewModel: HomeViewModel) {
             .fillMaxWidth()
     ) {
         CircularText(viewModel.getInitials())
-        Spacer(modifier = Modifier.padding(end = 8.dp))
+        Spacer(modifier = Modifier.width(8.dp))
         BasicText(
             buildAnnotatedString {
                 withStyle(style = ParagraphStyle(lineHeight = 24.sp)) {
@@ -184,7 +195,7 @@ fun Service(service: ServiceItem) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .padding(top = 8.dp,bottom = 4.dp)
+            .padding(top = 8.dp, bottom = 4.dp)
     ) {
         Box(
             modifier = Modifier
@@ -210,10 +221,63 @@ fun Service(service: ServiceItem) {
             fontWeight = FontWeight.Medium,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(top= 8.dp)
+                .padding(top = 8.dp)
         )
     }
 }
+
+@Composable
+fun TransactionList() {
+    val transactions = TransactionsSource().getRecentTransactions()
+    Card(
+        colors = CardDefaults.cardColors(containerColor = G0),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column {
+            for (transaction in transactions) {
+                Column {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(68.dp)
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(P50)
+                        ) {
+                            Icon(
+                                imageVector = ImageVector.vectorResource(transaction.paymentProcessorIcon),
+                                contentDescription = "call icon",
+                                tint = Unspecified,
+                                modifier = Modifier
+                                    .align(Alignment.Center)
+                                    .size(36.dp)
+                                    .padding(4.dp)
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Column {
+                            Row(
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(text = transaction.cardHolderName, color = G900, fontWeight = FontWeight.Medium)
+                                Spacer(modifier = Modifier.weight(1f))
+                                Text(text = transaction.amount, color = P300, fontWeight = FontWeight.Medium)
+                            }
+                            Text(text = transaction.cardType + " . " + transaction.lastFourDigits, color = G700)
+                            Text(text = transaction.dateTime + " - " + transaction.status, color = G100)
+                        }
+                    }
+                    HorizontalDivider(color = G40, thickness = 2.dp)
+                }
+            }
+        }
+    }
+}
+
 
 @Preview(showBackground = true)
 @Composable

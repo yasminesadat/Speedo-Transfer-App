@@ -1,5 +1,6 @@
 package com.ys.speedotransferapp.data
 
+import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.model.TransactionItem
 
 class TransactionsSource {
@@ -16,7 +17,9 @@ class TransactionsSource {
                     amount = "$100.00",
                     currency = "USD",
                     id = "TXN123456",
-                    cvv = "123"
+                    cvv = "123",
+                    paymentProcessorIcon = R.drawable.mastercard,
+                    cardType = "Visa"
                 )
             )
             add(
@@ -30,7 +33,9 @@ class TransactionsSource {
                     amount = "$150.00",
                     currency = "USD",
                     id = "TXN345678",
-                    cvv = "789"
+                    cvv = "789",
+                    paymentProcessorIcon = R.drawable.mastercard,
+                    cardType = "Visa"
                 )
             )
             add(
@@ -44,7 +49,9 @@ class TransactionsSource {
                     amount = "$200.00",
                     currency = "USD",
                     id = "TXN789012",
-                    cvv = "456"
+                    cvv = "456",
+                    paymentProcessorIcon = R.drawable.mastercard,
+                    cardType = "Visa"
                 )
             )
             add(
@@ -58,7 +65,9 @@ class TransactionsSource {
                     amount = "€300.00",
                     currency = "EUR",
                     id = "TXN901234",
-                    cvv = "012"
+                    cvv = "012",
+                    paymentProcessorIcon = R.drawable.mastercard,
+                    cardType = "Visa"
                 )
             )
             add(
@@ -72,7 +81,9 @@ class TransactionsSource {
                     amount = "$250.00",
                     currency = "USD",
                     id = "TXN567890",
-                    cvv = "345"
+                    cvv = "345",
+                    paymentProcessorIcon = R.drawable.mastercard,
+                    cardType = "Visa"
                 )
             )
             add(
@@ -86,7 +97,9 @@ class TransactionsSource {
                     amount = "€400.00",
                     currency = "EUR",
                     id = "TXN678901",
-                    cvv = "678"
+                    cvv = "678",
+                    paymentProcessorIcon = R.drawable.mastercard,
+                    cardType = "Visa"
                 )
             )
             add(
@@ -100,7 +113,9 @@ class TransactionsSource {
                     amount = "$500.00",
                     currency = "USD",
                     id = "TXN789012",
-                    cvv = "901"
+                    cvv = "901",
+                    paymentProcessorIcon = R.drawable.mastercard,
+                    cardType = "Visa"
                 )
             )
             add(
@@ -114,7 +129,9 @@ class TransactionsSource {
                     amount = "$600.00",
                     currency = "USD",
                     id = "TXN890123",
-                    cvv = "234"
+                    cvv = "234",
+                    paymentProcessorIcon = R.drawable.mastercard,
+                    cardType = "Visa"
                 )
             )
             add(
@@ -128,7 +145,9 @@ class TransactionsSource {
                     amount = "€700.00",
                     currency = "EUR",
                     id = "TXN901234",
-                    cvv = "567"
+                    cvv = "567",
+                    paymentProcessorIcon = R.drawable.mastercard,
+                    cardType = "Visa"
                 )
             )
             add(
@@ -142,7 +161,9 @@ class TransactionsSource {
                     amount = "€800.00",
                     currency = "EUR",
                     id = "TXN012345",
-                    cvv = "890"
+                    cvv = "890",
+                    paymentProcessorIcon = R.drawable.mastercard,
+                    cardType = "Visa"
                 )
             )
         }
@@ -162,7 +183,9 @@ class TransactionsSource {
                     amount = "$100.00",
                     currency = "USD",
                     id = "TXN123456",
-                    cvv = "123"
+                    cvv = "123",
+                    paymentProcessorIcon = R.drawable.mastercard,
+                    cardType = "Visa"
                 )
             )
             add(
@@ -176,7 +199,9 @@ class TransactionsSource {
                     amount = "$150.00",
                     currency = "USD",
                     id = "TXN345678",
-                    cvv = "789"
+                    cvv = "789",
+                    paymentProcessorIcon = R.drawable.mastercard,
+                    cardType = "Visa"
                 )
             )
             add(
@@ -190,7 +215,9 @@ class TransactionsSource {
                     amount = "$200.00",
                     currency = "USD",
                     id = "TXN789012",
-                    cvv = "456"
+                    cvv = "456",
+                    paymentProcessorIcon = R.drawable.mastercard,
+                    cardType = "Visa"
                 )
             )
         }
