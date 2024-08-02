@@ -35,12 +35,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.data.Constants.EMAIL
 import com.ys.speedotransferapp.data.Constants.NUMBER
@@ -57,7 +55,6 @@ import com.ys.speedotransferapp.ui.theme.P50
 fun MoreScreen(
     navController: NavController,
     viewModel: MoreViewModel = viewModel(),
-    onBackPress: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -73,8 +70,7 @@ fun MoreScreen(
     ) {
         Header(
             text = "More",
-            navController = navController,
-            changeNavBarState = onBackPress
+            navController = navController
         )
 
         val options = OptionsSource().getOptions()
@@ -278,10 +274,4 @@ fun ShowHelp(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun MoreScreenPreview() {
-    MoreScreen(rememberNavController()){}
 }

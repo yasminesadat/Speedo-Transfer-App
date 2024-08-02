@@ -59,7 +59,8 @@ import com.ys.speedotransferapp.ui.theme.P50
 
 @Composable
 fun FavouriteScreen(
-    navController: NavController, viewModel: FavouriteViewModel = viewModel()
+    navController: NavController,
+    viewModel: FavouriteViewModel = viewModel()
 ) {
     if (viewModel.showBottomSheet) {
         BottomSheet(

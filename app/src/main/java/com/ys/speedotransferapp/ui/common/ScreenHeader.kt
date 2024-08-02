@@ -21,7 +21,6 @@ import com.ys.speedotransferapp.ui.theme.G900
 fun Header(
     text: String,
     navController: NavController,
-    changeNavBarState: ()-> Unit = { }
 ) {
     Box(
         modifier = Modifier
@@ -37,7 +36,6 @@ fun Header(
                 .padding(start = 8.dp)
                 .clickable {
                     navController.popBackStack()
-                    changeNavBarState()
                 }
             ,
             tint = G900

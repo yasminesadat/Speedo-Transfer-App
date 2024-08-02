@@ -1,6 +1,7 @@
 package com.ys.speedotransferapp.ui.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,13 +36,14 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.data.ServicesSource
 import com.ys.speedotransferapp.data.TransactionsSource
 import com.ys.speedotransferapp.model.ServiceItem
+import com.ys.speedotransferapp.navigation.AppRoutes.TRANSACTIONS_ROUTE
 import com.ys.speedotransferapp.ui.theme.G0
 import com.ys.speedotransferapp.ui.theme.G10
 import com.ys.speedotransferapp.ui.theme.G100
@@ -55,6 +57,7 @@ import com.ys.speedotransferapp.ui.theme.S400
 
 @Composable
 fun HomeScreen(
+    navController: NavController,
     viewModel: HomeViewModel = HomeViewModel()
 ) {
     val scrollState = rememberScrollState()
@@ -122,7 +125,10 @@ fun HomeScreen(
             Text(
                 text = "View all",
                 color = G200,
-                fontWeight = FontWeight.Medium
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.clickable {
+                    navController.navigate(TRANSACTIONS_ROUTE)
+                }
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
@@ -263,12 +269,26 @@ fun TransactionList() {
                             Row(
                                 modifier = Modifier.fillMaxWidth()
                             ) {
-                                Text(text = transaction.cardHolderName, color = G900, fontWeight = FontWeight.Medium)
+                                Text(
+                                    text = transaction.cardHolderName,
+                                    color = G900,
+                                    fontWeight = FontWeight.Medium
+                                )
                                 Spacer(modifier = Modifier.weight(1f))
-                                Text(text = transaction.amount, color = P300, fontWeight = FontWeight.Medium)
+                                Text(
+                                    text = transaction.amount,
+                                    color = P300,
+                                    fontWeight = FontWeight.Medium
+                                )
                             }
-                            Text(text = transaction.cardType + " . " + transaction.lastFourDigits, color = G700)
-                            Text(text = transaction.dateTime + " - " + transaction.status, color = G100)
+                            Text(
+                                text = transaction.cardType + " . " + transaction.lastFourDigits,
+                                color = G700
+                            )
+                            Text(
+                                text = transaction.dateTime + " - " + transaction.status,
+                                color = G100
+                            )
                         }
                     }
                     HorizontalDivider(color = G40, thickness = 2.dp)
@@ -276,11 +296,4 @@ fun TransactionList() {
             }
         }
     }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-private fun HomeScreenPreview() {
-    HomeScreen()
 }
