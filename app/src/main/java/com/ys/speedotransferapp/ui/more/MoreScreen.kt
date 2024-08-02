@@ -26,8 +26,6 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,21 +45,21 @@ import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.data.OptionsSource
 import com.ys.speedotransferapp.navigation.AppRoutes.FAVOURITES_ROUTE
 import com.ys.speedotransferapp.ui.common.Header
-import com.ys.speedotransferapp.ui.theme.G900
-import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.G200
 import com.ys.speedotransferapp.ui.theme.G40
+import com.ys.speedotransferapp.ui.theme.G900
+import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.P50
 
 @Composable
 fun MoreScreen(
     navController: NavController,
-    viewModel: MoreViewModel = viewModel()
+    viewModel: MoreViewModel = viewModel(),
+    onBackPress: () -> Unit
 ) {
     val context = LocalContext.current
-    val showHelpBottomSheet by viewModel.showHelpBottomSheet.collectAsState()
 
-    if (showHelpBottomSheet) {
+    if (viewModel.showHelpBottomSheet) {
         ShowHelp(viewModel, context)
     }
     Column(
@@ -71,7 +69,11 @@ fun MoreScreen(
             .padding(top = 32.dp)
 
     ) {
-        Header("More", navController)
+        Header(
+            text = "More",
+            navController = navController,
+            changeNavBarState = onBackPress
+        )
 
         val options = OptionsSource().getOptions()
         for (option in options) {
@@ -185,7 +187,7 @@ fun ShowHelp(
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
-                        .padding(top =16.dp, bottom = 4.dp)
+                        .padding(top = 16.dp, bottom = 4.dp)
                         .fillMaxWidth()
                         .height(124.dp)
                 ) {
@@ -233,7 +235,7 @@ fun ShowHelp(
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
-                        .padding(top =16.dp, bottom = 4.dp)
+                        .padding(top = 16.dp, bottom = 4.dp)
                         .fillMaxWidth()
                         .height(124.dp)
                 ) {
@@ -279,5 +281,5 @@ fun ShowHelp(
 @Preview(showBackground = true)
 @Composable
 private fun MoreScreenPreview() {
-    MoreScreen(rememberNavController())
+    MoreScreen(rememberNavController()){}
 }

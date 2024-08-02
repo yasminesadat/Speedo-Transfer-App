@@ -14,8 +14,6 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
@@ -36,15 +34,14 @@ import com.ys.speedotransferapp.ui.favourite.FavouriteScreen
 import com.ys.speedotransferapp.ui.home.HomeScreen
 import com.ys.speedotransferapp.ui.more.MoreScreen
 import com.ys.speedotransferapp.ui.theme.CosmicLatte
-import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.G200
 import com.ys.speedotransferapp.ui.theme.P20
+import com.ys.speedotransferapp.ui.theme.P300
 
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
     val viewModel: MainViewModel = viewModel()
-    val selectedItemIndex by viewModel.selectedItemIndex.collectAsState()
 
     Scaffold(
         bottomBar = {
@@ -56,7 +53,7 @@ fun MainScreen() {
                     val destinations = BottomNavigationItemsSource().get()
                     destinations.forEachIndexed { index, item ->
                         NavigationBarItem(
-                            selected = selectedItemIndex == index,
+                            selected = viewModel.selectedItemIndex == index,
                             onClick = {
                                 viewModel.setItemIndex(index)
                                 navController.navigate(item.route)
@@ -64,7 +61,7 @@ fun MainScreen() {
                             label = {
                                 Text(
                                     text = item.label,
-                                    color = if (selectedItemIndex == index) P300 else G200,
+                                    color = if (viewModel.selectedItemIndex == index) P300 else G200,
                                     fontSize =  9.sp
                                 )
                             },
@@ -73,7 +70,7 @@ fun MainScreen() {
                                     imageVector = ImageVector.vectorResource(id = item.icon),
                                     contentDescription = item.label,
                                     modifier = Modifier.size(24.dp),
-                                    tint = if (selectedItemIndex == index) P300 else G200
+                                    tint = if (viewModel.selectedItemIndex == index) P300 else G200
                                 )
                             },
                             interactionSource = MutableInteractionSource(),
@@ -99,7 +96,8 @@ fun MainScreen() {
                 startDestination = HOME_ROUTE,
             ) {
                 composable(HOME_ROUTE) { HomeScreen() }
-                composable(MORE_ROUTE) { MoreScreen(navController) }
+                composable(MORE_ROUTE) { MoreScreen(navController,
+                    onBackPress = { viewModel.setItemIndex(0) }) }
                 composable(FAVOURITES_ROUTE) {FavouriteScreen(navController)}
             }
         }

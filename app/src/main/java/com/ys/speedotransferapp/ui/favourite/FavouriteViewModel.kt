@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ys.speedotransferapp.data.FavouriteItemsSource
+import com.ys.speedotransferapp.data.FavouritesSource
 import com.ys.speedotransferapp.model.FavouriteItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +17,6 @@ class FavouriteViewModel : ViewModel() {
     val favourites = _favourites.asStateFlow()
 
     private var selectedFavourite by mutableStateOf<FavouriteItem?>(null)
-        private set
 
     var showBottomSheet by mutableStateOf(false)
         private set
@@ -30,7 +29,7 @@ class FavouriteViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
-            _favourites.value = FavouriteItemsSource().getFavourites()
+            _favourites.value = FavouritesSource().getFavourites()
         }
     }
 
