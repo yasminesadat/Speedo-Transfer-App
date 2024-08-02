@@ -2,6 +2,7 @@ package com.ys.speedotransferapp.ui.signin
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,6 +22,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -34,25 +36,34 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.ys.speedotransferapp.R
+import com.ys.speedotransferapp.navigation.AppRoutes
+import com.ys.speedotransferapp.ui.common.CommonComposableViewModel
 import com.ys.speedotransferapp.ui.common.InputField
 import com.ys.speedotransferapp.ui.common.SpeedoTransferText
 import com.ys.speedotransferapp.ui.signup.SignUpViewModel
 import com.ys.speedotransferapp.ui.theme.G0
 import com.ys.speedotransferapp.ui.theme.P300
-import com.ys.speedotransferapp.ui.theme.Pink20
+import com.ys.speedotransferapp.ui.theme.P20
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignInScreen(viewModel: SignInViewModel, modifier: Modifier =  Modifier) {
+fun SignInScreen(
+    navController: NavController,
+    viewModel: SignInViewModel = SignInViewModel(),
+    modifier: Modifier = Modifier
+) {
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
     var isPassError: Boolean = false
+    val view_model = remember { CommonComposableViewModel() }
     Scaffold(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .background(
                 brush = Brush.linearGradient(
-                    colors = listOf(G0, Pink20)
+                    colors = listOf(G0, P20)
                 )
             ),
         topBar = {
@@ -84,7 +95,9 @@ fun SignInScreen(viewModel: SignInViewModel, modifier: Modifier =  Modifier) {
             SpeedoTransferText()
             Spacer(modifier = Modifier.padding(8.dp))
             InputField(
+                viewModel = view_model,
                 value = email,
+                fieldId = "email",
                 label = "Email",
                 hint = "Enter your email address",
                 onValueChanged = { viewModel.setEmail(it) },
@@ -93,7 +106,9 @@ fun SignInScreen(viewModel: SignInViewModel, modifier: Modifier =  Modifier) {
             )
             Spacer(modifier = Modifier.padding(8.dp))
             isPassError = InputField(
+                viewModel = view_model,
                 value = password,
+                fieldId = "password",
                 label = "Password",
                 hint = "Enter your password",
                 onValueChanged = { viewModel.setPassword(it) },
@@ -103,7 +118,7 @@ fun SignInScreen(viewModel: SignInViewModel, modifier: Modifier =  Modifier) {
             )
             Spacer(modifier = Modifier.padding(8.dp))
             Button(
-                onClick = {},
+                onClick = { navController.navigate(AppRoutes.HOME_ROUTE) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
@@ -134,15 +149,19 @@ fun SignInScreen(viewModel: SignInViewModel, modifier: Modifier =  Modifier) {
                     color = Color(0xff898886),
                     lineHeight = 9.38.em,
                     style = TextStyle(
-                        fontSize = 16.sp))
+                        fontSize = 16.sp
+                    )
+                )
                 Text(
-                    text = "Sign In",
+                    text = "Sign Up",
                     color = Color(0xff871e35),
                     textDecoration = TextDecoration.Underline,
                     lineHeight = 8.12.em,
                     style = TextStyle(
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium))
+                        fontWeight = FontWeight.Medium
+                    ),
+                    modifier = Modifier.clickable { navController.navigate(AppRoutes.SIGN_UP_ROUTE) })
             }
         }
     }
@@ -151,5 +170,5 @@ fun SignInScreen(viewModel: SignInViewModel, modifier: Modifier =  Modifier) {
 @Preview(showBackground = true)
 @Composable
 private fun SignInScreenPreview() {
-    SignInScreen(SignInViewModel())
+    //SignInScreen(SignInViewModel())
 }
