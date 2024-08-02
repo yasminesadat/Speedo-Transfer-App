@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.navigation.compose.rememberNavController
 import com.ys.speedotransferapp.navigation.AppNavHost
 import com.ys.speedotransferapp.navigation.MainScreen
 import com.ys.speedotransferapp.ui.signup.SignUpScreen
@@ -16,7 +17,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SpeedoTransferAppTheme {
-                AppNavHost()
+                val navController = rememberNavController()
+                MainScreen(navController)
             }
         }
     }

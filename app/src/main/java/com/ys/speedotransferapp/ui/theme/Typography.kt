@@ -30,6 +30,12 @@ val appTypography = Typography(
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp
     ),
+    titleLarge = TextStyle(
+        fontFamily = customFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp,
+        color = G900
+    ),
     //header for page
     headlineMedium = TextStyle(
         fontFamily = customFontFamily,
@@ -43,5 +49,13 @@ val appTypography = Typography(
         fontSize = 16.sp,
         fontWeight = FontWeight.Medium,
         color = G200
-    )
+    ),
+    bodyMedium = TextStyle(
+        fontFamily = FontFamily(
+            Font(R.font.inter_medium, FontWeight.Normal)
+        ),
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Normal,
+        color = G700
+    ),
 )

@@ -23,7 +23,6 @@ object AppRoutes {
     const val SIGN_UP_ROUTE = "sign up"
     const val EXTRA_SIGN_UP_ROUTE = "extra sign up"
     const val SIGN_IN_ROUTE = "sign in"
-
 }
 
 @Composable

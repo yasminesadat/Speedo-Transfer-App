@@ -33,6 +33,7 @@ import com.ys.speedotransferapp.data.BottomNavigationItemsSource
 import com.ys.speedotransferapp.navigation.AppRoutes.FAVOURITES_ROUTE
 import com.ys.speedotransferapp.navigation.AppRoutes.HOME_ROUTE
 import com.ys.speedotransferapp.navigation.AppRoutes.MORE_ROUTE
+import com.ys.speedotransferapp.navigation.AppRoutes.TRANSFER_ROUTE
 import com.ys.speedotransferapp.ui.favourite.FavouriteScreen
 import com.ys.speedotransferapp.ui.home.HomeScreen
 import com.ys.speedotransferapp.ui.more.MoreScreen
@@ -40,6 +41,8 @@ import com.ys.speedotransferapp.ui.theme.CosmicLatte
 import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.G200
 import com.ys.speedotransferapp.ui.theme.P20
+import com.ys.speedotransferapp.ui.transfer.TransferScreen
+import com.ys.speedotransferapp.ui.transfer.TransferScreenViewModel
 
 @Composable
 fun MainScreen(navController: NavController) {
@@ -100,6 +103,7 @@ fun MainScreen(navController: NavController) {
                 startDestination = HOME_ROUTE,
             ) {
                 composable(HOME_ROUTE) { HomeScreen() }
+                composable(TRANSFER_ROUTE) { TransferScreen(navController, TransferScreenViewModel()) }
                 composable(MORE_ROUTE) { MoreScreen(navController) }
                 composable(FAVOURITES_ROUTE) {FavouriteScreen(navController)}
             }
