@@ -1,4 +1,4 @@
-package com.ys.speedotransferapp.navigation
+package com.ys.speedotransferapp.constants
 
 object AppRoutes {
     const val HOME_ROUTE = "home"

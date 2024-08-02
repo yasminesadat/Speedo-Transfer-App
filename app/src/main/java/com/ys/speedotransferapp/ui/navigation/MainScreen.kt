@@ -1,4 +1,4 @@
-package com.ys.speedotransferapp.navigation
+package com.ys.speedotransferapp.ui.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -30,10 +30,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ys.speedotransferapp.data.BottomNavigationItemsSource
-import com.ys.speedotransferapp.navigation.AppRoutes.FAVOURITES_ROUTE
-import com.ys.speedotransferapp.navigation.AppRoutes.HOME_ROUTE
-import com.ys.speedotransferapp.navigation.AppRoutes.MORE_ROUTE
-import com.ys.speedotransferapp.navigation.AppRoutes.TRANSACTIONS_ROUTE
+import com.ys.speedotransferapp.constants.AppRoutes.FAVOURITES_ROUTE
+import com.ys.speedotransferapp.constants.AppRoutes.HOME_ROUTE
+import com.ys.speedotransferapp.constants.AppRoutes.MORE_ROUTE
+import com.ys.speedotransferapp.constants.AppRoutes.TRANSACTIONS_ROUTE
 import com.ys.speedotransferapp.ui.favourite.FavouriteScreen
 import com.ys.speedotransferapp.ui.home.HomeScreen
 import com.ys.speedotransferapp.ui.more.MoreScreen

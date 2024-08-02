@@ -43,7 +43,7 @@ import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.data.ServicesSource
 import com.ys.speedotransferapp.data.TransactionsSource
 import com.ys.speedotransferapp.model.ServiceItem
-import com.ys.speedotransferapp.navigation.AppRoutes.TRANSACTIONS_ROUTE
+import com.ys.speedotransferapp.constants.AppRoutes.TRANSACTIONS_ROUTE
 import com.ys.speedotransferapp.ui.theme.G0
 import com.ys.speedotransferapp.ui.theme.G10
 import com.ys.speedotransferapp.ui.theme.G100

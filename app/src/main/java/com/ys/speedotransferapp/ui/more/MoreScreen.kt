@@ -40,10 +40,10 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.ys.speedotransferapp.R
-import com.ys.speedotransferapp.data.Constants.EMAIL
-import com.ys.speedotransferapp.data.Constants.NUMBER
+import com.ys.speedotransferapp.constants.AppConstants.EMAIL
+import com.ys.speedotransferapp.constants.AppConstants.NUMBER
 import com.ys.speedotransferapp.data.OptionsSource
-import com.ys.speedotransferapp.navigation.AppRoutes.FAVOURITES_ROUTE
+import com.ys.speedotransferapp.constants.AppRoutes.FAVOURITES_ROUTE
 import com.ys.speedotransferapp.ui.common.Header
 import com.ys.speedotransferapp.ui.theme.G200
 import com.ys.speedotransferapp.ui.theme.G40
