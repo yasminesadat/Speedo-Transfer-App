@@ -50,8 +50,8 @@ import com.ys.speedotransferapp.model.FavouriteItem
 import com.ys.speedotransferapp.ui.common.CustomOutlinedTextField
 import com.ys.speedotransferapp.ui.common.Header
 import com.ys.speedotransferapp.ui.theme.D300
+import com.ys.speedotransferapp.ui.theme.G0
 import com.ys.speedotransferapp.ui.theme.G100
-import com.ys.speedotransferapp.ui.theme.G40
 import com.ys.speedotransferapp.ui.theme.G700
 import com.ys.speedotransferapp.ui.theme.G900
 import com.ys.speedotransferapp.ui.theme.P300
@@ -120,7 +120,7 @@ fun FavouritesItem(favourite: FavouriteItem, viewModel: FavouriteViewModel) {
                     .clip(GenericShape { size, _ ->
                         addOval(size.toRect())
                     })
-                    .background(G40)
+                    .background(G0)
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.bank),
@@ -218,7 +218,7 @@ fun BottomSheet(
             CustomOutlinedTextField(
                 header = "Recipient Account",
                 value = viewModel.accountNumber,
-                onValueChange = {viewModel.updateAccountNumber(it)},
+                onValueChange = { viewModel.updateAccountNumber(it) },
                 label = "Enter Cardholder Account Number",
                 keyboardType = KeyboardType.Number
             )

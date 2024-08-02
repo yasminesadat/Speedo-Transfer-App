@@ -2,33 +2,6 @@ package com.ys.speedotransferapp.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-//val Purple80 = Color(0xFFD0BCFF)
-//val PurpleGrey80 = Color(0xFFCCC2DC)
-//val Pink80 = Color(0xFFEFB8C8)
-//
-//val Purple40 = Color(0xFF6650a4)
-//val PurpleGrey40 = Color(0xFF625b71)
-//val Pink40 = Color(0xFF7D5260)
-
-//val CosmicLatte = Color(0xFFFFF8E7)
-//val P20 = Color(0xFFFFEAEE)
-//val P300 = Color(0xFF871E35)
-////G200
-//val G200 = Color(0xFF7C7A78)
-////G40
-//val G40 = Color(0xFFE3E2E2)
-////G100
-//val G100 = Color(0xFF898886)
-////G900
-//val G900 = Color(0xFF24221E)
-////P50 - Card Background
-//val P50 = Color(0xFFF3E9EB)
-//val D300 = Color(0xFFD80027)
-//// edit icon color
-//val G100 = Color(0xFF898886)
-////bank icon tint
-//val G700 = Color(0xFF3C3A37)
-
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
 val Pink80 = Color(0xFFEFB8C8)
@@ -42,9 +15,6 @@ val CosmicLatte = Color(0xFFFFF8E7)
 // Card Background
 val P20 = Color(0xFFFFEAEE)
 val P50 = Color(0xFFF3E9EB)
-
-// Additional colors from Development
-
 val P300 = Color(0xFF871E35)
 val D300 = Color(0xFFD80027)
 

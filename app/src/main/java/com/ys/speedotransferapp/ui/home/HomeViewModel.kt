@@ -15,7 +15,8 @@ class HomeViewModel : ViewModel() {
     private val _transactions = MutableStateFlow<List<TransactionItem>>(emptyList())
     val transactions: StateFlow<List<TransactionItem>> = _transactions.asStateFlow()
 
-    val user = ProfileSource().getProfile().firstAndSurname
+    val profile =ProfileSource().getProfile()
+
     init {
         viewModelScope.launch {
             _transactions.value = TransactionsSource().getTransactions()
@@ -23,7 +24,7 @@ class HomeViewModel : ViewModel() {
     }
 
     fun getInitials(): String{
-        val names = user.split(" ")
+        val names = profile.firstAndSurname.split(" ")
         val initials = names.map { it.first() }.joinToString("")
         return initials
     }
