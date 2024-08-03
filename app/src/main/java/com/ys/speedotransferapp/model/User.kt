@@ -1,5 +1,7 @@
 package com.ys.speedotransferapp.model
 
+import com.ys.speedotransferapp.ui_model.TransactionItem
+
 data class User(
 
     val name: String,

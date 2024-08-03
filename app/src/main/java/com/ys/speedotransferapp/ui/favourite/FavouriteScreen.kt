@@ -49,6 +49,7 @@ import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.ui.common.CustomOutlinedTextField
 import com.ys.speedotransferapp.ui.common.Header
 import com.ys.speedotransferapp.ui.theme.D300
+import com.ys.speedotransferapp.ui.theme.G0
 import com.ys.speedotransferapp.ui.theme.G100
 import com.ys.speedotransferapp.ui.theme.G40
 import com.ys.speedotransferapp.ui.theme.G700

@@ -48,7 +48,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ys.speedotransferapp.R
-import com.ys.speedotransferapp.model.FavouriteItem
+import com.ys.speedotransferapp.ui_model.FavouriteItem
 import com.ys.speedotransferapp.ui.common.CommonComposableViewModel
 import com.ys.speedotransferapp.ui.common.CustomOutlinedTextField
 import com.ys.speedotransferapp.ui.common.InputField
