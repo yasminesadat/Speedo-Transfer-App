@@ -20,6 +20,7 @@ object AppRoutes {
     const val CARDS_ROUTE = "my cards"
     const val MORE_ROUTE = "more"
     const val FAVOURITES_ROUTE = "favourites"
+    const val TRANSACTION_ROUTE = "transaction"
     const val LANDINGS_ROUTE = "landings"
     const val SIGN_UP_ROUTE = "sign up"
     const val EXTRA_SIGN_UP_ROUTE = "extra sign up"

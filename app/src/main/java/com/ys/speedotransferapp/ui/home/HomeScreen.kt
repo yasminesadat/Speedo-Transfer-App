@@ -256,7 +256,7 @@ fun TransactionList() {
                         ) {
                             Icon(
                                 imageVector = ImageVector.vectorResource(transaction.paymentProcessorIcon),
-                                contentDescription = "call icon",
+                                contentDescription = "payment processor icon",
                                 tint = Unspecified,
                                 modifier = Modifier
                                     .align(Alignment.Center)
@@ -270,7 +270,7 @@ fun TransactionList() {
                                 modifier = Modifier.fillMaxWidth()
                             ) {
                                 Text(
-                                    text = transaction.cardHolderName,
+                                    text = transaction.senderName,
                                     color = G900,
                                     fontWeight = FontWeight.Medium
                                 )
@@ -282,7 +282,7 @@ fun TransactionList() {
                                 )
                             }
                             Text(
-                                text = transaction.cardType + " . " + transaction.lastFourDigits,
+                                text = transaction.paymentProcessor + " . " + transaction.recipientDigits.takeLast(4),
                                 color = G700
                             )
                             Text(

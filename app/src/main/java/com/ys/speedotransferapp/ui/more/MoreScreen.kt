@@ -131,12 +131,11 @@ fun Option(
 
             if (!isLast) {
                 Icon(
-                    imageVector = ImageVector.vectorResource(R.drawable.chevron_down),
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_more),
                     contentDescription = null,
                     tint = G200,
                     modifier = Modifier
-                        .size(32.dp)
-                        .rotate(-90f)
+                        .size(16.dp)
                 )
             }
         }

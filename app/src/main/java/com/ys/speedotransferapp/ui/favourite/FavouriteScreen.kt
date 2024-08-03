@@ -98,14 +98,14 @@ fun FavouriteList(viewModel: FavouriteViewModel) {
     val favourites = viewModel.favourites.collectAsState().value
     LazyColumn {
         items(favourites) { favouriteItem ->
-            FavouritesItem(favouriteItem, viewModel)
+            FavouritesCard(favouriteItem, viewModel)
             Spacer(modifier = Modifier.height(8.dp))
         }
     }
 }
 
 @Composable
-fun FavouritesItem(favourite: FavouriteItem, viewModel: FavouriteViewModel) {
+fun FavouritesCard(favourite: FavouriteItem, viewModel: FavouriteViewModel) {
     Card(
         colors = CardDefaults.cardColors(containerColor = P50),
         modifier = Modifier
