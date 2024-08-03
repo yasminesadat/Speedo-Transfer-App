@@ -5,9 +5,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.ys.speedotransferapp.navigation.AppRoutes.LANDINGS_ROUTE
+import com.ys.speedotransferapp.constants.AppRoutes.LANDINGS_ROUTE
 import com.ys.speedotransferapp.ui.home.HomeScreen
 import com.ys.speedotransferapp.ui.landing.LandingPageScreen
+import com.ys.speedotransferapp.ui.navigation.MainScreen
 import com.ys.speedotransferapp.ui.signin.SignInScreen
 import com.ys.speedotransferapp.ui.signup.ExtraSignUpScreen
 import com.ys.speedotransferapp.ui.signup.SignUpScreen
@@ -43,7 +44,7 @@ fun AppNavHost(modifier: Modifier = Modifier) {
         }
 
         composable(route = AppRoutes.HOME_ROUTE){
-            MainScreen(navController)
+            MainScreen()
         }
     }
 }

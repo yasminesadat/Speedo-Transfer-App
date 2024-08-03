@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ys.speedotransferapp.model.TransferStep
-import com.ys.speedotransferapp.navigation.AppRoutes
+import com.ys.speedotransferapp.constants.AppRoutes
 import com.ys.speedotransferapp.ui.common.Header
 import com.ys.speedotransferapp.ui.theme.CosmicLatte
 import com.ys.speedotransferapp.ui.theme.P20
@@ -41,7 +41,7 @@ import com.ys.speedotransferapp.ui.theme.P300
 @Composable
 fun TransferScreen(
     navController: NavController,
-    viewModel: TransferScreenViewModel,
+    viewModel: TransferScreenViewModel = TransferScreenViewModel(),
     modifier: Modifier = Modifier
 ) {
     Scaffold(

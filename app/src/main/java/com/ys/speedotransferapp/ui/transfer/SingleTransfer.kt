@@ -200,20 +200,20 @@ fun BottomSheet(
                 )
 
             }
-            val name by viewModel.name.collectAsState()
-            val accountNumber by viewModel.accountNumber.collectAsState()
+            val name = viewModel.name
+            val accountNumber = viewModel.accountNumber
 
             CustomOutlinedTextField(
                 header = "Recipient Name",
                 value = name,
-                onValueChange = { viewModel.setName(it) },
+                onValueChange = { viewModel.updateName(it) },
                 label = "Enter Cardholder Name",
             )
 
             CustomOutlinedTextField(
                 header = "Recipient Account",
                 value = accountNumber,
-                onValueChange = {viewModel.setAccountNumber(it)},
+                onValueChange = {viewModel.updateAccountNumber(it)},
                 label = "Enter Cardholder Account Number",
                 keyboardType = KeyboardType.Number
             )
