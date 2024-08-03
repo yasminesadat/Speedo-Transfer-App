@@ -8,7 +8,12 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
@@ -20,8 +25,7 @@ import com.ys.speedotransferapp.ui.theme.G900
 fun CustomOutlinedTextField(
     header: String,
     value: String,
-    onValueChange: (String) -> Unit,
-    label: String,
+    onValueChange: (String) -> Unit, label: String,
     modifier: Modifier = Modifier,
     keyboardType: KeyboardType = KeyboardType.Text,
     borderColor: Color = Color.Gray,
@@ -31,6 +35,8 @@ fun CustomOutlinedTextField(
     fontSize: Int = 16,
     shape: RoundedCornerShape = RoundedCornerShape(8.dp)
 ) {
+    var isFocused by remember { mutableStateOf(false) }
+
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
             text = header,
@@ -42,13 +48,16 @@ fun CustomOutlinedTextField(
             value = value,
             onValueChange = onValueChange,
             label = {
-                Text(
-                    text = label,
-                    color = labelColor
-                )
+                if (!isFocused && value.isEmpty()) {
+                    Text(
+                        text = label,
+                        color = labelColor
+                    )
+                }
             },
             modifier = modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .onFocusChanged { isFocused = it.isFocused },
             textStyle = TextStyle(color = textColor, fontSize = fontSize.sp),
             colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = borderColor,
