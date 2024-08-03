@@ -158,7 +158,7 @@ fun AmountStep(onAmountEntered: (Double) -> Unit) {
                     contentDescription = "Favorite",
                     tint = P300
                 )
-                Text(text = "Favorite", style = appTypography.bodyMedium, color = P300)
+                Text(text = "Favourite", style = appTypography.bodyMedium, color = P300)
                 Icon(
                     painter = painterResource(id = R.drawable.back),
                     contentDescription = "Back",

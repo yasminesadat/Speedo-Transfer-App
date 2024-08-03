@@ -66,7 +66,7 @@ class SignUpViewModel: ViewModel() {
             context,
             0,
             { _, selectedYear, selectedMonth, selectedDay ->
-                val formattedDate = String.format("dd-MM-yyyy", selectedDay, selectedMonth + 1, selectedYear)
+                val formattedDate = String.format("%02d-%02d-%04d", selectedDay, selectedMonth + 1, selectedYear)
                 _selectedDate.value = formattedDate
                 setDateOfBirth(formattedDate)
             },
