@@ -62,47 +62,7 @@ fun PaymentStep(
                 toAccount = "Account xxxx1234",
                 icon = R.drawable.success_small
             )
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top)
-            ) {
-                Text(
-                    text = "To",
-                    color = Color(0xff871e35),
-                    lineHeight = 9.38.em,
-                    style = TextStyle(
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium
-                    ),
-                    modifier = Modifier
-                        .wrapContentHeight(align = Alignment.CenterVertically)
-                )
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top)
-                ) {
-                    Text(
-                        text = "Jonathon Smith",
-                        color = Color(0xff24221e),
-                        lineHeight = 7.5.em,
-                        style = TextStyle(
-                            fontSize = 20.sp
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .wrapContentHeight(align = Alignment.CenterVertically)
-                    )
-                    Text(
-                        text = "Account xxxx7890",
-                        color = Color(0xff898886),
-                        lineHeight = 9.38.em,
-                        style = TextStyle(
-                            fontSize = 16.sp
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .wrapContentHeight(align = Alignment.CenterVertically)
-                    )
-                }
-            }
+
         }
         Box(
             modifier = Modifier
@@ -113,25 +73,6 @@ fun PaymentStep(
                 )
                 .requiredSize(size = 44.dp)
         ) {
-            Box(
-                modifier = Modifier
-                    .requiredSize(size = 44.dp)
-                    .clip(shape = CircleShape)
-                    .background(color = Color(0xff9f7815))
-            )
-            Icon(
-                painter = painterResource(id = R.drawable.check_sucess),
-                contentDescription = "Group",
-                tint = Color.White,
-                modifier = Modifier
-                    .align(alignment = Alignment.TopStart)
-                    .offset(
-                        x = 14.dp,
-                        y = 12.dp
-                    )
-                    .requiredWidth(width = 16.dp)
-                    .requiredHeight(height = 20.dp)
-            )
         }
     }
     Spacer(modifier = Modifier.size(16.dp))
@@ -146,7 +87,7 @@ fun PaymentStep(
             horizontalArrangement = Arrangement.End,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "48.4220", style = appTypography.bodySmall)
+            Text(text = "48.4220 ", style = appTypography.bodySmall)
             Text(text = "EGP", style = appTypography.bodySmall)
         }
     }

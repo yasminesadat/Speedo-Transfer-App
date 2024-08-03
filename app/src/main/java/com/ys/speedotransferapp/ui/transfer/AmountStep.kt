@@ -164,7 +164,6 @@ fun AmountStep(onAmountEntered: (Double) -> Unit) {
                     contentDescription = "Back",
                     tint = P300,
                     modifier = Modifier
-                        .clickable { viewModelFav.showBottomSheet(true) }
                         .graphicsLayer(scaleX = -1f)
                 )
             }

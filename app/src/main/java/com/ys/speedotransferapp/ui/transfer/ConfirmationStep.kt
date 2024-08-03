@@ -29,11 +29,11 @@ fun ConfirmationStep(
     val viewModel = remember {
         TransferScreenViewModel()
     }
-    val selectedOption by viewModel.selectedOption.collectAsState()
-    val amountSend by viewModel.amount_sending.collectAsState()
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.size(16.dp))
         Text("1000 USD", style = appTypography.titleLarge)
         Spacer(modifier = Modifier.size(16.dp))
         Text(text = "Transfer amount", style = appTypography.bodySmall, color = G70)
