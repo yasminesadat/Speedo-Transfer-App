@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Calendar
 
 class SignUpViewModel: ViewModel() {
     private val _fullName = MutableStateFlow("")
@@ -29,8 +29,6 @@ class SignUpViewModel: ViewModel() {
     private val _selectedDate = MutableStateFlow("")
     val selectedDate = _selectedDate.asStateFlow()
 
-    private val _showDatePicker = MutableStateFlow(false)
-    val showDatePicker = _showDatePicker.asStateFlow()
 
     fun signUp() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -66,8 +64,9 @@ class SignUpViewModel: ViewModel() {
 
         val datePickerDialog = DatePickerDialog(
             context,
+            0,
             { _, selectedYear, selectedMonth, selectedDay ->
-                val formattedDate = String.format("%02d-%02d-%04d", selectedDay, selectedMonth + 1, selectedYear)
+                val formattedDate = String.format("dd-MM-yyyy", selectedDay, selectedMonth + 1, selectedYear)
                 _selectedDate.value = formattedDate
                 setDateOfBirth(formattedDate)
             },
