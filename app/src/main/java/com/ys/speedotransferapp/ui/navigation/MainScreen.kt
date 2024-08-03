@@ -62,7 +62,7 @@ fun MainScreen(
                 containerColor = Color.White,
                 modifier = Modifier.clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
             ) {
-                Spacer(modifier = Modifier.padding(8.dp))
+                Spacer(modifier = Modifier.padding(1.dp))
 
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
@@ -100,7 +100,7 @@ fun MainScreen(
                         )
                     )
                 }
-                Spacer(modifier = Modifier.padding(8.dp))
+                Spacer(modifier = Modifier.padding(1.dp))
             }
         }) { innerPadding ->
         Box(
