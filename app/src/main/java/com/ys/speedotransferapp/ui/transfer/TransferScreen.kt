@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -40,8 +39,8 @@ import com.ys.speedotransferapp.ui.theme.P300
 @Composable
 fun TransferScreen(
     navController: NavController,
+    modifier: Modifier = Modifier,
     viewModel: TransferScreenViewModel = TransferScreenViewModel(),
-    modifier: Modifier = Modifier
 ) {
     Scaffold(
         topBar = {  },
@@ -108,8 +107,7 @@ fun TransferScreen(
                     }
                 )
             }
-            Spacer(modifier = Modifier.padding(8.dp))
-            if (state.currentStep != TransferStep.AMOUNT) {
+            if (state.currentStep == TransferStep.CONFIRMATION) {
                 OutlinedButton(
                     onClick = viewModel::goToPreviousStep,
                     modifier = Modifier
