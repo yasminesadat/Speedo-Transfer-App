@@ -58,6 +58,7 @@ import com.ys.speedotransferapp.ui.theme.S400
 @Composable
 fun HomeScreen(
     navController: NavController,
+    onLogout: () -> Unit,
     viewModel: HomeViewModel = HomeViewModel()
 ) {
     val scrollState = rememberScrollState()

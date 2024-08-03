@@ -1,5 +1,7 @@
 package com.ys.speedotransferapp.ui.signup
 
+import android.app.DatePickerDialog
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -54,6 +56,7 @@ import com.ys.speedotransferapp.ui.theme.appTypography
 fun ExtraSignUpScreen(navController: NavController, viewModel: SignUpViewModel = SignUpViewModel(), modifier: Modifier = Modifier) {
     val country by viewModel.country.collectAsState()
     val dateOfBirth by viewModel.dateOfBirth.collectAsState()
+    val selectedDate by viewModel.selectedDate.collectAsState()
     var showBottomSheet by remember { mutableStateOf(false) }
     var selectedLabel by remember { mutableStateOf("") }
     val view_model = remember { CommonComposableViewModel() }
@@ -115,10 +118,12 @@ fun ExtraSignUpScreen(navController: NavController, viewModel: SignUpViewModel =
             Spacer(modifier = Modifier.padding(8.dp))
             InputField(
                 viewModel = view_model,
-                value = dateOfBirth,
+                value = selectedDate,
                 label = "Date of Birth",
                 fieldId = "dateOfBirth",
                 hint = "DD/MM/YYYY",
+                isClickable = true,
+                clickAction = { viewModel.showDatePicker(navController.context) },
                 keyboardType = KeyboardType.Uri,
                 onValueChanged = { viewModel.setDateOfBirth(it) },
                 trailingIcon = R.drawable.date,
@@ -138,7 +143,7 @@ fun ExtraSignUpScreen(navController: NavController, viewModel: SignUpViewModel =
 
             ) {
                 Text(
-                    text = "Continue",
+                    text = "Sign Up",
                     style = TextStyle(
                         color = Color.White,
                         fontStyle = FontStyle.Normal,
@@ -176,5 +181,5 @@ fun SideScreen(onDismiss: () -> Unit) {
 @Preview
 @Composable
 private fun ExtraSignUpScreenPreview() {
-      //ExtraSignUpScreen(viewModel = SignUpViewModel())
+    //ExtraSignUpScreen(viewModel = SignUpViewModel())
 }

@@ -132,7 +132,7 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = Sign
 
             ) {
                 Text(
-                    text = "Sign Up",
+                    text = "Continue",
                     style = TextStyle(
                         color = Color.White,
                         fontStyle = FontStyle.Normal,

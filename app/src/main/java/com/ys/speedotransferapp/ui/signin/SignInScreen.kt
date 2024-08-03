@@ -1,6 +1,7 @@
 package com.ys.speedotransferapp.ui.signin
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -39,6 +41,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.constants.AppRoutes
+import com.ys.speedotransferapp.data.UserSource
 import com.ys.speedotransferapp.ui.common.CommonComposableViewModel
 import com.ys.speedotransferapp.ui.common.InputField
 import com.ys.speedotransferapp.ui.common.SpeedoTransferText
@@ -50,13 +53,17 @@ import com.ys.speedotransferapp.ui.theme.P20
 @Composable
 fun SignInScreen(
     navController: NavController,
-    viewModel: SignInViewModel = SignInViewModel(),
+    viewModel: SignInViewModel = SignInViewModel(UserSource()),
+    onLoginSuccess: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
+    val isUserValid by viewModel.isUserValid.collectAsState()
     var isPassError: Boolean = false
     val view_model = remember { CommonComposableViewModel() }
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -117,7 +124,15 @@ fun SignInScreen(
             )
             Spacer(modifier = Modifier.padding(8.dp))
             Button(
-                onClick = { navController.navigate(AppRoutes.HOME_ROUTE) },
+                onClick = {
+
+                    if (viewModel.verifyUser()) {
+
+                        onLoginSuccess()
+                    } else {
+                        Toast.makeText(context, "Invalid account", Toast.LENGTH_SHORT).show();
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
@@ -169,5 +184,5 @@ fun SignInScreen(
 @Preview(showBackground = true)
 @Composable
 private fun SignInScreenPreview() {
-    //SignInScreen(SignInViewModel())
+    //SignInScreen(SignInViewModel(UserSource()))
 }
