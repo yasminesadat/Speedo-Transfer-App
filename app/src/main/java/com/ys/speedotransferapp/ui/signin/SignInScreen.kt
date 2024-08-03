@@ -114,7 +114,7 @@ fun SignInScreen(
             isPassError = InputField(
                 viewModel = view_model,
                 value = password,
-                fieldId = "password",
+                fieldId = "password_signin",
                 label = "Password",
                 hint = "Enter your password",
                 onValueChanged = { viewModel.setPassword(it) },

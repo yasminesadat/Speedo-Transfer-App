@@ -66,7 +66,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.ys.speedotransferapp.R
-import com.ys.speedotransferapp.model.FavouriteItem
 import com.ys.speedotransferapp.model.TransferStep
 import com.ys.speedotransferapp.ui.common.CommonComposableViewModel
 import com.ys.speedotransferapp.ui.common.CustomOutlinedTextField

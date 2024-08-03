@@ -19,7 +19,7 @@ class CommonComposableViewModel : ViewModel() {
         if (newValue.isEmpty()) {
             errorMessages[fieldId] = null
         } else {
-            if (isPassword) {
+            if (isPassword && fieldId == "password") {
                 validatePasswordAfterDelay(fieldId, newValue)
             } else {
                 // Clear error for non-password fields
