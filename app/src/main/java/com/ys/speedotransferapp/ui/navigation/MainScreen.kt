@@ -34,6 +34,7 @@ import com.ys.speedotransferapp.constants.AppRoutes.FAVOURITES_ROUTE
 import com.ys.speedotransferapp.constants.AppRoutes.HOME_ROUTE
 import com.ys.speedotransferapp.constants.AppRoutes.MORE_ROUTE
 import com.ys.speedotransferapp.constants.AppRoutes.TRANSACTIONS_ROUTE
+import com.ys.speedotransferapp.constants.AppRoutes.TRANSACTION_ROUTE
 import com.ys.speedotransferapp.ui.favourite.FavouriteScreen
 import com.ys.speedotransferapp.ui.home.HomeScreen
 import com.ys.speedotransferapp.ui.more.MoreScreen
@@ -41,6 +42,7 @@ import com.ys.speedotransferapp.ui.theme.CosmicLatte
 import com.ys.speedotransferapp.ui.theme.G200
 import com.ys.speedotransferapp.ui.theme.P20
 import com.ys.speedotransferapp.ui.theme.P300
+import com.ys.speedotransferapp.ui.transaction.TransactionScreen
 import com.ys.speedotransferapp.ui.transactions.TransactionsScreen
 
 @Composable
@@ -107,10 +109,11 @@ fun MainScreen() {
                 navController = navController,
                 startDestination = HOME_ROUTE,
             ) {
-                composable(HOME_ROUTE) { HomeScreen(navController)}
+                composable(HOME_ROUTE) { HomeScreen(navController) }
                 composable(MORE_ROUTE) { MoreScreen(navController) }
                 composable(FAVOURITES_ROUTE) { FavouriteScreen(navController) }
-                composable(TRANSACTIONS_ROUTE) { TransactionsScreen(navController)}
+                composable(TRANSACTIONS_ROUTE) { TransactionsScreen(navController) }
+                composable(TRANSACTION_ROUTE) { TransactionScreen(navController) }
             }
         }
     }

@@ -11,6 +11,10 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 val CosmicLatte = Color(0xFFFFF8E7)
+val Green = Color(0xFF118A30)
+val LightGreen = Color(0xFFEAF3EC)
+val Red= Color(0xFFD80027)
+val LightRed = Color(0xFFFFEFEF)
 
 // Card Background
 val P20 = Color(0xFFFFEAEE)
@@ -47,3 +51,5 @@ val S200 = Color(0xFFE8BA44)
 val S300 = Color(0xFFE3AC1E)
 val S400 = Color(0xFF9F7815)
 val S500 = Color(0xFF8A6912)
+
+

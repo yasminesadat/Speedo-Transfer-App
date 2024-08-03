@@ -7,5 +7,6 @@ object AppRoutes {
     const val CARDS_ROUTE = "my cards"
     const val MORE_ROUTE = "more"
     const val FAVOURITES_ROUTE = "favourites"
+    const val TRANSACTION_ROUTE = "transaction"
 }
 
