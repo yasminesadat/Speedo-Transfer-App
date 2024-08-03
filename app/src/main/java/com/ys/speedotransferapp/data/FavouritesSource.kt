@@ -9,61 +9,61 @@ class FavouritesSource {
             add(
                 FavouriteItem(
                     name = "Ahmed Fahmy",
-                    accountNumber = "Account xxxx1234"
+                    accountNumber = "85621234"
                 )
             )
             add(
                 FavouriteItem(
                     name = "Hoda Mustafa",
-                    accountNumber = "Account xxxx5678"
+                    accountNumber = "59865678"
                 )
             )
             add(
                 FavouriteItem(
                     name = "John Doe",
-                    accountNumber = "Account xxxx9101"
+                    accountNumber = "542959101"
                 )
             )
             add(
                 FavouriteItem(
                     name = "Jane Smith",
-                    accountNumber = "Account xxxx1121"
+                    accountNumber = "82811121"
                 )
             )
             add(
                 FavouriteItem(
                     name = "Alice Johnson",
-                    accountNumber = "Account xxxx3141"
+                    accountNumber = "85643141"
                 )
             )
             add(
                 FavouriteItem(
                     name = "Bob Brown",
-                    accountNumber = "Account xxxx5161"
+                    accountNumber = "85345161"
                 )
             )
             add(
                 FavouriteItem(
                     name = "Charlie Davis",
-                    accountNumber = "Account xxxx7181"
+                    accountNumber = "85627181"
                 )
             )
             add(
                 FavouriteItem(
                     name = "Diana Evans",
-                    accountNumber = "Account xxxx9202"
+                    accountNumber = "85659202"
                 )
             )
             add(
                 FavouriteItem(
                     name = "Eve Foster",
-                    accountNumber = "Account xxxx1222"
+                    accountNumber = "52581222"
                 )
             )
             add(
                 FavouriteItem(
                     name = "Frank Green",
-                    accountNumber = "Account xxxx3242"
+                    accountNumber = "85623242"
                 )
             )
 

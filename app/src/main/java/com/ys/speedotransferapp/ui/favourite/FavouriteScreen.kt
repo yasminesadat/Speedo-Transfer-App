@@ -156,7 +156,7 @@ fun FavouritesCard(favourite: FavouriteItem, viewModel: FavouriteViewModel) {
                     fontSize = 16.sp
                 )
                 Text(
-                    text = favourite.accountNumber,
+                    text = "Account xxxx"+favourite.accountNumber.takeLast(4),
                     color = G100,
                     modifier = Modifier.padding(top = 8.dp),
                     fontSize = 16.sp
@@ -223,7 +223,7 @@ fun FavouritesCardNoIcons(favourite: FavouriteItem, onClick: () -> Unit) {
                     fontSize = 16.sp
                 )
                 Text(
-                    text = favourite.accountNumber,
+                    text = "Account xxxx"+favourite.accountNumber.takeLast(4),
                     color = G100,
                     modifier = Modifier.padding(top = 8.dp),
                     fontSize = 16.sp
