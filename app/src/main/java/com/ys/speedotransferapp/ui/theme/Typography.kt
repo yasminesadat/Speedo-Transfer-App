@@ -46,7 +46,7 @@ val appTypography = Typography(
     // gray options
     titleMedium = TextStyle(
         fontFamily = additionalFontFamily,
-        fontSize = 18.sp,
+        fontSize = 16.sp,
         fontWeight = FontWeight.Medium,
         color = G200
     ),
