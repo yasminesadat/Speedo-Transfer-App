@@ -1,4 +1,4 @@
-package com.ys.speedotransferapp.model
+package com.ys.speedotransferapp.ui_model
 
 data class Card(
     val cardHolderName: String,

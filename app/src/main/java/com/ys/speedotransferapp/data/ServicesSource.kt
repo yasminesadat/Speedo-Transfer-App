@@ -1,7 +1,7 @@
 package com.ys.speedotransferapp.data
 
 import com.ys.speedotransferapp.R
-import com.ys.speedotransferapp.model.ServiceItem
+import com.ys.speedotransferapp.ui_model.ServiceItem
 
 class ServicesSource {
     fun getServices(): List<ServiceItem> {

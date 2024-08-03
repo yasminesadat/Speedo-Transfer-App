@@ -1,7 +1,7 @@
 package com.ys.speedotransferapp.data
 
 import com.ys.speedotransferapp.R
-import com.ys.speedotransferapp.model.BottomNavigationItem
+import com.ys.speedotransferapp.ui_model.BottomNavigationItem
 import com.ys.speedotransferapp.constants.AppRoutes.CARDS_ROUTE
 import com.ys.speedotransferapp.constants.AppRoutes.HOME_ROUTE
 import com.ys.speedotransferapp.constants.AppRoutes.MORE_ROUTE

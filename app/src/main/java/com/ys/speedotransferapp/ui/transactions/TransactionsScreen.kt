@@ -40,7 +40,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.constants.AppRoutes.TRANSACTION_ROUTE
-import com.ys.speedotransferapp.model.TransactionItem
 import com.ys.speedotransferapp.ui.common.Header
 import com.ys.speedotransferapp.ui.theme.G0
 import com.ys.speedotransferapp.ui.theme.G100
@@ -49,6 +48,7 @@ import com.ys.speedotransferapp.ui.theme.G700
 import com.ys.speedotransferapp.ui.theme.G900
 import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.P50
+import com.ys.speedotransferapp.ui_model.TransactionItem
 
 @Composable
 fun TransactionsScreen(
@@ -129,7 +129,7 @@ fun TransactionCard(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = transaction.senderName,
+                    text = transaction.recipientName,
                     fontWeight = FontWeight.Medium,
                     fontSize = 18.sp,
                     lineHeight = 3.sp,
@@ -145,7 +145,7 @@ fun TransactionCard(
                         ) {
                             append(
                                 transaction.paymentProcessor + " . " +
-                                        transaction.recipientDigits.takeLast(4)
+                                        transaction.recipientDigits
                             )
                         }
                         append("\n")

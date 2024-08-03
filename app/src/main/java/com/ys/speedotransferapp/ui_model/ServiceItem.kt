@@ -1,4 +1,4 @@
-package com.ys.speedotransferapp.model
+package com.ys.speedotransferapp.ui_model
 
 import androidx.annotation.DrawableRes
 

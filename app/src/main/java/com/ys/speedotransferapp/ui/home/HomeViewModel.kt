@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ys.speedotransferapp.data.ProfileSource
 import com.ys.speedotransferapp.data.TransactionsSource
-import com.ys.speedotransferapp.model.TransactionItem
+import com.ys.speedotransferapp.ui_model.TransactionItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
