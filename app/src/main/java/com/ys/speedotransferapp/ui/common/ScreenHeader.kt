@@ -20,7 +20,7 @@ import com.ys.speedotransferapp.ui.theme.G900
 @Composable
 fun Header(
     text: String,
-    navController: NavController
+    navController: NavController,
 ) {
     Box(
         modifier = Modifier

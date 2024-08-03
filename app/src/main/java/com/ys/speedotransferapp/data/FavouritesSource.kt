@@ -2,7 +2,7 @@ package com.ys.speedotransferapp.data
 
 import com.ys.speedotransferapp.model.FavouriteItem
 
-class FavouriteItemsSource {
+class FavouritesSource {
     //get from API and only last 4 digits of account
     fun getFavourites(): List<FavouriteItem> {
         val favourites = mutableListOf<FavouriteItem>().apply {

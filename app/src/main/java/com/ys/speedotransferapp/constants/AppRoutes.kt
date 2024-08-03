@@ -1,4 +1,4 @@
-package com.ys.speedotransferapp.navigation
+package com.ys.speedotransferapp.constants
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

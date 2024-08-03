@@ -1,15 +1,16 @@
 package com.ys.speedotransferapp.ui.more
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 class MoreViewModel : ViewModel() {
 
-    private var _showHelpBottomSheet = MutableStateFlow(false)
-    val showHelpBottomSheet = _showHelpBottomSheet.asStateFlow()
+    var showHelpBottomSheet by mutableStateOf(false)
+    private set
 
     fun showHelpBottomSheet(show: Boolean) {
-        _showHelpBottomSheet.value = show
+       showHelpBottomSheet = show
     }
 }
