@@ -60,13 +60,12 @@ fun HomeScreen(
     navController: NavController,
     viewModel: HomeViewModel = HomeViewModel()
 ) {
-    val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 32.dp)
             .padding(horizontal = 12.dp)
-            .verticalScroll(scrollState)
+            .verticalScroll(rememberScrollState())
     ) {
         ScreenHeader(viewModel)
         Spacer(modifier = Modifier.height(8.dp))

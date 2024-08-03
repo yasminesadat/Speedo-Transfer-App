@@ -46,16 +46,16 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.ys.speedotransferapp.R
-import com.ys.speedotransferapp.ui_model.FavouriteItem
 import com.ys.speedotransferapp.ui.common.CustomOutlinedTextField
 import com.ys.speedotransferapp.ui.common.Header
 import com.ys.speedotransferapp.ui.theme.D300
-import com.ys.speedotransferapp.ui.theme.G0
 import com.ys.speedotransferapp.ui.theme.G100
+import com.ys.speedotransferapp.ui.theme.G40
 import com.ys.speedotransferapp.ui.theme.G700
 import com.ys.speedotransferapp.ui.theme.G900
 import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.P50
+import com.ys.speedotransferapp.ui_model.FavouriteItem
 
 @Composable
 fun FavouriteScreen(
@@ -121,7 +121,7 @@ fun FavouritesCard(favourite: FavouriteItem, viewModel: FavouriteViewModel) {
                     .clip(GenericShape { size, _ ->
                         addOval(size.toRect())
                     })
-                    .background(G0)
+                    .background(G40)
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.bank),

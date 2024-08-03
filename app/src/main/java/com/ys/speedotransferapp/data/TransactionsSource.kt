@@ -12,8 +12,8 @@ class TransactionsSource {
                     recipientDigits = "1234",
                     dateTime = "Today 14:23",
                     status = "Successful",
-                    paymentProcessorIcon = R.drawable.visa,
-                    paymentProcessor = "Visa",
+                    paymentProcessorIcon = R.drawable.mastercard,
+                    paymentProcessor = "Mastercard",
                     amount = "$100.00"
                 )
             )
@@ -34,8 +34,8 @@ class TransactionsSource {
                     recipientDigits = "8765",
                     dateTime = "3 August 16:30",
                     status = "Successful",
-                    paymentProcessorIcon = R.drawable.visa,
-                    paymentProcessor = "Visa",
+                    paymentProcessorIcon = R.drawable.mastercard,
+                    paymentProcessor = "Mastercard",
                     amount = "€100.00"
                 )
             )
