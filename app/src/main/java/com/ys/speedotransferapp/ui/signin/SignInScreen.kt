@@ -42,7 +42,6 @@ import com.ys.speedotransferapp.navigation.AppRoutes
 import com.ys.speedotransferapp.ui.common.CommonComposableViewModel
 import com.ys.speedotransferapp.ui.common.InputField
 import com.ys.speedotransferapp.ui.common.SpeedoTransferText
-import com.ys.speedotransferapp.ui.signup.SignUpViewModel
 import com.ys.speedotransferapp.ui.theme.G0
 import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.P20

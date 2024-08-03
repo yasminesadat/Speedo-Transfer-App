@@ -1,22 +1,13 @@
 package com.ys.speedotransferapp.ui.common
 
 import androidx.annotation.DrawableRes
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -26,11 +17,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.view.WindowInsetsCompat
 import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.ui.theme.*
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,7 +33,7 @@ fun InputField(
     isClickable: Boolean = false,
     readOnly: Boolean = false,
     clickAction: (() -> Unit)? = null,
-    @DrawableRes trailingIcon: Int,
+    @DrawableRes trailingIcon: Int = 0,
     iconDescription: String,
     keyboardType: KeyboardType = KeyboardType.Text,
     modifier: Modifier = Modifier
@@ -64,7 +52,7 @@ fun InputField(
     )
 
     Column {
-        Text(text = label, modifier = modifier)
+        Text(text = label, modifier = modifier, style = appTypography.bodySmall)
         var isFocused by remember { mutableStateOf(false) }
         OutlinedTextField(
             value = value,
@@ -88,7 +76,10 @@ fun InputField(
                             contentDescription = if (viewModel.passwordVisible) "Hide password" else "Show password"
                         )
                     }
-                } else {
+                }else if (trailingIcon == 0) {
+                    // Do nothing
+                }
+                else {
                     Icon(
                         painter = painterResource(id = trailingIcon),
                         contentDescription = iconDescription
@@ -143,7 +134,10 @@ fun BottomSheet(
                     .fillMaxHeight() // This makes the sheet cover the entire height
                     .padding(16.dp)
             ) {
-                Row(modifier = Modifier.clickable { clickAction("Egypt"); onDismiss() }.fillMaxWidth(). padding(top = 16.dp, bottom = 16.dp)) {
+                Row(modifier = Modifier
+                    .clickable { clickAction("Egypt"); onDismiss() }
+                    .fillMaxWidth()
+                    .padding(top = 16.dp, bottom = 16.dp)) {
                     Image(
                         painter = painterResource(id = R.drawable.egypt),
                         contentDescription = "Egypt flag"
@@ -151,7 +145,10 @@ fun BottomSheet(
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(text = "Egypt")
                 }
-                Row(modifier = Modifier.clickable { clickAction("United States"); onDismiss() }.fillMaxWidth().padding(top = 16.dp, bottom = 16.dp)) {
+                Row(modifier = Modifier
+                    .clickable { clickAction("United States"); onDismiss() }
+                    .fillMaxWidth()
+                    .padding(top = 16.dp, bottom = 16.dp)) {
                     Image(
                         painter = painterResource(id = R.drawable.united_states),
                         contentDescription = "United States flag"

@@ -58,4 +58,12 @@ val appTypography = Typography(
         fontWeight = FontWeight.Normal,
         color = G700
     ),
+    bodySmall = TextStyle(
+        fontFamily = FontFamily(
+            Font(R.font.inter_regular, FontWeight.Normal)
+        ),
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Normal,
+        color = G700
+    ),
 )

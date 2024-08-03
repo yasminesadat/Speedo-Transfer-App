@@ -1,16 +1,22 @@
 package com.ys.speedotransferapp.ui.transfer
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -39,21 +46,25 @@ fun TransferScreen(
 ) {
     Scaffold(
         topBar = { Header(text = "Transfer", navController = navController) },
-        modifier = modifier.fillMaxSize().background(
-            brush = Brush.linearGradient(
-                colors = listOf(CosmicLatte, P20)
-            )
-        ),
+        modifier = modifier
+            .fillMaxSize()
+            .background(
+                brush = Brush.linearGradient(
+                    colors = listOf(CosmicLatte, P20)
+                )
+            ),
         containerColor = Color.Transparent
     ) {
         val state by viewModel.state.collectAsState()
 
         Column(
-            verticalArrangement = Arrangement.SpaceAround,
+            verticalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxSize()
-        ) {
+                .verticalScroll(rememberScrollState()),
+
+            ) {
             TransferHeader(state.currentStep)
             when (state.currentStep) {
                 TransferStep.AMOUNT -> AmountStep(
@@ -84,8 +95,7 @@ fun TransferScreen(
                     }
                 },
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
+                    .fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = P300),
                 shape = RoundedCornerShape(6.dp),
                 contentPadding = PaddingValues(16.dp),
@@ -98,18 +108,25 @@ fun TransferScreen(
                     }
                 )
             }
-
+            Spacer(modifier = Modifier.padding(8.dp))
             if (state.currentStep != TransferStep.AMOUNT) {
-                Button(
+                OutlinedButton(
                     onClick = viewModel::goToPreviousStep,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 8.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = P300),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = P300 // Use the color that matches your design
+                    ),
+                    border = BorderStroke(1.dp, P300), // Border color
                     shape = RoundedCornerShape(6.dp),
-                    contentPadding = PaddingValues(16.dp),
+                    contentPadding = PaddingValues(vertical = 12.dp, horizontal = 16.dp),
                 ) {
-                    Text("Previous")
+                    Text(
+                        "Previous",
+                        fontWeight = FontWeight.Medium
+                    )
                 }
             }
         }
