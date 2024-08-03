@@ -1,7 +1,6 @@
 package com.ys.speedotransferapp.ui.signin
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,13 +16,18 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -48,6 +52,7 @@ import com.ys.speedotransferapp.ui.common.SpeedoTransferText
 import com.ys.speedotransferapp.ui.theme.G0
 import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.P20
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,6 +68,8 @@ fun SignInScreen(
     val isUserValid by viewModel.isUserValid.collectAsState()
     var isPassError: Boolean = false
     val view_model = remember { CommonComposableViewModel() }
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         modifier = Modifier
@@ -87,7 +94,8 @@ fun SignInScreen(
                 )
             )
         },
-        containerColor = Color.Transparent
+        containerColor = Color.Transparent,
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
 
         Column(
@@ -125,12 +133,14 @@ fun SignInScreen(
             Spacer(modifier = Modifier.padding(8.dp))
             Button(
                 onClick = {
-
                     if (viewModel.verifyUser()) {
-
                         onLoginSuccess()
                     } else {
-                        Toast.makeText(context, "Invalid account", Toast.LENGTH_SHORT).show();
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar(
+                                message = "Invalid account"
+                            )
+                        }
                     }
                 },
                 modifier = Modifier
@@ -140,7 +150,6 @@ fun SignInScreen(
                 shape = RoundedCornerShape(6.dp),
                 contentPadding = PaddingValues(16.dp),
                 enabled = email.isNotBlank() && (password.isNotBlank() || !isPassError)
-
             ) {
                 Log.d("SignInScreen", "isPassError: $isPassError")
                 Text(
@@ -151,7 +160,6 @@ fun SignInScreen(
                         fontWeight = FontWeight.Bold
                     )
                 )
-
             }
             Spacer(modifier = Modifier.padding(8.dp))
             Row(
