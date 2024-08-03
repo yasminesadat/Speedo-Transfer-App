@@ -5,7 +5,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.ys.speedotransferapp.ui.navigation.MainScreen
+import com.ys.speedotransferapp.constants.AppNavHost
+import com.ys.speedotransferapp.ui.theme.SpeedoTransferAppTheme
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
@@ -13,9 +14,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-                    MainScreen()
+            SpeedoTransferAppTheme {
+                AppNavHost()
+            }
         }
         //requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
     }
 }
-

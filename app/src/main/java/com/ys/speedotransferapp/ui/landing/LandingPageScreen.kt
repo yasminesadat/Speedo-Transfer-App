@@ -31,10 +31,10 @@ fun LandingPageScreen(navController: NavController, modifier: Modifier = Modifie
             .pointerInput(Unit) {
                 detectHorizontalDragGestures { change, dragAmount ->
                     if (dragAmount > 0) {
-                        navController.navigate(AppRoutes.SIGN_UP_ROUTE)
+                        navController.navigate(AppRoutes.SIGN_IN_ROUTE)
                     }
                 }
-            }.clickable { navController.navigate(AppRoutes.SIGN_UP_ROUTE) },
+            }.clickable { navController.navigate(AppRoutes.SIGN_IN_ROUTE) },
         containerColor = Color.Transparent
     ) {
         Box(

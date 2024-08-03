@@ -54,6 +54,7 @@ import com.ys.speedotransferapp.ui.theme.P50
 @Composable
 fun MoreScreen(
     navController: NavController,
+    onLogout: () -> Unit,
     viewModel: MoreViewModel = viewModel(),
 ) {
     val context = LocalContext.current
@@ -78,6 +79,7 @@ fun MoreScreen(
             Option(
                 icon = option.icon,
                 title = option.title,
+                onLogout = onLogout,
                 isLast = option.isLast,
                 navController = navController,
                 viewModel = viewModel
@@ -93,6 +95,7 @@ fun Option(
     @DrawableRes icon: Int,
     title: String,
     isLast: Boolean = false,
+    onLogout: () -> Unit,
     navController: NavController,
     viewModel: MoreViewModel
 ) {
@@ -110,7 +113,7 @@ fun Option(
                             viewModel.showHelpBottomSheet(true)
                         }
 
-                        "logout" -> {}
+                        "logout" -> {onLogout()}
                     }
                 }
         ) {

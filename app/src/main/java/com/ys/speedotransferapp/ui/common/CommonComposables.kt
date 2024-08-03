@@ -23,7 +23,7 @@ import com.ys.speedotransferapp.ui.theme.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InputField(
-    viewModel: CommonComposableViewModel,
+    viewModel: CommonComposableViewModel = CommonComposableViewModel(),
     value: String,
     fieldId: String,
     label: String,
