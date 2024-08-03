@@ -45,7 +45,7 @@ fun TransferScreen(
     modifier: Modifier = Modifier
 ) {
     Scaffold(
-        topBar = { Header(text = "Transfer", navController = navController) },
+        topBar = {  },
         modifier = modifier
             .fillMaxSize()
             .background(
@@ -65,6 +65,7 @@ fun TransferScreen(
                 .verticalScroll(rememberScrollState()),
 
             ) {
+            Header(text = "Transfer", navController = navController)
             TransferHeader(state.currentStep)
             when (state.currentStep) {
                 TransferStep.AMOUNT -> AmountStep(
