@@ -24,6 +24,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,10 +41,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.ys.speedotransferapp.R
-import com.ys.speedotransferapp.data.ServicesSource
-import com.ys.speedotransferapp.data.TransactionsSource
-import com.ys.speedotransferapp.ui_model.ServiceItem
 import com.ys.speedotransferapp.constants.AppRoutes.TRANSACTIONS_ROUTE
+import com.ys.speedotransferapp.data.ServicesSource
 import com.ys.speedotransferapp.ui.theme.G0
 import com.ys.speedotransferapp.ui.theme.G10
 import com.ys.speedotransferapp.ui.theme.G100
@@ -54,6 +53,7 @@ import com.ys.speedotransferapp.ui.theme.G900
 import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.P50
 import com.ys.speedotransferapp.ui.theme.S400
+import com.ys.speedotransferapp.ui_model.ServiceItem
 
 @Composable
 fun HomeScreen(
@@ -131,7 +131,7 @@ fun HomeScreen(
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
-        TransactionList()
+        TransactionList(viewModel)
     }
 }
 
@@ -232,15 +232,15 @@ fun Service(service: ServiceItem) {
 }
 
 @Composable
-fun TransactionList() {
-    val transactions = TransactionsSource().getRecentTransactions()
+fun TransactionList(viewModel: HomeViewModel) {
     Card(
         colors = CardDefaults.cardColors(containerColor = G0),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
+        val transactions = viewModel.transactions.collectAsState()
         Column {
-            for (transaction in transactions) {
+            for (transaction in transactions.value.take(3)) {
                 Column {
                     Row(
                         modifier = Modifier
