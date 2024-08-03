@@ -1,7 +1,6 @@
 package com.ys.speedotransferapp.ui.transaction
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -63,33 +63,42 @@ fun TransactionScreen(
                 .align(Alignment.CenterHorizontally)
         )
         Spacer(modifier = Modifier.height(8.dp))
-        Box(
+        Column(
             modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.Center
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             BasicText(
                 buildAnnotatedString {
-                    withStyle(
-                        SpanStyle(
-                            color = G900,
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Medium
-                        )
-                    ) {
-                        append(viewModel.transaction.amount)
-                    }
-                    append(" ")
-                    withStyle(
-                        SpanStyle(
-                            color = P300,
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Medium
-                        )
-                    ) {
-                        append(viewModel.transaction.currency)
+                    withStyle(style = ParagraphStyle(lineHeight = 24.sp)) {
+                        withStyle(
+                            SpanStyle(
+                                color = G900,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Medium
+                            )
+                        ) {
+                            append(viewModel.transaction.amount)
+                        }
+                        append(" ")
+                        withStyle(
+                            SpanStyle(
+                                color = P300,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Medium
+                            )
+                        ) {
+                            append(viewModel.transaction.currency)
+                        }
                     }
                 }
             )
+
+            Text(
+                text ="Transfer Amount",
+                color = G700,
+                fontSize = 14.sp
+            )
+
         }
         TransferInfo(
             fromName = viewModel.transaction.senderName,
@@ -124,8 +133,6 @@ fun TransactionScreen(
         }
     }
 }
-
-
 
 
 @Composable
