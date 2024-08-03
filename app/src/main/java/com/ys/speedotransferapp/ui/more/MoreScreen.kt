@@ -26,8 +26,6 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,31 +35,30 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.ys.speedotransferapp.R
+import com.ys.speedotransferapp.constants.AppConstants.EMAIL
+import com.ys.speedotransferapp.constants.AppConstants.NUMBER
 import com.ys.speedotransferapp.data.OptionsSource
-import com.ys.speedotransferapp.navigation.AppRoutes.FAVOURITES_ROUTE
+import com.ys.speedotransferapp.constants.AppRoutes.FAVOURITES_ROUTE
 import com.ys.speedotransferapp.ui.common.Header
-import com.ys.speedotransferapp.ui.theme.G900
-import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.G200
 import com.ys.speedotransferapp.ui.theme.G40
+import com.ys.speedotransferapp.ui.theme.G900
+import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.P50
 
 @Composable
 fun MoreScreen(
     navController: NavController,
-    viewModel: MoreViewModel = viewModel()
+    viewModel: MoreViewModel = viewModel(),
 ) {
     val context = LocalContext.current
-    val showHelpBottomSheet by viewModel.showHelpBottomSheet.collectAsState()
 
-    if (showHelpBottomSheet) {
+    if (viewModel.showHelpBottomSheet) {
         ShowHelp(viewModel, context)
     }
     Column(
@@ -71,7 +68,10 @@ fun MoreScreen(
             .padding(top = 32.dp)
 
     ) {
-        Header("More", navController)
+        Header(
+            text = "More",
+            navController = navController
+        )
 
         val options = OptionsSource().getOptions()
         for (option in options) {
@@ -126,7 +126,7 @@ fun Option(
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             )
 
             if (!isLast) {
@@ -177,7 +177,7 @@ fun ShowHelp(
                     .weight(1f)
                     .clickable {
                         val intent = Intent(Intent.ACTION_SENDTO).apply {
-                            data = Uri.parse("mailto:help@speedo.com")
+                            data = Uri.parse("mailto: $EMAIL")
                         }
                         context.startActivity(intent)
                     }
@@ -185,7 +185,7 @@ fun ShowHelp(
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
-                        .padding(top =16.dp, bottom = 4.dp)
+                        .padding(top = 16.dp, bottom = 4.dp)
                         .fillMaxWidth()
                         .height(124.dp)
                 ) {
@@ -225,7 +225,7 @@ fun ShowHelp(
                     .weight(1f)
                     .clickable {
                         val intent = Intent(Intent.ACTION_DIAL).apply {
-                            data = Uri.parse("tel:1234")
+                            data = Uri.parse("tel: $NUMBER")
                         }
                         context.startActivity(intent)
                     },
@@ -233,7 +233,7 @@ fun ShowHelp(
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
-                        .padding(top =16.dp, bottom = 4.dp)
+                        .padding(top = 16.dp, bottom = 4.dp)
                         .fillMaxWidth()
                         .height(124.dp)
                 ) {
@@ -264,7 +264,7 @@ fun ShowHelp(
                             .padding(top = 8.dp)
                     )
                     Text(
-                        text = "1234",
+                        text = NUMBER.toString(),
                         color = P300,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Medium,
@@ -274,10 +274,4 @@ fun ShowHelp(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun MoreScreenPreview() {
-    MoreScreen(rememberNavController())
 }

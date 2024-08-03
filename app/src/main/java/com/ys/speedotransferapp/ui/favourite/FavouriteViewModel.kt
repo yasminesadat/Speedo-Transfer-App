@@ -1,8 +1,11 @@
 package com.ys.speedotransferapp.ui.favourite
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ys.speedotransferapp.data.FavouriteItemsSource
+import com.ys.speedotransferapp.data.FavouritesSource
 import com.ys.speedotransferapp.model.FavouriteItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,21 +16,20 @@ class FavouriteViewModel : ViewModel() {
     private val _favourites = MutableStateFlow<List<FavouriteItem>>(emptyList())
     val favourites = _favourites.asStateFlow()
 
-    private val _selectedFavourite: MutableStateFlow<FavouriteItem?> = MutableStateFlow(null)
-    val selectedFavourite = _selectedFavourite.asStateFlow()
+    private var selectedFavourite by mutableStateOf<FavouriteItem?>(null)
 
-    private val _showBottomSheet = MutableStateFlow(false)
-    val showBottomSheet = _showBottomSheet.asStateFlow()
+    var showBottomSheet by mutableStateOf(false)
+        private set
 
-    private val _name = MutableStateFlow("")
-    val name = _name.asStateFlow()
+    var name by mutableStateOf("")
+        private set
 
-    private val _accountNumber = MutableStateFlow("")
-    val accountNumber = _accountNumber.asStateFlow()
+    var accountNumber by mutableStateOf("")
+        private set
 
     init {
         viewModelScope.launch {
-            _favourites.value = FavouriteItemsSource().getFavourites()
+            _favourites.value = FavouritesSource().getFavourites()
         }
     }
 
@@ -35,26 +37,27 @@ class FavouriteViewModel : ViewModel() {
         _favourites.value = _favourites.value.filter { it != favourite }
     }
 
-    fun updateFavourite(oldFavourite: FavouriteItem, newFavourite: FavouriteItem) {
-        newFavourite.accountNumber = "xxxx" + newFavourite.accountNumber.takeLast(4)
+    fun updateFavourite() {
+        accountNumber = "xxxx" + accountNumber.takeLast(4)
+        val updatedFavourite = FavouriteItem(name, accountNumber)
         _favourites.value = _favourites.value.map {
-            if (it == oldFavourite) newFavourite else it
+            if (it == selectedFavourite) updatedFavourite else it
         }
     }
 
     fun showBottomSheet(show: Boolean) {
-        _showBottomSheet.value = show
+        showBottomSheet = show
     }
 
-    fun setSelectedFavourite(favourite: FavouriteItem?) {
-        _selectedFavourite.value = favourite
+    fun updateSelectedFavourite(favourite: FavouriteItem) {
+        selectedFavourite = favourite
     }
 
-    fun setName(newName: String) {
-        _name.value = newName
+    fun updateName(newName: String) {
+        name = newName
     }
 
-    fun setAccountNumber(newAccountNumber: String) {
-        _accountNumber.value = newAccountNumber.filter{input -> input.isDigit()}
+    fun updateAccountNumber(newAccountNumber: String) {
+        accountNumber = newAccountNumber.filter { input -> input.isDigit() }
     }
 }
