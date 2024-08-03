@@ -1,6 +1,6 @@
 package com.ys.speedotransferapp.data
 
-import com.ys.speedotransferapp.model.FavouriteItem
+import com.ys.speedotransferapp.ui_model.FavouriteItem
 
 class FavouritesSource {
     //get from API and only last 4 digits of account

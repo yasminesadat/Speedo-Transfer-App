@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ys.speedotransferapp.data.FavouritesSource
-import com.ys.speedotransferapp.model.FavouriteItem
+import com.ys.speedotransferapp.ui_model.FavouriteItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

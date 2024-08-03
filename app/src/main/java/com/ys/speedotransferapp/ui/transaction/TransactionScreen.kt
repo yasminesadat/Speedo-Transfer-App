@@ -27,9 +27,11 @@ import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.ui.common.Header
 import com.ys.speedotransferapp.ui.theme.G700
 
+
 @Composable
 fun TransactionScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: TransactionViewModel = TransactionViewModel()
 ) {
     Column(
         modifier = Modifier
@@ -68,13 +70,6 @@ fun TransferInfo(
                 .fillMaxWidth()
                 .size(height = 120.dp, width = 500.dp)
         )
-        Image(
-            painter = painterResource(R.drawable.small_success),
-            contentDescription = null,
-            modifier = Modifier
-                .size(40.dp)
-                .align(Alignment.Center)
-        )
         TransferCard(
             label = "To",
             name = toName,
@@ -83,6 +78,13 @@ fun TransferInfo(
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
                 .size(height = 120.dp, width = 500.dp)
+        )
+        Image(
+            painter = painterResource(R.drawable.small_success),
+            contentDescription = null,
+            modifier = Modifier
+                .size(40.dp)
+                .align(Alignment.Center)
         )
     }
 }
@@ -125,5 +127,5 @@ fun TransferCard(
 @Preview(showBackground = true)
 @Composable
 private fun TranferInfoPreview() {
-    TransactionScreen(rememberNavController())
+   TransactionScreen(rememberNavController())
 }

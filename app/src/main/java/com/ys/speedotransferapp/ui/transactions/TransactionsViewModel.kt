@@ -4,11 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.data.TransactionsSource
-import com.ys.speedotransferapp.model.TransactionItem
 import com.ys.speedotransferapp.ui.theme.Green
 import com.ys.speedotransferapp.ui.theme.LightGreen
 import com.ys.speedotransferapp.ui.theme.LightRed
 import com.ys.speedotransferapp.ui.theme.Red
+import com.ys.speedotransferapp.ui_model.TransactionItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

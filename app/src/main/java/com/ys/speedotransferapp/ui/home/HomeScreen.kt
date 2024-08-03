@@ -42,7 +42,7 @@ import androidx.navigation.NavController
 import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.data.ServicesSource
 import com.ys.speedotransferapp.data.TransactionsSource
-import com.ys.speedotransferapp.model.ServiceItem
+import com.ys.speedotransferapp.ui_model.ServiceItem
 import com.ys.speedotransferapp.constants.AppRoutes.TRANSACTIONS_ROUTE
 import com.ys.speedotransferapp.ui.theme.G0
 import com.ys.speedotransferapp.ui.theme.G10
@@ -270,7 +270,7 @@ fun TransactionList() {
                                 modifier = Modifier.fillMaxWidth()
                             ) {
                                 Text(
-                                    text = transaction.senderName,
+                                    text = transaction.recipientName,
                                     color = G900,
                                     fontWeight = FontWeight.Medium
                                 )
@@ -282,7 +282,7 @@ fun TransactionList() {
                                 )
                             }
                             Text(
-                                text = transaction.paymentProcessor + " . " + transaction.recipientDigits.takeLast(4),
+                                text = transaction.paymentProcessor + " . " + transaction.recipientDigits,
                                 color = G700
                             )
                             Text(
