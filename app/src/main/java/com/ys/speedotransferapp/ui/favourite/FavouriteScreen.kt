@@ -49,7 +49,6 @@ import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.ui.common.CustomOutlinedTextField
 import com.ys.speedotransferapp.ui.common.Header
 import com.ys.speedotransferapp.ui.theme.D300
-import com.ys.speedotransferapp.ui.theme.G0
 import com.ys.speedotransferapp.ui.theme.G100
 import com.ys.speedotransferapp.ui.theme.G40
 import com.ys.speedotransferapp.ui.theme.G700
@@ -203,7 +202,7 @@ fun FavouritesCardNoIcons(favourite: FavouriteItem, onClick: () -> Unit) {
                     .clip(GenericShape { size, _ ->
                         addOval(size.toRect())
                     })
-                    .background(G0)
+                    .background(G40)
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.bank),
