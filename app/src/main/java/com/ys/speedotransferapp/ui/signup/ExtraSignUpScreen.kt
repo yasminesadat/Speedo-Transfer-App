@@ -1,7 +1,5 @@
 package com.ys.speedotransferapp.ui.signup
 
-import android.app.DatePickerDialog
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -47,8 +45,8 @@ import com.ys.speedotransferapp.ui.common.CommonComposableViewModel
 import com.ys.speedotransferapp.ui.common.InputField
 import com.ys.speedotransferapp.ui.common.SpeedoTransferText
 import com.ys.speedotransferapp.ui.theme.G0
-import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.P20
+import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.appTypography
 
 @OptIn(ExperimentalMaterial3Api::class)
