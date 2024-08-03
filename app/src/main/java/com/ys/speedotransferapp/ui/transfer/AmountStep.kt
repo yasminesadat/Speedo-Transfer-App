@@ -6,21 +6,29 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,13 +36,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.ys.speedotransferapp.R
+import com.ys.speedotransferapp.model.FavouriteItem
 import com.ys.speedotransferapp.ui.common.CommonComposableViewModel
+import com.ys.speedotransferapp.ui.common.CustomOutlinedTextField
 import com.ys.speedotransferapp.ui.common.InputField
+import com.ys.speedotransferapp.ui.favourite.FavouriteList
+import com.ys.speedotransferapp.ui.favourite.FavouriteListNoIcon
+import com.ys.speedotransferapp.ui.favourite.FavouriteViewModel
 import com.ys.speedotransferapp.ui.theme.G0
 import com.ys.speedotransferapp.ui.theme.G100
 import com.ys.speedotransferapp.ui.theme.P300
@@ -45,9 +65,23 @@ fun AmountStep(onAmountEntered: (Double) -> Unit) {
     val viewModel = remember {
         TransferScreenViewModel()
     }
+
+    val viewModelFav = remember {
+        FavouriteViewModel()
+    }
     val amount_send by viewModel.amount_sending.collectAsState()
     val recName by viewModel.recName.collectAsState()
     val recAccount by viewModel.recAccount.collectAsState()
+
+    if (viewModelFav.showBottomSheet) {
+        BottomSheet(
+            onDismiss = { viewModelFav.showBottomSheet(false) },
+            onFavoriteSelected = { selectedFavorite ->
+                viewModel.onRecNameChange(selectedFavorite.name)
+                viewModel.onRecAccountChange(selectedFavorite.accountNumber)
+            }
+        )
+    }
 
     Column {
         Text(text = "How much are you sending?", style = appTypography.titleLarge)
@@ -123,7 +157,7 @@ fun AmountStep(onAmountEntered: (Double) -> Unit) {
         {
             Text(text = "Recipient Information", style = appTypography.bodyMedium)
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.clickable { viewModelFav.showBottomSheet(true) },
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -138,7 +172,7 @@ fun AmountStep(onAmountEntered: (Double) -> Unit) {
                     contentDescription = "Back",
                     tint = P300,
                     modifier = Modifier
-                        .clickable { }
+                        .clickable { viewModelFav.showBottomSheet(true) }
                         .graphicsLayer(scaleX = -1f)
                 )
             }
@@ -166,6 +200,56 @@ fun AmountStep(onAmountEntered: (Double) -> Unit) {
             modifier = Modifier.fillMaxWidth()
         )
 
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BottomSheet(
+    onDismiss: () -> Unit,
+    onFavoriteSelected: (FavouriteItem) -> Unit
+) {
+    val sheetState = rememberModalBottomSheetState()
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        sheetState = sheetState,
+        containerColor = Color.White,
+        windowInsets = WindowInsets.systemBars
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        )  {
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(bottom = 4.dp)
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(R.drawable.favorite),
+                    contentDescription = "favorite icon",
+                    tint = P300,
+                    modifier = Modifier
+                        .size(32.dp)
+                        .padding(end = 8.dp)
+                )
+                Text(
+                    text = "Favourite List",
+                    fontSize = 24.sp,
+                    color = P300
+                )
+
+            }
+            FavouriteListNoIcon(
+                viewModel = FavouriteViewModel(),
+                onItemClick = { selectedFavorite ->
+                    onFavoriteSelected(selectedFavorite)
+                    onDismiss()
+                }
+            )
+        }
     }
 }
 
