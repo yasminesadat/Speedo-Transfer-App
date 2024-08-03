@@ -34,7 +34,10 @@ import com.ys.speedotransferapp.constants.AppRoutes.FAVOURITES_ROUTE
 import com.ys.speedotransferapp.constants.AppRoutes.HOME_ROUTE
 import com.ys.speedotransferapp.constants.AppRoutes.MORE_ROUTE
 import com.ys.speedotransferapp.constants.AppRoutes.TRANSACTIONS_ROUTE
+
 import com.ys.speedotransferapp.constants.AppRoutes.TRANSACTION_ROUTE
+import com.ys.speedotransferapp.constants.AppRoutes.TRANSFER_ROUTE
+
 import com.ys.speedotransferapp.ui.favourite.FavouriteScreen
 import com.ys.speedotransferapp.ui.home.HomeScreen
 import com.ys.speedotransferapp.ui.more.MoreScreen
@@ -44,18 +47,22 @@ import com.ys.speedotransferapp.ui.theme.P20
 import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.transaction.TransactionScreen
 import com.ys.speedotransferapp.ui.transactions.TransactionsScreen
+import com.ys.speedotransferapp.ui.transfer.TransferScreen
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    onLogout: () -> Unit
+) {
     val viewModel: MainViewModel = viewModel()
     val navController = rememberNavController()
+
     Scaffold(
         bottomBar = {
             NavigationBar(
                 containerColor = Color.White,
                 modifier = Modifier.clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
             ) {
-                Spacer(modifier = Modifier.padding(8.dp))
+                Spacer(modifier = Modifier.padding(1.dp))
 
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
@@ -93,7 +100,7 @@ fun MainScreen() {
                         )
                     )
                 }
-                Spacer(modifier = Modifier.padding(8.dp))
+                Spacer(modifier = Modifier.padding(1.dp))
             }
         }) { innerPadding ->
         Box(
@@ -109,8 +116,10 @@ fun MainScreen() {
                 navController = navController,
                 startDestination = HOME_ROUTE,
             ) {
-                composable(HOME_ROUTE) { HomeScreen(navController) }
-                composable(MORE_ROUTE) { MoreScreen(navController) }
+
+                composable(HOME_ROUTE) { HomeScreen(navController, {}) }
+                composable(TRANSFER_ROUTE) { TransferScreen(navController) }
+                composable(MORE_ROUTE) { MoreScreen(navController, onLogout) }
                 composable(FAVOURITES_ROUTE) { FavouriteScreen(navController) }
                 composable(TRANSACTIONS_ROUTE) { TransactionsScreen(navController) }
                 composable(TRANSACTION_ROUTE) { TransactionScreen(navController) }

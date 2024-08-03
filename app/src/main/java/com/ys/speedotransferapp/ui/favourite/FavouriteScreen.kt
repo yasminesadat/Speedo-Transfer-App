@@ -105,6 +105,20 @@ fun FavouriteList(viewModel: FavouriteViewModel) {
 }
 
 @Composable
+fun FavouriteListNoIcon(viewModel: FavouriteViewModel, onItemClick: (FavouriteItem) -> Unit) {
+    val favourites = viewModel.favourites.collectAsState().value
+    LazyColumn {
+        items(favourites) { favouriteItem ->
+            FavouritesCardNoIcons(
+                favouriteItem,
+                onClick = { onItemClick(favouriteItem) }
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+    }
+}
+
+@Composable
 fun FavouritesCard(favourite: FavouriteItem, viewModel: FavouriteViewModel) {
     Card(
         colors = CardDefaults.cardColors(containerColor = P50),
@@ -165,6 +179,58 @@ fun FavouritesCard(favourite: FavouriteItem, viewModel: FavouriteViewModel) {
                 modifier = Modifier
                     .size(24.dp)
                     .clickable { viewModel.deleteFavourite(favourite) })
+        }
+    }
+}
+
+
+@Composable
+fun FavouritesCardNoIcons(favourite: FavouriteItem, onClick: () -> Unit) {
+    Card(
+        colors = CardDefaults.cardColors(containerColor = P50),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(4.dp)
+            .clickable(onClick = onClick)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(16.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(52.dp)
+                    .clip(GenericShape { size, _ ->
+                        addOval(size.toRect())
+                    })
+                    .background(G0)
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(R.drawable.bank),
+                    contentDescription = "bank icon",
+                    tint = G700,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .size(36.dp)
+                )
+            }
+            Column(
+                modifier = Modifier.padding(horizontal = 8.dp)
+            ) {
+                Text(
+                    text = favourite.name,
+                    color = G900,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 16.sp
+                )
+                Text(
+                    text = favourite.accountNumber,
+                    color = G100,
+                    modifier = Modifier.padding(top = 8.dp),
+                    fontSize = 16.sp
+                )
+            }
+            Spacer(modifier = Modifier.weight(1f))
+
         }
     }
 }

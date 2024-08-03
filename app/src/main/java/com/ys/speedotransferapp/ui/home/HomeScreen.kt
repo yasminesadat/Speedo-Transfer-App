@@ -58,6 +58,7 @@ import com.ys.speedotransferapp.ui_model.ServiceItem
 @Composable
 fun HomeScreen(
     navController: NavController,
+    onLogout: () -> Unit,
     viewModel: HomeViewModel = HomeViewModel()
 ) {
     Column(
