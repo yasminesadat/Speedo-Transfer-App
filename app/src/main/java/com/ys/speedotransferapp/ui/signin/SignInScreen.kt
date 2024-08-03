@@ -16,17 +16,23 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -38,26 +44,33 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.ys.speedotransferapp.R
-import com.ys.speedotransferapp.navigation.AppRoutes
+import com.ys.speedotransferapp.constants.AppRoutes
+import com.ys.speedotransferapp.data.UserSource
 import com.ys.speedotransferapp.ui.common.CommonComposableViewModel
 import com.ys.speedotransferapp.ui.common.InputField
 import com.ys.speedotransferapp.ui.common.SpeedoTransferText
-import com.ys.speedotransferapp.ui.signup.SignUpViewModel
 import com.ys.speedotransferapp.ui.theme.G0
 import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.P20
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignInScreen(
     navController: NavController,
-    viewModel: SignInViewModel = SignInViewModel(),
+    viewModel: SignInViewModel = SignInViewModel(UserSource()),
+    onLoginSuccess: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
+    val isUserValid by viewModel.isUserValid.collectAsState()
     var isPassError: Boolean = false
     val view_model = remember { CommonComposableViewModel() }
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -81,7 +94,8 @@ fun SignInScreen(
                 )
             )
         },
-        containerColor = Color.Transparent
+        containerColor = Color.Transparent,
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
 
         Column(
@@ -108,7 +122,7 @@ fun SignInScreen(
             isPassError = InputField(
                 viewModel = view_model,
                 value = password,
-                fieldId = "password",
+                fieldId = "password_signin",
                 label = "Password",
                 hint = "Enter your password",
                 onValueChanged = { viewModel.setPassword(it) },
@@ -118,7 +132,17 @@ fun SignInScreen(
             )
             Spacer(modifier = Modifier.padding(8.dp))
             Button(
-                onClick = { navController.navigate(AppRoutes.HOME_ROUTE) },
+                onClick = {
+                    if (viewModel.verifyUser()) {
+                        onLoginSuccess()
+                    } else {
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar(
+                                message = "Invalid account"
+                            )
+                        }
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
@@ -126,7 +150,6 @@ fun SignInScreen(
                 shape = RoundedCornerShape(6.dp),
                 contentPadding = PaddingValues(16.dp),
                 enabled = email.isNotBlank() && (password.isNotBlank() || !isPassError)
-
             ) {
                 Log.d("SignInScreen", "isPassError: $isPassError")
                 Text(
@@ -137,7 +160,6 @@ fun SignInScreen(
                         fontWeight = FontWeight.Bold
                     )
                 )
-
             }
             Spacer(modifier = Modifier.padding(8.dp))
             Row(
@@ -170,5 +192,5 @@ fun SignInScreen(
 @Preview(showBackground = true)
 @Composable
 private fun SignInScreenPreview() {
-    //SignInScreen(SignInViewModel())
+    //SignInScreen(SignInViewModel(UserSource()))
 }

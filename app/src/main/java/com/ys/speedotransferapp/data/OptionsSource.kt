@@ -1,7 +1,7 @@
 package com.ys.speedotransferapp.data
 
 import com.ys.speedotransferapp.R
-import com.ys.speedotransferapp.model.OptionItem
+import com.ys.speedotransferapp.ui_model.OptionItem
 
 class OptionsSource {
     fun getOptions(): List<OptionItem>{

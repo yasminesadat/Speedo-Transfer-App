@@ -1,12 +1,12 @@
 package com.ys.speedotransferapp.data
 
 import com.ys.speedotransferapp.R
-import com.ys.speedotransferapp.model.BottomNavigationItem
-import com.ys.speedotransferapp.navigation.AppRoutes.CARDS_ROUTE
-import com.ys.speedotransferapp.navigation.AppRoutes.HOME_ROUTE
-import com.ys.speedotransferapp.navigation.AppRoutes.MORE_ROUTE
-import com.ys.speedotransferapp.navigation.AppRoutes.TRANSACTIONS_ROUTE
-import com.ys.speedotransferapp.navigation.AppRoutes.TRANSFER_ROUTE
+import com.ys.speedotransferapp.ui_model.BottomNavigationItem
+import com.ys.speedotransferapp.constants.AppRoutes.CARDS_ROUTE
+import com.ys.speedotransferapp.constants.AppRoutes.HOME_ROUTE
+import com.ys.speedotransferapp.constants.AppRoutes.MORE_ROUTE
+import com.ys.speedotransferapp.constants.AppRoutes.TRANSACTIONS_ROUTE
+import com.ys.speedotransferapp.constants.AppRoutes.TRANSFER_ROUTE
 
 class BottomNavigationItemsSource {
     fun get(): List<BottomNavigationItem> {

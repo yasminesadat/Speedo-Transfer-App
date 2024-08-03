@@ -30,7 +30,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,29 +46,26 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.ys.speedotransferapp.R
-import com.ys.speedotransferapp.model.FavouriteItem
 import com.ys.speedotransferapp.ui.common.CustomOutlinedTextField
 import com.ys.speedotransferapp.ui.common.Header
-import com.ys.speedotransferapp.ui.theme.G900
-import com.ys.speedotransferapp.ui.theme.G100
-import com.ys.speedotransferapp.ui.theme.P300
-import com.ys.speedotransferapp.ui.theme.G700
-import com.ys.speedotransferapp.ui.theme.G40
 import com.ys.speedotransferapp.ui.theme.D300
+import com.ys.speedotransferapp.ui.theme.G100
+import com.ys.speedotransferapp.ui.theme.G40
+import com.ys.speedotransferapp.ui.theme.G700
+import com.ys.speedotransferapp.ui.theme.G900
+import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.P50
+import com.ys.speedotransferapp.ui_model.FavouriteItem
 
 @Composable
 fun FavouriteScreen(
-    navController: NavController, viewModel: FavouriteViewModel = viewModel()
+    navController: NavController,
+    viewModel: FavouriteViewModel = viewModel()
 ) {
-    val showBottomSheet by viewModel.showBottomSheet.collectAsState()
-    val selectedFavourite by viewModel.selectedFavourite.collectAsState()
-
-    if (showBottomSheet) {
+    if (viewModel.showBottomSheet) {
         BottomSheet(
-            favourite = selectedFavourite!!,
             onDismiss = { viewModel.showBottomSheet(false) },
-            onSave = { old, new -> viewModel.updateFavourite(old, new) },
+            onSave = { viewModel.updateFavourite() },
             viewModel = viewModel
         )
     }
@@ -102,14 +98,28 @@ fun FavouriteList(viewModel: FavouriteViewModel) {
     val favourites = viewModel.favourites.collectAsState().value
     LazyColumn {
         items(favourites) { favouriteItem ->
-            FavouritesItem(favouriteItem, viewModel)
+            FavouritesCard(favouriteItem, viewModel)
             Spacer(modifier = Modifier.height(8.dp))
         }
     }
 }
 
 @Composable
-fun FavouritesItem(favourite: FavouriteItem, viewModel: FavouriteViewModel) {
+fun FavouriteListNoIcon(viewModel: FavouriteViewModel, onItemClick: (FavouriteItem) -> Unit) {
+    val favourites = viewModel.favourites.collectAsState().value
+    LazyColumn {
+        items(favourites) { favouriteItem ->
+            FavouritesCardNoIcons(
+                favouriteItem,
+                onClick = { onItemClick(favouriteItem) }
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+    }
+}
+
+@Composable
+fun FavouritesCard(favourite: FavouriteItem, viewModel: FavouriteViewModel) {
     Card(
         colors = CardDefaults.cardColors(containerColor = P50),
         modifier = Modifier
@@ -146,7 +156,7 @@ fun FavouritesItem(favourite: FavouriteItem, viewModel: FavouriteViewModel) {
                     fontSize = 16.sp
                 )
                 Text(
-                    text = favourite.accountNumber,
+                    text = "Account xxxx"+favourite.accountNumber.takeLast(4),
                     color = G100,
                     modifier = Modifier.padding(top = 8.dp),
                     fontSize = 16.sp
@@ -161,7 +171,7 @@ fun FavouritesItem(favourite: FavouriteItem, viewModel: FavouriteViewModel) {
                     .size(24.dp)
                     .clickable {
                         viewModel.showBottomSheet(true)
-                        viewModel.setSelectedFavourite(favourite)
+                        viewModel.updateSelectedFavourite(favourite)
                     })
             Icon(imageVector = ImageVector.vectorResource(R.drawable.delete),
                 contentDescription = "delete icon",
@@ -173,12 +183,63 @@ fun FavouritesItem(favourite: FavouriteItem, viewModel: FavouriteViewModel) {
     }
 }
 
+
+@Composable
+fun FavouritesCardNoIcons(favourite: FavouriteItem, onClick: () -> Unit) {
+    Card(
+        colors = CardDefaults.cardColors(containerColor = P50),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(4.dp)
+            .clickable(onClick = onClick)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(16.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(52.dp)
+                    .clip(GenericShape { size, _ ->
+                        addOval(size.toRect())
+                    })
+                    .background(G40)
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(R.drawable.bank),
+                    contentDescription = "bank icon",
+                    tint = G700,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .size(36.dp)
+                )
+            }
+            Column(
+                modifier = Modifier.padding(horizontal = 8.dp)
+            ) {
+                Text(
+                    text = favourite.name,
+                    color = G900,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 16.sp
+                )
+                Text(
+                    text = "Account xxxx"+favourite.accountNumber.takeLast(4),
+                    color = G100,
+                    modifier = Modifier.padding(top = 8.dp),
+                    fontSize = 16.sp
+                )
+            }
+            Spacer(modifier = Modifier.weight(1f))
+
+        }
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomSheet(
-    favourite: FavouriteItem,
     onDismiss: () -> Unit,
-    onSave: (FavouriteItem, FavouriteItem) -> Unit,
+    onSave: () -> Unit,
     viewModel: FavouriteViewModel
 ) {
     val sheetState = rememberModalBottomSheetState()
@@ -213,26 +274,24 @@ fun BottomSheet(
                 )
 
             }
-            val name by viewModel.name.collectAsState()
-            val accountNumber by viewModel.accountNumber.collectAsState()
 
             CustomOutlinedTextField(
                 header = "Recipient Name",
-                value = name,
-                onValueChange = { viewModel.setName(it) },
+                value = viewModel.name,
+                onValueChange = { viewModel.updateName(it) },
                 label = "Enter Cardholder Name",
             )
 
             CustomOutlinedTextField(
                 header = "Recipient Account",
-                value = accountNumber,
-                onValueChange = {viewModel.setAccountNumber(it)},
+                value = viewModel.accountNumber,
+                onValueChange = { viewModel.updateAccountNumber(it) },
                 label = "Enter Cardholder Account Number",
                 keyboardType = KeyboardType.Number
             )
             Button(
                 onClick = {
-                    onSave(favourite, FavouriteItem(name, accountNumber))
+                    onSave()
                     onDismiss()
                 },
                 modifier = Modifier
@@ -241,7 +300,7 @@ fun BottomSheet(
                 colors = ButtonDefaults.buttonColors(containerColor = P300),
                 shape = RoundedCornerShape(6.dp),
                 contentPadding = PaddingValues(16.dp),
-                enabled = name.isNotBlank() && accountNumber.isNotBlank()
+                enabled = viewModel.name.isNotBlank() && viewModel.accountNumber.isNotBlank()
             ) {
                 Text(
                     text = "Save",

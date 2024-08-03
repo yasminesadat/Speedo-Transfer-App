@@ -39,14 +39,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.navigation.NavController
 import com.ys.speedotransferapp.R
-import com.ys.speedotransferapp.navigation.AppRoutes
+import com.ys.speedotransferapp.constants.AppRoutes
 import com.ys.speedotransferapp.ui.common.BottomSheet
 import com.ys.speedotransferapp.ui.common.CommonComposableViewModel
 import com.ys.speedotransferapp.ui.common.InputField
 import com.ys.speedotransferapp.ui.common.SpeedoTransferText
 import com.ys.speedotransferapp.ui.theme.G0
-import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.P20
+import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.appTypography
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,6 +54,7 @@ import com.ys.speedotransferapp.ui.theme.appTypography
 fun ExtraSignUpScreen(navController: NavController, viewModel: SignUpViewModel = SignUpViewModel(), modifier: Modifier = Modifier) {
     val country by viewModel.country.collectAsState()
     val dateOfBirth by viewModel.dateOfBirth.collectAsState()
+    val selectedDate by viewModel.selectedDate.collectAsState()
     var showBottomSheet by remember { mutableStateOf(false) }
     var selectedLabel by remember { mutableStateOf("") }
     val view_model = remember { CommonComposableViewModel() }
@@ -115,10 +116,12 @@ fun ExtraSignUpScreen(navController: NavController, viewModel: SignUpViewModel =
             Spacer(modifier = Modifier.padding(8.dp))
             InputField(
                 viewModel = view_model,
-                value = dateOfBirth,
+                value = selectedDate,
                 label = "Date of Birth",
                 fieldId = "dateOfBirth",
                 hint = "DD/MM/YYYY",
+                isClickable = true,
+                clickAction = { viewModel.showDatePicker(navController.context) },
                 keyboardType = KeyboardType.Uri,
                 onValueChanged = { viewModel.setDateOfBirth(it) },
                 trailingIcon = R.drawable.date,
@@ -138,7 +141,7 @@ fun ExtraSignUpScreen(navController: NavController, viewModel: SignUpViewModel =
 
             ) {
                 Text(
-                    text = "Continue",
+                    text = "Sign Up",
                     style = TextStyle(
                         color = Color.White,
                         fontStyle = FontStyle.Normal,
@@ -176,5 +179,5 @@ fun SideScreen(onDismiss: () -> Unit) {
 @Preview
 @Composable
 private fun ExtraSignUpScreenPreview() {
-      //ExtraSignUpScreen(viewModel = SignUpViewModel())
+    //ExtraSignUpScreen(viewModel = SignUpViewModel())
 }
