@@ -1,7 +1,5 @@
 package com.ys.speedotransferapp.data
 
-import com.ys.speedotransferapp.R
-import com.ys.speedotransferapp.model.OptionItem
 import com.ys.speedotransferapp.model.User
 
 class UserSource {

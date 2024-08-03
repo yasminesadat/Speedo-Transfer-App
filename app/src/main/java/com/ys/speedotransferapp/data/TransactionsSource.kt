@@ -85,8 +85,8 @@ class TransactionsSource {
             )
         }
     }
-
-    fun getRecentTransactions(): List<TransactionItem> {
-        return getTransactions().take(3)
-    }
+//might need it
+//    fun getRecentTransactions(): List<TransactionItem> {
+//        return getTransactions().take(3)
+//    }
 }
