@@ -1,13 +1,11 @@
 package com.ys.speedotransferapp.ui.transfer
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ys.speedotransferapp.data.CurrienciesSource
-import com.ys.speedotransferapp.model.Currencies
-import com.ys.speedotransferapp.model.TransferState
-import com.ys.speedotransferapp.model.TransferStep
+import com.ys.speedotransferapp.ui_model.Currencies
+import com.ys.speedotransferapp.ui_model.TransferState
+import com.ys.speedotransferapp.ui_model.TransferStep
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

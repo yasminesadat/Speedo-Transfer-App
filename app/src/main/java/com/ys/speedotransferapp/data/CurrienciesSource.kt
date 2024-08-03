@@ -1,7 +1,7 @@
 package com.ys.speedotransferapp.data
 
 import com.ys.speedotransferapp.R
-import com.ys.speedotransferapp.model.Currencies
+import com.ys.speedotransferapp.ui_model.Currencies
 
 class CurrienciesSource {
     fun get (): List<Currencies> {

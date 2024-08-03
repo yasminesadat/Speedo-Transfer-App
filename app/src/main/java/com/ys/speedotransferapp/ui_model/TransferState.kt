@@ -1,4 +1,4 @@
-package com.ys.speedotransferapp.model
+package com.ys.speedotransferapp.ui_model
 
 enum class TransferStep {
     AMOUNT, CONFIRMATION, PAYMENT

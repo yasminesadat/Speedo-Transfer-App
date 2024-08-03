@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ys.speedotransferapp.model.TransferStep
+import com.ys.speedotransferapp.ui_model.TransferStep
 import com.ys.speedotransferapp.ui.theme.P300
 
 @Composable

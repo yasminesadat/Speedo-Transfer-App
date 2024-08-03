@@ -1,6 +1,4 @@
-package com.ys.speedotransferapp.model
-
-import com.ys.speedotransferapp.ui_model.TransactionItem
+package com.ys.speedotransferapp.ui_model
 
 data class User(
 

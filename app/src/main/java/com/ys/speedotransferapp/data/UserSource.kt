@@ -1,6 +1,6 @@
 package com.ys.speedotransferapp.data
 
-import com.ys.speedotransferapp.model.User
+import com.ys.speedotransferapp.ui_model.User
 
 class UserSource {
     fun getUsers() :List<User>{
