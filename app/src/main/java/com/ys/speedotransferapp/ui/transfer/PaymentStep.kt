@@ -20,26 +20,44 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.ui.common.TransferInfo
 import com.ys.speedotransferapp.ui.theme.appTypography
 
 @Composable
 fun PaymentStep(
-    amount: Double,
-    isSuccessful: Boolean,
-    onBackToHome: () -> Unit
+    navController: NavController
 ) {
+
+    val context = LocalContext.current
+    val viewModel = remember {
+        TransferScreenViewModel()
+    }
+    LaunchedEffect(Unit) {
+        viewModel.loadTransferDetails(context)
+    }
+    val amount by viewModel.amount_sending.collectAsState()
+    val recName by viewModel.recName.collectAsState()
+    val recAccount by viewModel.recAccount.collectAsState()
+    var recAccountString = "xxxx"+recAccount.takeLast(4)
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -58,8 +76,8 @@ fun PaymentStep(
             TransferInfo(
                 fromName = "Yasmine Atef",
                 fromAccount = "Account xxxx1234",
-                toName = "Ahmed Bakr",
-                toAccount = "Account xxxx1234",
+                toName = recName,
+                toAccount = "Account $recAccountString",
                 icon = R.drawable.success_small
             )
 
