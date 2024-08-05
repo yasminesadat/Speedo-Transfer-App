@@ -92,6 +92,7 @@ fun AmountStep(navController: NavController): Boolean {
         isLoading.value = false
     }
 
+
     val amountSend by viewModel.amount_sending.collectAsState()
     val recName by viewModel.recName.collectAsState()
     val recAccount by viewModel.recAccount.collectAsState()

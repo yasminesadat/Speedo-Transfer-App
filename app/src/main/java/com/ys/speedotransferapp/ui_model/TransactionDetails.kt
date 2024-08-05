@@ -7,9 +7,9 @@ data class TransactionDetails(
     val status: String,
     val paymentProcessor: String,
     val amount: String,
+    val reference: Long,
     //details
     val senderName: String,
-    val reference: String,
     val senderAccount: String,
     val currency: String
     )

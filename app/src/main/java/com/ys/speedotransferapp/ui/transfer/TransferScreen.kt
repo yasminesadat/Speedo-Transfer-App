@@ -51,8 +51,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.constants.AppRoutes
-import com.ys.speedotransferapp.model.TransferStep
+
 import com.ys.speedotransferapp.ui.common.CommonComposableViewModel
+import com.ys.speedotransferapp.ui_model.TransferStep
 import com.ys.speedotransferapp.ui.common.Header
 import com.ys.speedotransferapp.ui.common.InputField
 import com.ys.speedotransferapp.ui.favourite.FavouriteViewModel

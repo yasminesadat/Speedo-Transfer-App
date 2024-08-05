@@ -9,8 +9,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.ui.platform.LocalContext
-import com.ys.speedotransferapp.constants.AppNavHost
+import com.ys.speedotransferapp.ui.navigation.MainScreen
 import com.ys.speedotransferapp.ui.theme.SpeedoTransferAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,8 +20,7 @@ class MainActivity : ComponentActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setContent {
             SpeedoTransferAppTheme {
-                createNotificationChannel(LocalContext.current)
-                AppNavHost()
+                MainScreen() {}
             }
         }
     }
@@ -36,4 +34,3 @@ private fun createNotificationChannel(context: Context) {
     val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     manager.createNotificationChannel(channel)
 }
-

@@ -1,17 +1,12 @@
 package com.ys.speedotransferapp.ui.transfer
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
-import android.util.Log
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ys.speedotransferapp.R
-import com.ys.speedotransferapp.model.TransferState
-import com.ys.speedotransferapp.model.TransferStep
-import com.ys.speedotransferapp.ui.home.HomeViewModel
+import com.ys.speedotransferapp.data.CurrienciesSource
+import com.ys.speedotransferapp.ui_model.Currencies
+import com.ys.speedotransferapp.ui_model.TransferState
+import com.ys.speedotransferapp.ui_model.TransferStep
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,14 +18,17 @@ class TransferScreenViewModel : ViewModel() {
     private val _state = MutableStateFlow(TransferState())
     val state: StateFlow<TransferState> = _state.asStateFlow()
 
+
     private val _amount_sending = MutableStateFlow("")
     val amount_sending = _amount_sending.asStateFlow()
+
 
     private val _recName = MutableStateFlow("")
     val recName = _recName.asStateFlow()
 
     private val _recAccount = MutableStateFlow("")
     val recAccount = _recAccount.asStateFlow()
+
 
     private val _amountError = MutableStateFlow<String?>(null)
     val amountError: StateFlow<String?> get() = _amountError
@@ -108,7 +106,7 @@ class TransferScreenViewModel : ViewModel() {
         }
 
         return isValid && isAmountFieldValid
-    }
+
 
 
     fun onRecNameChange(newText: String) {

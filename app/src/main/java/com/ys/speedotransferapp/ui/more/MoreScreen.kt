@@ -226,7 +226,7 @@ fun ShowHelp(
                     .weight(1f)
                     .clickable {
                         val intent = Intent(Intent.ACTION_DIAL).apply {
-                            data = Uri.parse("tel: $NUMBER")
+                            data = Uri.parse("tel:$NUMBER")
                         }
                         context.startActivity(intent)
                     },

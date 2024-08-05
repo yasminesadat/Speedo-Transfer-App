@@ -1,0 +1,88 @@
+{
+  "transactions": [
+    {
+      "id": 1234567890123456793,
+      "senderAccountNumber": "1423456789",
+      "recipientAccountNumber": "1387654321",
+      "senderName": "Xander Smith",
+      "recipientName": "PAGE1",
+      "amount": 1000.75,
+      "transactionTime": "2024-08-10T22:30:00",
+      "currency": "USD",
+      "cardType": "Mastercard",
+      "status": "Successful"
+    },
+    {
+      "id": 1234567890123456792,
+      "senderAccountNumber": "1323456789",
+      "recipientAccountNumber": "1287654321",
+      "senderName": "Vera Rodriguez",
+      "recipientName": "Will Edwards",
+      "amount": 900.50,
+      "transactionTime": "2024-08-09T22:00:00",
+      "currency": "EGP",
+      "cardType": "Mastercard",
+      "status": "Successful"
+    },
+    {
+      "id": 1234567890123456791,
+      "senderAccountNumber": "1223456789",
+      "recipientAccountNumber": "1187654321",
+      "senderName": "Thomas Garcia",
+      "recipientName": "Uma Scott",
+      "amount": 75.25,
+      "transactionTime": "2024-08-08T21:30:00",
+      "currency": "USD",
+      "cardType": "Mastercard",
+      "status": "Failed"
+    },
+    {
+      "id": 1234567890123456790,
+      "senderAccountNumber": "1123456789",
+      "recipientAccountNumber": "1087654321",
+      "senderName": "Rachel White",
+      "recipientName": "Sam Thompson",
+      "amount": 50.00,
+      "transactionTime": "2024-08-07T21:00:00",
+      "currency": "EUR",
+      "cardType": "Mastercard",
+      "status": "Failed"
+    },
+    {
+      "id": 1234567890123456789,
+      "senderAccountNumber": "1023456789",
+      "recipientAccountNumber": "9987654321",
+      "senderName": "Paul Robinson",
+      "recipientName": "Quinn Carter",
+      "amount": 600.75,
+      "transactionTime": "2024-08-06T20:30:00",
+      "currency": "EGP",
+      "cardType": "Mastercard",
+      "status": "Successful"
+    },
+    {
+      "id": 1234567890123456788,
+      "senderAccountNumber": "9234567890",
+      "recipientAccountNumber": "8987654321",
+      "senderName": "Noah Perez",
+      "recipientName": "Olivia Taylor",
+      "amount": 400.00,
+      "transactionTime": "2024-08-05T20:00:00",
+      "currency": "USD",
+      "cardType": "Mastercard",
+      "status": "Failed"
+    },
+    {
+      "id": 1234567890123456787,
+      "senderAccountNumber": "8234567890",
+      "recipientAccountNumber": "7987654321",
+      "senderName": "Liam Martinez",
+      "recipientName": "Mia Lee",
+      "amount": 250.50,
+      "transactionTime": "2024-08-05T19:30:00",
+      "currency": "EUR",
+      "cardType": "Mastercard",
+      "status": "Successful"
+    }
+  ]
+}
