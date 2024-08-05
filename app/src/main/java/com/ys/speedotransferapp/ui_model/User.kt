@@ -8,6 +8,6 @@ data class User(
     val country: String,
     val birthDate: String,
     val favourites: List<String>,
-    val transactions: List<TransactionItem>
+    val transactions: List<Transaction>
 ) {
 }

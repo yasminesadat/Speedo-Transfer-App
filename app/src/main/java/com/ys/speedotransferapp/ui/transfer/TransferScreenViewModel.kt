@@ -25,15 +25,15 @@ class TransferScreenViewModel : ViewModel() {
     init {
         _selectedOption.value = options[0]
     }
-    private val _amount_sending = MutableStateFlow("")
-    val amount_sending = _amount_sending.asStateFlow()
+    private val _amountSending = MutableStateFlow("")
+    val amountSending = _amountSending.asStateFlow()
     private val _recName = MutableStateFlow("")
     val recName = _recName.asStateFlow()
 
     private val _recAccount = MutableStateFlow("")
     val recAccount = _recAccount.asStateFlow()
     fun onAmountSendChange(newText: String) {
-        _amount_sending.value = newText
+        _amountSending.value = newText
     }
 
     fun onRecNameChange(newText: String) {

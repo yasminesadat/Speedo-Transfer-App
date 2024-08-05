@@ -48,7 +48,7 @@ import com.ys.speedotransferapp.ui.theme.G700
 import com.ys.speedotransferapp.ui.theme.G900
 import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.P50
-import com.ys.speedotransferapp.ui_model.TransactionItem
+import com.ys.speedotransferapp.ui_model.Transaction
 
 @Composable
 fun TransactionsScreen(
@@ -91,7 +91,7 @@ fun TransactionsScreen(
 
 @Composable
 fun TransactionCard(
-    transaction: TransactionItem,
+    transaction: Transaction,
     viewModel: TransactionsViewModel,
     navController: NavController
 ) {
@@ -144,8 +144,7 @@ fun TransactionCard(
                             )
                         ) {
                             append(
-                                transaction.paymentProcessor + " . " +
-                                        transaction.recipientDigits
+                                viewModel.getCardDetails(transaction)
                             )
                         }
                         append("\n")

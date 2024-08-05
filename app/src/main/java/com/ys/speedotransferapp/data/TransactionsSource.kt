@@ -1,13 +1,14 @@
 package com.ys.speedotransferapp.data
 
 import com.ys.speedotransferapp.R
-import com.ys.speedotransferapp.ui_model.TransactionItem
+import com.ys.speedotransferapp.ui_model.Transaction
 
 class TransactionsSource {
-    fun getTransactions(): List<TransactionItem> {
-        return mutableListOf<TransactionItem>().apply {
+    fun getTransactions(): List<Transaction> {
+        return mutableListOf<Transaction>().apply {
             add(
-                TransactionItem(
+                Transaction(
+                    reference = 234567,
                     recipientName = "John Doe",
                     recipientDigits = "1234",
                     dateTime = "Today 14:23",
@@ -18,7 +19,8 @@ class TransactionsSource {
                 )
             )
             add(
-                TransactionItem(
+                Transaction(
+                    reference = 234567,
                     recipientName = "Alice Johnson",
                     recipientDigits = "5678",
                     dateTime = "Yesterday 09:45",
@@ -29,7 +31,8 @@ class TransactionsSource {
                 )
             )
             add(
-                TransactionItem(
+                Transaction(
+                    reference = 2345672,
                     recipientName = "Chris Evans",
                     recipientDigits = "8765",
                     dateTime = "3 August 16:30",
@@ -40,7 +43,8 @@ class TransactionsSource {
                 )
             )
             add(
-                TransactionItem(
+                Transaction(
+                    reference = 2345637,
                     recipientName = "Diana Prince",
                     recipientDigits = "4321",
                     dateTime = "1 June 11:20",
@@ -51,7 +55,8 @@ class TransactionsSource {
                 )
             )
             add(
-                TransactionItem(
+                Transaction(
+                    reference = 2345367,
                     recipientName = "Bruce Wayne",
                     recipientDigits = "1234",
                     dateTime = "20 May 18:45",
@@ -62,7 +67,8 @@ class TransactionsSource {
                 )
             )
             add(
-                TransactionItem(
+                Transaction(
+                    reference = 2341567,
                     recipientName = "Peter Parker",
                     recipientDigits = "5678",
                     dateTime = "15 May 14:15",
@@ -73,7 +79,8 @@ class TransactionsSource {
                 )
             )
             add(
-                TransactionItem(
+                Transaction(
+                    reference = 2343567,
                     recipientName = "Tony Stark",
                     recipientDigits = "8765",
                     dateTime = "1 May 09:10",

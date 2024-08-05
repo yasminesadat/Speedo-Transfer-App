@@ -61,7 +61,7 @@ fun AmountStep(onAmountEntered: (Double) -> Unit) {
     val viewModelFav = remember {
         FavouriteViewModel()
     }
-    val amount_send by viewModel.amount_sending.collectAsState()
+    val amount_send by viewModel.amountSending.collectAsState()
     val recName by viewModel.recName.collectAsState()
     val recAccount by viewModel.recAccount.collectAsState()
 
