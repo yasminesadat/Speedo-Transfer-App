@@ -1,0 +1,12 @@
+{
+  "id": 1234567890123456793,
+  "senderAccountNumber": "1423456789",
+  "recipientAccountNumber": "1387654321",
+  "senderName": "Xander Smith",
+  "recipientName": "Vera Rodriguez",
+  "amount": 1000.75,
+  "transactionTime": "2024-08-10T22:30:00",
+  "currency": "USD",
+  "cardType": "Mastercard",
+  "status": "Failed"
+}

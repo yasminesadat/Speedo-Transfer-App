@@ -15,9 +15,16 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -39,13 +46,26 @@ import com.ys.speedotransferapp.ui.theme.G700
 import com.ys.speedotransferapp.ui.theme.G900
 import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.P50
-
+import kotlinx.coroutines.delay
 
 @Composable
 fun TransactionScreen(
     navController: NavController,
-    viewModel: TransactionViewModel = TransactionViewModel()
+    transactionID: Long,
+    viewModel: TransactionViewModel = TransactionViewModel(transactionID)
 ) {
+    val transaction by viewModel.transaction.collectAsState()
+    var showLoading by remember { mutableStateOf(false) }
+
+    LaunchedEffect(transaction) {
+        if(transaction==null)
+            showLoading = true
+        else {
+            delay(5000)
+            showLoading = false
+        }
+        }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -54,86 +74,92 @@ fun TransactionScreen(
             .verticalScroll(rememberScrollState())
     ) {
         Header(text = viewModel.getHeader(), navController = navController)
-
-        Image(
-            painter = painterResource(viewModel.getLargeIcon()),
-            contentDescription = null,
-            modifier = Modifier
-                .size(120.dp)
-                .align(Alignment.CenterHorizontally)
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            BasicText(
-                buildAnnotatedString {
-                    withStyle(style = ParagraphStyle(lineHeight = 24.sp)) {
-                        withStyle(
-                            SpanStyle(
-                                color = G900,
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.Medium
-                            )
-                        ) {
-                            append(viewModel.transaction.amount)
+            transaction?.let {
+                Image(
+                    painter = painterResource(viewModel.getLargeIcon()),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(120.dp)
+                        .align(Alignment.CenterHorizontally)
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    BasicText(
+                        buildAnnotatedString {
+                            withStyle(style = ParagraphStyle(lineHeight = 24.sp)) {
+                                withStyle(
+                                    SpanStyle(
+                                        color = G900,
+                                        fontSize = 24.sp,
+                                        fontWeight = FontWeight.Medium
+                                    )
+                                ) {
+                                    append(it.amount)
+                                }
+                                append(" ")
+                                withStyle(
+                                    SpanStyle(
+                                        color = P300,
+                                        fontSize = 24.sp,
+                                        fontWeight = FontWeight.Medium
+                                    )
+                                ) {
+                                    append(it.currency)
+                                }
+                            }
                         }
-                        append(" ")
-                        withStyle(
-                            SpanStyle(
-                                color = P300,
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.Medium
+                    )
+
+                    Text(
+                        text = "Transfer Amount",
+                        color = G700,
+                        fontSize = 14.sp
+                    )
+
+                    TransferInfo(
+                        fromName = it.senderName,
+                        fromAccount = it.senderAccount,
+                        toName = it.recipientName,
+                        toAccount = it.recipientAccount,
+                        icon = viewModel.getIcon()
+                    )
+
+                    Card(
+                        colors = CardDefaults.cardColors(containerColor = P50),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) {
+                        Column {
+                            RowEntry(
+                                field = "Reference",
+                                value = it.reference.toString(),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp)
+                                    .padding(vertical = 8.dp)
                             )
-                        ) {
-                            append(viewModel.transaction.currency)
+                            HorizontalDivider(color = G40, thickness = 2.dp)
+                            RowEntry(
+                                field = "Date",
+                                value = it.dateTime,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp)
+                                    .padding(vertical = 8.dp)
+                            )
                         }
                     }
                 }
-            )
-
-            Text(
-                text ="Transfer Amount",
-                color = G700,
-                fontSize = 14.sp
-            )
-
-        }
-        TransferInfo(
-            fromName = viewModel.transaction.senderName,
-            fromAccount = viewModel.transaction.senderAccount,
-            toName = viewModel.transaction.recipientName,
-            toAccount = viewModel.transaction.recipientAccount,
-            icon = viewModel.getIcon()
-        )
-        Card(
-            colors = CardDefaults.cardColors(containerColor = P50),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            RowEntry(
-                field = "Reference",
-                value = viewModel.transaction.reference.toString(),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .padding(vertical = 8.dp)
-            )
-            HorizontalDivider(color = G40, thickness = 2.dp)
-            RowEntry(
-                field = "Date",
-                value = viewModel.transaction.dateTime,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .padding(vertical = 8.dp)
-            )
+            } ?: run {
+                if(showLoading)
+               CircularProgressIndicator()
+            }
         }
     }
-}
-
 
 @Composable
 fun RowEntry(field: String, value: String, modifier: Modifier) {
@@ -161,5 +187,5 @@ fun RowEntry(field: String, value: String, modifier: Modifier) {
 @Preview(showBackground = true)
 @Composable
 private fun TransferInfoPreview() {
-    TransactionScreen(rememberNavController())
+    TransactionScreen(rememberNavController(), 1)
 }

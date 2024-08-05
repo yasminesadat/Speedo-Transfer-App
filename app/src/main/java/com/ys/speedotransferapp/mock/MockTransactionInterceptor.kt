@@ -21,7 +21,6 @@ class MockTransactionInterceptor : Interceptor {
                 val pageNumber = getPageNumberFromUrl(url)
                 val mockFile = "assets/mock_transactions_page_$pageNumber.json"
                 val mockResponseBody = loadMockResponse(mockFile)
-                println(mockResponseBody)
                 Response.Builder()
                     .code(200)
                     .message("OK")
@@ -32,21 +31,17 @@ class MockTransactionInterceptor : Interceptor {
             }
 
             else -> {
+                val mockFile = "assets/mock_transaction.json"
+                val mockResponseBody = loadMockResponse(mockFile)
                 Response.Builder()
-                    .code(404)
-                    .message("Not Found")
-                    .body(
-                        ResponseBody.create(
-                            MediaType.parse("text/plain"),
-                            "The requested resource was not found"
-                        )
-                    )
+                    .code(200)
+                    .message("OK")
+                    .body(ResponseBody.create(MediaType.get("application/json"), mockResponseBody))
                     .protocol(okhttp3.Protocol.HTTP_1_1)
                     .request(request)
                     .build()
             }
         }
-
         return mockResponse
     }
 

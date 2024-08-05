@@ -2,8 +2,8 @@ package com.ys.speedotransferapp.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.ys.speedotransferapp.api.TransactionAPICallable
 import com.ys.speedotransferapp.api.TransactionAPIService
+import com.ys.speedotransferapp.constants.AppConstants.BEARER
 import com.ys.speedotransferapp.mapper.TransactionMapper
 import com.ys.speedotransferapp.ui_model.Transaction
 
@@ -16,9 +16,9 @@ class TransactionsPagingSource(
             val page = params.key ?: 1
             val pageSize = params.loadSize
             //replace with Token Manager
-            val token ="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKb2huQGV4YW1wbGUuY29tIiwiaWF0IjoxNzIyODc0NDYwLCJleHAiOjE3MjI5NjA4NjB9.uIu0m2Fj8em95v0eNF3oM-gS7EURI_XQkY5itqHmFGA"
-            val response = apiService.callable.getTransactions(page, pageSize, token)
-            val transactions = TransactionMapper().mapToView(response)
+            val token ="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsImlhdCI6MTcyMjg4MjIyOSwiZXhwIjoxNzIyOTY4NjI5fQ.JnM_IhnzdNxVwzCRkfYKq3FHAE8fx2ct4ekvHdixXSw"
+            val response = apiService.callable.getTransactions(page, pageSize, BEARER + token)
+            val transactions = TransactionMapper.mapToView(response)
 
             val nextKey = if (transactions.isEmpty()) {
                 null // No more pages
