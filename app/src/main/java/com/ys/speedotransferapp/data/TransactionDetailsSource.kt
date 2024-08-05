@@ -12,7 +12,7 @@ class TransactionDetailsSource {
         senderName = "Mary Jane",
         amount = "175.00",
         currency = "USD",
-        reference = "234567",
+        reference = 234567,
         senderAccount = "Account xxxx1234"
     )
 }

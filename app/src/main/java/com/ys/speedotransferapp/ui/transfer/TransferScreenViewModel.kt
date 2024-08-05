@@ -1,13 +1,11 @@
 package com.ys.speedotransferapp.ui.transfer
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ys.speedotransferapp.data.CurrienciesSource
-import com.ys.speedotransferapp.model.Currencies
-import com.ys.speedotransferapp.model.TransferState
-import com.ys.speedotransferapp.model.TransferStep
+import com.ys.speedotransferapp.ui_model.Currencies
+import com.ys.speedotransferapp.ui_model.TransferState
+import com.ys.speedotransferapp.ui_model.TransferStep
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,15 +25,15 @@ class TransferScreenViewModel : ViewModel() {
     init {
         _selectedOption.value = options[0]
     }
-    private val _amount_sending = MutableStateFlow("")
-    val amount_sending = _amount_sending.asStateFlow()
+    private val _amountSending = MutableStateFlow("")
+    val amountSending = _amountSending.asStateFlow()
     private val _recName = MutableStateFlow("")
     val recName = _recName.asStateFlow()
 
     private val _recAccount = MutableStateFlow("")
     val recAccount = _recAccount.asStateFlow()
     fun onAmountSendChange(newText: String) {
-        _amount_sending.value = newText
+        _amountSending.value = newText
     }
 
     fun onRecNameChange(newText: String) {

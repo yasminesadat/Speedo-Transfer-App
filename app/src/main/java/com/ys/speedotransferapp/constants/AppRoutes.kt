@@ -1,6 +1,6 @@
 package com.ys.speedotransferapp.constants
 
-import UserPreferences
+import com.ys.speedotransferapp.database.UserPreferences
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
