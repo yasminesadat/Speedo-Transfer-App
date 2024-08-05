@@ -1,6 +1,9 @@
 package com.ys.speedotransferapp
 
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -17,10 +20,17 @@ class MainActivity : ComponentActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setContent {
             SpeedoTransferAppTheme {
-               // AppNavHost()
-                MainScreen(){}
+                MainScreen() {}
             }
         }
     }
 }
 
+private fun createNotificationChannel(context: Context) {
+    val name = "TransferChannel"
+    val importance = NotificationManager.IMPORTANCE_DEFAULT
+    val channel = NotificationChannel("1", name, importance)
+    channel.description = "DateTime Scheduled Notification"
+    val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    manager.createNotificationChannel(channel)
+}
