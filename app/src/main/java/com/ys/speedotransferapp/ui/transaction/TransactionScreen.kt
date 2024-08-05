@@ -1,6 +1,7 @@
 package com.ys.speedotransferapp.ui.transaction
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -55,111 +56,118 @@ fun TransactionScreen(
     viewModel: TransactionViewModel = TransactionViewModel(transactionID)
 ) {
     val transaction by viewModel.transaction.collectAsState()
-    var showLoading by remember { mutableStateOf(false) }
+    var showLoading by remember { mutableStateOf(true) }
 
     LaunchedEffect(transaction) {
-        if(transaction==null)
-            showLoading = true
-        else {
-            delay(5000)
+        if (transaction == null) {
+            delay(3000)
             showLoading = false
         }
+        else
+            showLoading=false
+    }
+
+    if (showLoading)
+        Box(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
         }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 12.dp)
-            .padding(top = 32.dp)
-            .verticalScroll(rememberScrollState())
-    ) {
-        Header(text = viewModel.getHeader(), navController = navController)
-            transaction?.let {
-                Image(
-                    painter = painterResource(viewModel.getLargeIcon()),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(120.dp)
-                        .align(Alignment.CenterHorizontally)
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    BasicText(
-                        buildAnnotatedString {
-                            withStyle(style = ParagraphStyle(lineHeight = 24.sp)) {
-                                withStyle(
-                                    SpanStyle(
-                                        color = G900,
-                                        fontSize = 24.sp,
-                                        fontWeight = FontWeight.Medium
-                                    )
-                                ) {
-                                    append(it.amount)
-                                }
-                                append(" ")
-                                withStyle(
-                                    SpanStyle(
-                                        color = P300,
-                                        fontSize = 24.sp,
-                                        fontWeight = FontWeight.Medium
-                                    )
-                                ) {
-                                    append(it.currency)
-                                }
+
+    transaction?.let {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 12.dp)
+                .padding(top = 32.dp)
+                .verticalScroll(rememberScrollState())
+        ) {
+            Header(text = viewModel.getHeader(), navController = navController)
+            Image(
+                painter = painterResource(viewModel.getLargeIcon()),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(120.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                BasicText(
+                    buildAnnotatedString {
+                        withStyle(style = ParagraphStyle(lineHeight = 24.sp)) {
+                            withStyle(
+                                SpanStyle(
+                                    color = G900,
+                                    fontSize = 24.sp,
+                                    fontWeight = FontWeight.Medium
+                                )
+                            ) {
+                                append(it.amount)
+                            }
+                            append(" ")
+                            withStyle(
+                                SpanStyle(
+                                    color = P300,
+                                    fontSize = 24.sp,
+                                    fontWeight = FontWeight.Medium
+                                )
+                            ) {
+                                append(it.currency)
                             }
                         }
-                    )
+                    }
+                )
 
-                    Text(
-                        text = "Transfer Amount",
-                        color = G700,
-                        fontSize = 14.sp
-                    )
+                Text(
+                    text = "Transfer Amount",
+                    color = G700,
+                    fontSize = 14.sp
+                )
 
-                    TransferInfo(
-                        fromName = it.senderName,
-                        fromAccount = it.senderAccount,
-                        toName = it.recipientName,
-                        toAccount = it.recipientAccount,
-                        icon = viewModel.getIcon()
-                    )
+                TransferInfo(
+                    fromName = it.senderName,
+                    fromAccount = it.senderAccount,
+                    toName = it.recipientName,
+                    toAccount = it.recipientAccount,
+                    icon = viewModel.getIcon()
+                )
 
-                    Card(
-                        colors = CardDefaults.cardColors(containerColor = P50),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                    ) {
-                        Column {
-                            RowEntry(
-                                field = "Reference",
-                                value = it.reference.toString(),
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 16.dp)
-                                    .padding(vertical = 8.dp)
-                            )
-                            HorizontalDivider(color = G40, thickness = 2.dp)
-                            RowEntry(
-                                field = "Date",
-                                value = it.dateTime,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 16.dp)
-                                    .padding(vertical = 8.dp)
-                            )
-                        }
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = P50),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Column {
+                        RowEntry(
+                            field = "Reference",
+                            value = it.reference.toString(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                                .padding(vertical = 8.dp)
+                        )
+                        HorizontalDivider(color = G40, thickness = 2.dp)
+                        RowEntry(
+                            field = "Date",
+                            value = it.dateTime,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                                .padding(vertical = 8.dp)
+                        )
                     }
                 }
-            } ?: run {
-                if(showLoading)
-               CircularProgressIndicator()
             }
         }
     }
+}
 
 @Composable
 fun RowEntry(field: String, value: String, modifier: Modifier) {
