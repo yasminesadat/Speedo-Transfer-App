@@ -8,14 +8,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object TransactionAPIService {
 
-    private val client: OkHttpClient = OkHttpClient.Builder()
-        .addInterceptor(MockTransactionInterceptor()) // Add the interceptor
-        .build()
+//    private val client: OkHttpClient = OkHttpClient.Builder()
+//        .addInterceptor(MockTransactionInterceptor()) // Add the interceptor
+//        .build()
 
     private val retrofit = Retrofit
         .Builder()
         .baseUrl(BASE_URL)
-        .client(client) //remove later
+        //.client(client) //remove later
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

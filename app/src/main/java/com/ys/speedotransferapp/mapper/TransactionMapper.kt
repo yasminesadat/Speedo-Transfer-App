@@ -15,7 +15,7 @@ class TransactionMapper {
     // Convert data model to UI model
     private fun mapToView(transactionDTO: TransactionDTO): Transaction {
         return Transaction(
-          reference = transactionDTO.id,
+            reference = transactionDTO.id,
             recipientName = transactionDTO.recipientName,
             recipientDigits = transactionDTO.recipientAccountNumber,
             dateTime = formatDate(transactionDTO.transactionTime),
@@ -32,17 +32,13 @@ class TransactionMapper {
     }
 
     private fun formatAmount(amount: Double, currencyCode: String): String {
-        val currencySymbol = getCurrencySymbol(currencyCode)
         val formattedAmount = NumberFormat.getCurrencyInstance().apply {
             currency = Currency.getInstance(currencyCode)
-            maximumFractionDigits = 2 // Adjust this as needed
+            maximumFractionDigits = 2
         }.format(amount)
 
-        // Replace default symbol with specific currency symbol if default symbol is not null
-        return formattedAmount.replace(
-            NumberFormat.getCurrencyInstance().currency?.symbol ?: "",
-            currencySymbol
-        )
+        // handle EGP to LE and place at end of amount
+        return if (formattedAmount.take(3) == "EGP") formattedAmount.drop(3) + " LE" else formattedAmount
     }
 
     private fun formatDate(dateTime: String): String {
@@ -64,15 +60,6 @@ class TransactionMapper {
             "Today " + localDateTime.format(timeFormatter)
         } else {
             localDateTime.format(dateFormatter) + " " + localDateTime.format(timeFormatter)
-        }
-    }
-
-    private fun getCurrencySymbol(currencyCode: String): String {
-        return when (currencyCode) {
-            "USD" -> "$"
-            "EUR" -> "€"
-            "EGP" -> "LE"
-            else -> ""
         }
     }
 }

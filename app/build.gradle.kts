@@ -73,5 +73,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.androidx.navigation.compose)
+    implementation (libs.androidx.paging.runtime)
+    implementation (libs.androidx.paging.compose)
 
 }

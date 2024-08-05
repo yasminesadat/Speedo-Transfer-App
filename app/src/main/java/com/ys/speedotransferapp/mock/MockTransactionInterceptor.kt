@@ -18,7 +18,9 @@ class MockTransactionInterceptor : Interceptor {
 
         val mockResponse = when (path) {
             TRANSACTIONS_ENDPOINT -> {
-                val mockResponseBody = loadMockResponse("assets/mock_transactions.json")
+                val pageNumber = getPageNumberFromUrl(url)
+                val mockFile = "assets/mock_transactions_page_$pageNumber.json"
+                val mockResponseBody = loadMockResponse(mockFile)
                 println(mockResponseBody)
                 Response.Builder()
                     .code(200)
@@ -28,11 +30,17 @@ class MockTransactionInterceptor : Interceptor {
                     .request(request)
                     .build()
             }
+
             else -> {
                 Response.Builder()
                     .code(404)
                     .message("Not Found")
-                    .body(ResponseBody.create(MediaType.parse("text/plain"), "The requested resource was not found"))
+                    .body(
+                        ResponseBody.create(
+                            MediaType.parse("text/plain"),
+                            "The requested resource was not found"
+                        )
+                    )
                     .protocol(okhttp3.Protocol.HTTP_1_1)
                     .request(request)
                     .build()
@@ -47,4 +55,10 @@ class MockTransactionInterceptor : Interceptor {
             ?: throw IllegalStateException("Mock file not found: $filename")
         return InputStreamReader(inputStream, Charset.forName("UTF-8")).readText()
     }
+}
+
+private fun getPageNumberFromUrl(url: HttpUrl): Int {
+    // Assuming the page number is provided as a query parameter named "page"
+    val pageNumberQuery = url.queryParameter("page")
+    return pageNumberQuery?.toIntOrNull() ?: 1 // Default to 1 if the page number is not provided
 }
