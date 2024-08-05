@@ -1,10 +1,14 @@
 package com.ys.speedotransferapp.ui.transfer
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.model.TransferState
 import com.ys.speedotransferapp.model.TransferStep
 import com.ys.speedotransferapp.ui.home.HomeViewModel
@@ -119,24 +123,19 @@ class TransferScreenViewModel : ViewModel() {
         _state.update { it.copy(amount = amount, currentStep = TransferStep.CONFIRMATION) }
     }
 
-    fun saveTransferDetails(context: Context){
-        //using shared pref
-        val editor = context.getSharedPreferences("transfer_data", Context.MODE_PRIVATE).edit()
-
-        editor.putString("recName", _recName.value)
-        editor.putString("recAccount", _recAccount.value)
-        editor.apply()
-        Log.d("TransferViewModel", "Saved: Amount=${_amount_sending.value}, Name=${_recName.value}, Account=${_recAccount.value}")
-
-    }
 
     fun loadTransferDetails(context: Context) {
         val sharedPreferences = context.getSharedPreferences("transfer_data", Context.MODE_PRIVATE)
-        _amount_sending.value = sharedPreferences.getString("amount", "") ?: ""
-        _recName.value = sharedPreferences.getString("recName", "") ?: ""
-        _recAccount.value = sharedPreferences.getString("recAccount", "") ?: ""
-    }
+        val loadedAmount = sharedPreferences.getString("amount", "") ?: ""
+        val loadedName = sharedPreferences.getString("recName", "") ?: ""
+        val loadedAccount = sharedPreferences.getString("recAccount", "") ?: ""
 
+        _amount_sending.value = loadedAmount
+        _recName.value = loadedName
+        _recAccount.value = loadedAccount
+
+        Log.d("TransferViewModel", "Loaded: Amount=$loadedAmount, Name=$loadedName, Account=$loadedAccount")
+    }
     fun clearTransferDetails(context: Context) {
         val editor = context.getSharedPreferences("transfer_data", Context.MODE_PRIVATE).edit()
         editor.clear()
@@ -153,6 +152,15 @@ class TransferScreenViewModel : ViewModel() {
             delay(1000) // Simulate network call
             _state.update { it.copy(isTransferSuccessful = true) }
         }
+    }
+
+    @SuppressLint("MissingPermission")
+    fun sendNotification(title: String, text: String, context: Context) {
+        var builder = NotificationCompat.Builder(context, "1").setSmallIcon(R.drawable.received)
+            .setContentTitle(title)
+            .setContentText(text)
+            .setAutoCancel(true)
+        NotificationManagerCompat.from(context).notify(99, builder.build())
     }
 
     fun goToNextStep() {
@@ -176,6 +184,8 @@ class TransferScreenViewModel : ViewModel() {
             )
         }
     }
+
+
 
     fun resetTransfer() {
         _state.value = TransferState()

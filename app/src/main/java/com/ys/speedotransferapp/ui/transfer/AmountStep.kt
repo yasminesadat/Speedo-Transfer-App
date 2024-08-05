@@ -1,6 +1,7 @@
 package com.ys.speedotransferapp.ui.transfer
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -94,7 +95,7 @@ fun AmountStep(navController: NavController): Boolean {
     val amountSend by viewModel.amount_sending.collectAsState()
     val recName by viewModel.recName.collectAsState()
     val recAccount by viewModel.recAccount.collectAsState()
-
+    val amountDouble = if (amountSend.isNotEmpty()) amountSend.toDouble() else 0.0
     LaunchedEffect(amountSend) {
         editor.putString("amount", amountSend)
         editor.apply()
@@ -143,7 +144,7 @@ fun AmountStep(navController: NavController): Boolean {
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "1 ${selectedOption1.curr_code} = 0.74 ${selectedOption2.curr_code}",
+                        text = "1.0 ${selectedOption1.curr_code} = ${currenciesViewModel.getExchangeRate(selectedOption1.curr_code, selectedOption2.curr_code)} ${selectedOption2.curr_code}",
                         style = appTypography.bodyMedium
                     )
                     Spacer(modifier = Modifier.size(8.dp))
@@ -197,7 +198,7 @@ fun AmountStep(navController: NavController): Boolean {
                         SimpleDropdown(currenciesViewModel1, "selected_option_index_2")
 
                         OutlinedTextField(
-                            value = amountSend,
+                            value = currenciesViewModel.convertCurrency(amountDouble, selectedOption1.curr_code, selectedOption2.curr_code).toString(),
                             onValueChange = {
                                 viewModel.onAmountSendChange(it)
                             },

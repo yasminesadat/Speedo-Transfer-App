@@ -50,14 +50,24 @@ fun PaymentStep(
     val viewModel = remember {
         TransferScreenViewModel()
     }
+    val currenciesViewModel = remember {
+        CurrenciesViewModel()
+    }
+
+    LaunchedEffect(Unit) {
+        currenciesViewModel.loadSelectedCurrencyOptionsList(context, listOf("selected_option_index_1", "selected_option_index_2"))
+    }
     LaunchedEffect(Unit) {
         viewModel.loadTransferDetails(context)
     }
     val amount by viewModel.amount_sending.collectAsState()
+    val amountDouble = if (amount.isNotEmpty()) amount.toDouble() else 0.0
     val recName by viewModel.recName.collectAsState()
     val recAccount by viewModel.recAccount.collectAsState()
+    val currencies by currenciesViewModel.selectedOptionsList.collectAsState()
     var recAccountString = "xxxx"+recAccount.takeLast(4)
-
+    val convertedAmount =
+        currenciesViewModel.convertCurrency(amountDouble, currencies[0].curr_code, currencies[1].curr_code).toString()
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -105,8 +115,8 @@ fun PaymentStep(
             horizontalArrangement = Arrangement.End,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "48.4220 ", style = appTypography.bodySmall)
-            Text(text = "EGP", style = appTypography.bodySmall)
+            Text(text = "$convertedAmount ", style = appTypography.bodySmall)
+            Text(text = currencies[1].curr_code, style = appTypography.bodySmall)
         }
     }
     Spacer(modifier = Modifier.size(16.dp))

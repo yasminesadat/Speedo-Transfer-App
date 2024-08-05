@@ -2,6 +2,7 @@ package com.ys.speedotransferapp.ui.transfer
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -30,6 +31,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -62,14 +64,11 @@ import com.ys.speedotransferapp.ui.theme.P20
 import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.appTypography
 
-
-
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TransferScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
-    viewModel: TransferScreenViewModel = TransferScreenViewModel(),
 ) {
     Scaffold(
         topBar = { },
@@ -82,15 +81,26 @@ fun TransferScreen(
             ),
         containerColor = Color.Transparent
     ) {
-        val state by viewModel.state.collectAsState()
-        val error by viewModel.amountError.collectAsState()
-        val recNameError by viewModel.recNameError.collectAsState()
-        val recAccountError by viewModel.recAccountError.collectAsState()
+        val viewModel = remember { TransferScreenViewModel() }
+        val currencyViewModel = remember { CurrenciesViewModel() }
         val context = LocalContext.current
-        var isValid: Boolean = false
-        val currencyViewModel = remember {
-            CurrenciesViewModel()
+        LaunchedEffect(Unit) {
+            viewModel.loadTransferDetails(context)
+            currencyViewModel.loadSelectedCurrencyOptionsList(
+                context,
+                listOf("selected_option_index_1", "selected_option_index_2")
+            )
         }
+        val state by viewModel.state.collectAsState()
+        val amount by viewModel.amount_sending.collectAsState()
+        val recName by viewModel.recName.collectAsState()
+        val currencies by currencyViewModel.selectedOptionsList.collectAsState()
+        var isValid: Boolean = false
+
+
+        Log.d("TransferScreen", "Transfer details loaded: Amount=$amount, Name=$recName")
+        Log.d("TransferScreen", "Currency options loaded: ${currencies.size}")
+
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
@@ -117,16 +127,20 @@ fun TransferScreen(
                 onClick = {
                     when (state.currentStep) {
                         TransferStep.AMOUNT -> {
-                            // Validate fields for AmountStep before proceeding
                             if (isValid) {
                                 viewModel.goToNextStep()
-
                             }
                         }
+
                         TransferStep.CONFIRMATION -> {
-                            // Add any necessary validation for the confirmation step if needed
+                            viewModel.sendNotification(
+                                title = "Transfer Successful",
+                                text = "You have successfully transferred $amount ${currencies[0].curr_code} to $recName",
+                                context = context
+                            )
                             viewModel.confirmTransfer()
                         }
+
                         TransferStep.PAYMENT -> {
                             // Reset transfer and navigate to home
                             viewModel.resetTransfer()
@@ -180,5 +194,5 @@ fun TransferScreen(
 private fun TransferScreenPreview() {
     val navController = rememberNavController()
     navController.navigate(AppRoutes.HOME_ROUTE)
-    TransferScreen(navController = navController, viewModel = TransferScreenViewModel())
+    TransferScreen(navController = navController)
 }
