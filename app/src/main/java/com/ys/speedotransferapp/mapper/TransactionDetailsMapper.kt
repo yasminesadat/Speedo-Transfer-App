@@ -16,9 +16,9 @@ object TransactionDetailsMapper {
         TransactionDetails(
             reference = transactionDTO.id,
             senderName = transactionDTO.senderName,
-            senderAccount = transactionDTO.senderAccountNumber,
+            senderAccount = "Account xxxx"+transactionDTO.senderAccountNumber.takeLast(4),
             recipientName = transactionDTO.recipientName,
-            recipientAccount = transactionDTO.recipientAccountNumber,
+            recipientAccount = "Account xxxx"+transactionDTO.recipientAccountNumber.takeLast(4),
             dateTime = formatDate(transactionDTO.transactionTime),
             status = transactionDTO.status,
             paymentProcessor = transactionDTO.cardType,
