@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.ys.speedotransferapp.data.CurrencyExchangeRateSource
 import com.ys.speedotransferapp.data.CurrienciesSource
-import com.ys.speedotransferapp.model.Currencies
+import com.ys.speedotransferapp.ui_model.Currencies
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 

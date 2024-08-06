@@ -9,5 +9,8 @@ object AppConstants {
 
     const val TRANSACTIONS_ENDPOINT = "/api/transactions"
     const val TRANSACTION_DETAILS_ENDPOINT = "/api/transactions/{transactionId}"
-
+    const val REGISTER_ENDPOINT = "/api/auth/register"
+    const val LOGIN_ENDPOINT = "/api/auth/login"
+    const val LOGOUT_ENDPOINT = "/api/auth/logout"
+    const val BALANCE_ENDPOINT = "/api/balance"
 }

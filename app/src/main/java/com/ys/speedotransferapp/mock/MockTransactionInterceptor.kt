@@ -4,6 +4,8 @@ import com.ys.speedotransferapp.constants.AppConstants.TRANSACTIONS_ENDPOINT
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Response
 import okhttp3.ResponseBody
 import java.io.InputStreamReader
@@ -13,8 +15,8 @@ class MockTransactionInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
-        val url: HttpUrl = request.url()
-        val path = url.encodedPath()
+        val url: HttpUrl = request.url
+        val path = url.encodedPath
 
         val mockResponse = when (path) {
             TRANSACTIONS_ENDPOINT -> {
@@ -25,7 +27,7 @@ class MockTransactionInterceptor : Interceptor {
                 Response.Builder()
                     .code(200)
                     .message("OK")
-                    .body(ResponseBody.create(MediaType.get("application/json"), mockResponseBody))
+                    .body(ResponseBody.create("application/json".toMediaType(), mockResponseBody))
                     .protocol(okhttp3.Protocol.HTTP_1_1)
                     .request(request)
                     .build()
@@ -37,7 +39,7 @@ class MockTransactionInterceptor : Interceptor {
                     .message("Not Found")
                     .body(
                         ResponseBody.create(
-                            MediaType.parse("text/plain"),
+                            "text/plain".toMediaTypeOrNull(),
                             "The requested resource was not found"
                         )
                     )
