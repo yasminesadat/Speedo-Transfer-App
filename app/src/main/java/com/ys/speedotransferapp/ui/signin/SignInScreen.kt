@@ -1,5 +1,6 @@
 package com.ys.speedotransferapp.ui.signin
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -41,6 +42,8 @@ fun SignInScreen(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
+
+    viewModel.loadSignInDetails(context)
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
     val loginResult by viewModel.loginResult.collectAsState()
@@ -48,7 +51,10 @@ fun SignInScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
     var token = viewModel.loadToken(context)
-    val loginResponse by viewModel.loginResult.collectAsState()
+    val sharedPreferences = context.getSharedPreferences("sign_up_data", Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -106,7 +112,11 @@ fun SignInScreen(
                 fieldId = "email",
                 label = "Email",
                 hint = "Enter your email address",
-                onValueChanged = { viewModel.setEmail(it) },
+                onValueChanged = {
+                    viewModel.setEmail(it)
+                    editor.putString("email", email)
+                    editor.apply()
+                },
                 trailingIcon = R.drawable.email,
                 iconDescription = "Email icon"
             )
@@ -117,7 +127,11 @@ fun SignInScreen(
                 fieldId = "password_signin",
                 label = "Password",
                 hint = "Enter your password",
-                onValueChanged = { viewModel.setPassword(it) },
+                onValueChanged = {
+                    viewModel.setPassword(it)
+                    editor.putString("password", password)
+                    editor.apply()
+                },
                 isPassword = true,
                 trailingIcon = R.drawable.close_eye,
                 iconDescription = "User icon"
@@ -127,7 +141,6 @@ fun SignInScreen(
                 onClick = {
                     viewModel.loginUser(context)
                     Log.d("SignInScreen", "token: $token")
-
 
 
                 },
