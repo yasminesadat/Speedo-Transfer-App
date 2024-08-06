@@ -16,7 +16,7 @@ object TransactionMapper {
         Transaction(
             reference = transactionDTO.id,
             recipientName = transactionDTO.recipientName,
-            recipientDigits = transactionDTO.recipientAccountNumber,
+            recipientDigits = transactionDTO.recipientAccountNumber.takeLast(4),
             dateTime = formatDate(transactionDTO.transactionTime),
             status = transactionDTO.status,
             paymentProcessorIcon = R.drawable.mastercard,
