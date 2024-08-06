@@ -71,6 +71,7 @@ fun TransferScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
     Scaffold(
         topBar = { },
         modifier = modifier
@@ -82,7 +83,8 @@ fun TransferScreen(
             ),
         containerColor = Color.Transparent
     ) {
-        val viewModel = remember { TransferScreenViewModel() }
+        val viewModel = remember { TransferScreenViewModel( context.getSharedPreferences("auth_data", Context.MODE_PRIVATE)
+            .getString("token", "")!!) }
         val currencyViewModel = remember { CurrenciesViewModel() }
         val context = LocalContext.current
         LaunchedEffect(Unit) {

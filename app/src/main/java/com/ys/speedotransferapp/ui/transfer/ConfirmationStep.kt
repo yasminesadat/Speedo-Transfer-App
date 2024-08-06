@@ -1,5 +1,6 @@
 package com.ys.speedotransferapp.ui.transfer
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,9 +29,10 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ConfirmationStep(navController: NavController) {
-    val viewModel = remember { TransferScreenViewModel() }
-    val currencyViewModel = remember { CurrenciesViewModel() }
     val context = LocalContext.current
+    val viewModel = remember { TransferScreenViewModel(context.getSharedPreferences("auth_data", Context.MODE_PRIVATE)
+        .getString("token", "")!!) }
+    val currencyViewModel = remember { CurrenciesViewModel() }
     val currencies by currencyViewModel.selectedOptionsList.collectAsState()
 
     LaunchedEffect(Unit) {

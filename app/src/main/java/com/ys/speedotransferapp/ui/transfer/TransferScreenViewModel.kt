@@ -9,11 +9,15 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ys.speedotransferapp.R
+import com.ys.speedotransferapp.api.UserAPIService
+import com.ys.speedotransferapp.constants.AppConstants.BEARER
 import com.ys.speedotransferapp.data.CurrienciesSource
+import com.ys.speedotransferapp.mapper.BalanceMapper
 import com.ys.speedotransferapp.ui.home.HomeViewModel
 import com.ys.speedotransferapp.ui_model.Currencies
 import com.ys.speedotransferapp.ui_model.TransferState
 import com.ys.speedotransferapp.ui_model.TransferStep
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,7 +25,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class TransferScreenViewModel : ViewModel() {
+class TransferScreenViewModel(
+    private val token: String
+) : ViewModel() {
     private val _state = MutableStateFlow(TransferState())
     val state: StateFlow<TransferState> = _state.asStateFlow()
 
@@ -43,6 +49,22 @@ class TransferScreenViewModel : ViewModel() {
     private val _recAccountError = MutableStateFlow<String?>(null)
     val recAccountError: StateFlow<String?> = _recAccountError
 
+    private val _balance = MutableStateFlow(0.0)
+    val balance: StateFlow<Double> = _balance.asStateFlow()
+
+    // Fetch balance
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val balanceResponse = UserAPIService.callable.getBalance(BEARER + token)
+                _balance.value = balanceResponse.balance
+
+            }
+            catch(e:Exception){
+                e.printStackTrace()
+            }
+        }
+    }
     private fun convertBalanceStringToDouble(balance: String?): Double {
         return balance?.replace(",", "")?.toDoubleOrNull() ?: 0.0
     }
@@ -63,7 +85,7 @@ class TransferScreenViewModel : ViewModel() {
         // Validate amount
         val amount = _amount_sending.value.toDoubleOrNull()
         val maxAmount = 5000.0
-        val userBalance = viewModel.balance.collectAsState().value // Replace with actual method to get the user's balance
+       val userBalance = balance.value
         Log.d("TransferViewModel", "User balance: $userBalance")
         // Assuming the currency is stored in the profile or another field
         currenciesViewModel.loadSelectedCurrencyOption(context, "selected_option_index_1")
@@ -88,7 +110,7 @@ class TransferScreenViewModel : ViewModel() {
             isValid = false
         }
         // Check if amount exceeds the user's balance
-        else if (amountInLE > convertBalanceStringToDouble(userBalance)) {
+        else if (amountInLE > userBalance!!) {
             _amountError.value = "Amount exceeds your available balance."
             isValid = false
         } else {
