@@ -34,8 +34,7 @@ class UserInterceptor : Interceptor {
                     .build()
             }
             LOGIN_ENDPOINT->{
-                val method = request.method()
-                val mockFile=if(method == "GET") "assets/mock_get_login.json" else "assets/mock_post_login/json"
+                val mockFile= "assets/mock_post_login.json"
                 val mockResponseBody = loadMockResponse(mockFile)
                 Response.Builder()
                     .code(200)
@@ -44,10 +43,8 @@ class UserInterceptor : Interceptor {
                     .protocol(okhttp3.Protocol.HTTP_1_1)
                     .request(request)
                     .build()
-
             }
             LOGOUT_ENDPOINT->{
-                val method = request.method()
                 val mockFile="assets/mock_logout.json"
                 val mockResponseBody = loadMockResponse(mockFile)
                 Response.Builder()

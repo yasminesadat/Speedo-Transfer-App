@@ -1,1 +1,6 @@
-473797582658726
+{
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb2hhbWFkZXNtYXQyMDAzQGdtYWlsLmNvIiwiaWF0IjoxNzIyOTM0MzA1LCJleHAiOjE3MjMwMjA3MDV9.eF_OATD-r786QOAKfIjRBxHwrUKddAj6FCxV9-wfGJ8",
+    "tokenType": "Bearer",
+    "message": "Login Successful",
+    "status": "ACCEPTED"
+}

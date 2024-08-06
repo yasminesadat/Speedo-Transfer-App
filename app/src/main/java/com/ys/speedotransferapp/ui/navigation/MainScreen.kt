@@ -31,6 +31,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.ys.speedotransferapp.constants.AppRoutes.CARDS_ROUTE
 import com.ys.speedotransferapp.data.BottomNavigationItemsSource
 import com.ys.speedotransferapp.constants.AppRoutes.FAVOURITES_ROUTE
 import com.ys.speedotransferapp.constants.AppRoutes.HOME_ROUTE
@@ -121,6 +122,7 @@ fun MainScreen(
                 startDestination = HOME_ROUTE,
             ) {
                 composable(HOME_ROUTE) { HomeScreen(navController, {}) }
+                composable(CARDS_ROUTE){}
                 composable(TRANSFER_ROUTE) { TransferScreen(navController) }
                 composable(MORE_ROUTE) { MoreScreen(navController, onLogout) }
                 composable(FAVOURITES_ROUTE) { FavouriteScreen(navController) }
