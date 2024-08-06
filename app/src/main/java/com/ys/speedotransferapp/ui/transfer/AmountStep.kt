@@ -53,7 +53,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.constants.AppRoutes
-import com.ys.speedotransferapp.model.TransferStep
+import com.ys.speedotransferapp.ui_model.TransferStep
 import com.ys.speedotransferapp.ui_model.FavouriteItem
 import com.ys.speedotransferapp.ui.common.CommonComposableViewModel
 import com.ys.speedotransferapp.ui.common.InputField

@@ -18,7 +18,7 @@ import com.ys.speedotransferapp.ui_model.Currencies
                 add(
                     Currencies(
                         curr_icon = R.drawable.egypt,
-                        curr_code = "LE",
+                        curr_code = "EGP",
                         curr_name = "Egyptian Pound"
                     )
                 )

@@ -1,9 +1,16 @@
 package com.ys.speedotransferapp.ui.transfer
 
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.util.Log
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.data.CurrienciesSource
+import com.ys.speedotransferapp.ui.home.HomeViewModel
 import com.ys.speedotransferapp.ui_model.Currencies
 import com.ys.speedotransferapp.ui_model.TransferState
 import com.ys.speedotransferapp.ui_model.TransferStep
@@ -106,6 +113,7 @@ class TransferScreenViewModel : ViewModel() {
         }
 
         return isValid && isAmountFieldValid
+    }
 
 
 
