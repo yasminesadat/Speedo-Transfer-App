@@ -1,13 +1,13 @@
 package com.ys.speedotransferapp.mapper
 
 
+import com.ys.speedotransferapp.R
+import com.ys.speedotransferapp.constants.AppConstants.FAILED
 import com.ys.speedotransferapp.data_model.TransactionDTO
 import com.ys.speedotransferapp.ui_model.TransactionDetails
-import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.Currency
 
 object TransactionDetailsMapper {
 
@@ -22,20 +22,12 @@ object TransactionDetailsMapper {
             dateTime = formatDate(transactionDTO.transactionTime),
             status = transactionDTO.status,
             paymentProcessor = transactionDTO.cardType,
-            amount = formatAmount(transactionDTO.amount, transactionDTO.currency),
-            currency = transactionDTO.currency
+            currency = transactionDTO.currency,
+            amount = transactionDTO.amount.toString(),
+            header = if (transactionDTO.status == FAILED) "Failed Transaction" else "Successful Transaction",
+            largeIcon =if (transactionDTO.status == FAILED) R.drawable.failed else R.drawable.successful,
+            smallIcon = if (transactionDTO.status == FAILED) R.drawable.failed_small else R.drawable.success_small
         )
-
-
-    private fun formatAmount(amount: Double, currencyCode: String): String {
-        val formattedAmount = NumberFormat.getCurrencyInstance().apply {
-            currency = Currency.getInstance(currencyCode)
-            maximumFractionDigits = 2
-        }.format(amount)
-
-        // handle EGP to LE and place at end of amount
-        return if (formattedAmount.take(3) == "EGP") formattedAmount.drop(3) + " LE" else formattedAmount
-    }
 
     private fun formatDate(dateTime: String): String {
 

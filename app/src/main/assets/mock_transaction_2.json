@@ -1,0 +1,12 @@
+{
+  "id": 1234567890123456786,
+  "senderAccountNumber": "7234567890",
+  "recipientAccountNumber": "6987654321",
+  "senderName": "Kevin Young",
+  "recipientName": "Ivy Walker",
+  "amount": 120.25,
+  "transactionTime": "2024-08-04T19:00:00",
+  "currency": "EGP",
+  "cardType": "Mastercard",
+  "status": "Failed"
+}

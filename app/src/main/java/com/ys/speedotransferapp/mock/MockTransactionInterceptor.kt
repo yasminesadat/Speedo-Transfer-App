@@ -31,7 +31,12 @@ class MockTransactionInterceptor : Interceptor {
             }
 
             else -> {
-                val mockFile = "assets/mock_transaction.json"
+                val mockFile =
+                    //first transaction
+                    if (path.contains("1234567890123456793")) "assets/mock_transaction_1.json" else if (path.contains(
+                            "1234567890123456786"  //Ivy Walker 120.25
+                        )
+                    ) "assets/mock_transaction_2.json" else ""
                 val mockResponseBody = loadMockResponse(mockFile)
                 Response.Builder()
                     .code(200)

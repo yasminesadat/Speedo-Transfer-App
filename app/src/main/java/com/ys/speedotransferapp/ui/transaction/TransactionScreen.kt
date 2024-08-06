@@ -1,7 +1,6 @@
 package com.ys.speedotransferapp.ui.transaction
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,16 +15,11 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -40,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ys.speedotransferapp.ui.common.Header
+import com.ys.speedotransferapp.ui.common.LoadingScreen
 import com.ys.speedotransferapp.ui.common.TransferInfo
 import com.ys.speedotransferapp.ui.theme.G100
 import com.ys.speedotransferapp.ui.theme.G40
@@ -47,7 +42,6 @@ import com.ys.speedotransferapp.ui.theme.G700
 import com.ys.speedotransferapp.ui.theme.G900
 import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.P50
-import kotlinx.coroutines.delay
 
 @Composable
 fun TransactionScreen(
@@ -56,27 +50,6 @@ fun TransactionScreen(
     viewModel: TransactionViewModel = TransactionViewModel(transactionID)
 ) {
     val transaction by viewModel.transaction.collectAsState()
-    var showLoading by remember { mutableStateOf(true) }
-
-    LaunchedEffect(transaction) {
-        if (transaction == null) {
-            delay(3000)
-            showLoading = false
-        }
-        else
-            showLoading=false
-    }
-
-    if (showLoading)
-        Box(
-            modifier = Modifier
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator()
-        }
-
-
     transaction?.let {
         Column(
             modifier = Modifier
@@ -85,9 +58,9 @@ fun TransactionScreen(
                 .padding(top = 32.dp)
                 .verticalScroll(rememberScrollState())
         ) {
-            Header(text = viewModel.getHeader(), navController = navController)
+            Header(text = it.header, navController = navController)
             Image(
-                painter = painterResource(viewModel.getLargeIcon()),
+                painter = painterResource(it.largeIcon),
                 contentDescription = null,
                 modifier = Modifier
                     .size(120.dp)
@@ -135,7 +108,7 @@ fun TransactionScreen(
                     fromAccount = it.senderAccount,
                     toName = it.recipientName,
                     toAccount = it.recipientAccount,
-                    icon = viewModel.getIcon()
+                    icon = it.smallIcon
                 )
 
                 Card(
@@ -166,8 +139,11 @@ fun TransactionScreen(
                 }
             }
         }
+    }?: run{
+        LoadingScreen()
     }
 }
+
 
 @Composable
 fun RowEntry(field: String, value: String, modifier: Modifier) {

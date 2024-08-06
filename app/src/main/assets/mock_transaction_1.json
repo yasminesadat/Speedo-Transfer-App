@@ -8,5 +8,5 @@
   "transactionTime": "2024-08-10T22:30:00",
   "currency": "USD",
   "cardType": "Mastercard",
-  "status": "Failed"
+  "status": "Successful"
 }
