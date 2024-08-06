@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class TransactionsPagingSource(
+    private val token: String,
     private val apiService: TransactionAPIService
 ) : PagingSource<Int, Transaction>() {
 
@@ -18,8 +19,6 @@ class TransactionsPagingSource(
             withContext(Dispatchers.IO) {
                 val page = params.key ?: 1
                 val pageSize = params.loadSize
-                // Replace with Token Manager
-                val token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsImlhdCI6MTcyMjg4MjIyOSwiZXhwIjoxNzIyOTY4NjI5fQ.JnM_IhnzdNxVwzCRkfYKq3FHAE8fx2ct4ekvHdixXSw"
                 val response = apiService.callable.getTransactions(page, pageSize, BEARER + token)
                 val transactions = TransactionMapper.mapToView(response)
 

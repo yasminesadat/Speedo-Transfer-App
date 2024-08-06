@@ -1,7 +1,9 @@
 package com.ys.speedotransferapp.mock
 
 import com.ys.speedotransferapp.constants.AppConstants.BALANCE_ENDPOINT
+import com.ys.speedotransferapp.constants.AppConstants.LOGIN_ENDPOINT
 import com.ys.speedotransferapp.constants.AppConstants.NAME_ENDPOINT
+import com.ys.speedotransferapp.constants.AppConstants.REGISTER_ENDPOINT
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.MediaType
@@ -19,8 +21,31 @@ class UserInterceptor : Interceptor {
         val path = url.encodedPath()
 
         val mockResponse = when (path) {
+            REGISTER_ENDPOINT->{
+                val mockFile = "assets/mock_register.json"
+                val mockResponseBody = loadMockResponse(mockFile)
+                Response.Builder()
+                    .code(200)
+                    .message("OK")
+                    .body(ResponseBody.create(MediaType.get("application/json"), mockResponseBody))
+                    .protocol(okhttp3.Protocol.HTTP_1_1)
+                    .request(request)
+                    .build()
+            }
+            LOGIN_ENDPOINT->{
+                val method = request.method()
+                val mockFile=if(method == "GET") "assets/mock_get_login.json" else "assets/mock_post_login/json"
+                val mockResponseBody = loadMockResponse(mockFile)
+                Response.Builder()
+                    .code(200)
+                    .message("OK")
+                    .body(ResponseBody.create(MediaType.get("application/json"), mockResponseBody))
+                    .protocol(okhttp3.Protocol.HTTP_1_1)
+                    .request(request)
+                    .build()
+
+            }
             NAME_ENDPOINT -> {
-                val pageNumber = getPageNumberFromUrl(url)
                 val mockFile = "assets/mock_name.json"
                 val mockResponseBody = loadMockResponse(mockFile)
                 Response.Builder()
@@ -32,7 +57,6 @@ class UserInterceptor : Interceptor {
                     .build()
             }
             BALANCE_ENDPOINT->{
-                val pageNumber = getPageNumberFromUrl(url)
                 val mockFile = "assets/mock_balance.json"
                 val mockResponseBody = loadMockResponse(mockFile)
                 Response.Builder()
@@ -64,7 +88,4 @@ class UserInterceptor : Interceptor {
     }
 }
 
-private fun getPageNumberFromUrl(url: HttpUrl): Int {
-    val pageNumberQuery = url.queryParameter("page")
-    return pageNumberQuery?.toIntOrNull() ?: 1
-}
+
