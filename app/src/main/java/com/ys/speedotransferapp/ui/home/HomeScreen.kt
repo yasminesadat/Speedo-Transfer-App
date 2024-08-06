@@ -24,6 +24,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -65,7 +66,9 @@ fun HomeScreen(
     val userProfile = viewModel.userProfile.collectAsState().value
     val balance = viewModel.balance.collectAsState().value
     val transactions = viewModel.transactions.collectAsState().value
+    LaunchedEffect(Unit) {
 
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()

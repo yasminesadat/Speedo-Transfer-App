@@ -3,6 +3,7 @@ package com.ys.speedotransferapp.ui.transfer
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
+import androidx.compose.runtime.collectAsState
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModel
@@ -42,8 +43,8 @@ class TransferScreenViewModel : ViewModel() {
     private val _recAccountError = MutableStateFlow<String?>(null)
     val recAccountError: StateFlow<String?> = _recAccountError
 
-    private fun convertBalanceStringToDouble(balance: String): Double {
-        return balance.replace(",", "").toDoubleOrNull() ?: 0.0
+    private fun convertBalanceStringToDouble(balance: String?): Double {
+        return balance?.replace(",", "")?.toDoubleOrNull() ?: 0.0
     }
 
     private fun convertToLE(amount: Double, currency: String, currenciesViewModel: CurrenciesViewModel = CurrenciesViewModel()): Double {
@@ -62,8 +63,8 @@ class TransferScreenViewModel : ViewModel() {
         // Validate amount
         val amount = _amount_sending.value.toDoubleOrNull()
         val maxAmount = 5000.0
-        val userBalance = viewModel.profile.balance // Replace with actual method to get the user's balance
-
+        val userBalance = viewModel.balance.collectAsState().value // Replace with actual method to get the user's balance
+        Log.d("TransferViewModel", "User balance: $userBalance")
         // Assuming the currency is stored in the profile or another field
         currenciesViewModel.loadSelectedCurrencyOption(context, "selected_option_index_1")
         val currency = currenciesViewModel.selectedOption.value.curr_code
