@@ -98,6 +98,7 @@ fun Option(
     navController: NavController,
     viewModel: MoreViewModel
 ) {
+    val token = viewModel.loadToken(LocalContext.current)
     Column {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -112,7 +113,7 @@ fun Option(
                             viewModel.showHelpBottomSheet(true)
                         }
 
-                        "logout" -> {onLogout()}
+                        "logout" -> {onLogout(); viewModel.logout(token!!)}
                     }
                 }
         ) {

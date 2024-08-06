@@ -69,4 +69,16 @@ class SignInViewModel : ViewModel() {
         val sharedPreferences = context.getSharedPreferences("auth_data", Context.MODE_PRIVATE)
         return sharedPreferences.getString("token", null)
     }
+
+    //load auth data
+    fun loadSignInDetails(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("sign_up_data", Context.MODE_PRIVATE)
+        val loadedEmail = sharedPreferences.getString("email", "") ?: ""
+        val loadedPassword = sharedPreferences.getString("password", "") ?: ""
+
+        _email.value = loadedEmail
+        _password.value = loadedPassword
+
+        Log.d("SignInViewModel", "Loaded: Email=$loadedEmail, Password=$loadedPassword")
+    }
 }
