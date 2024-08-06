@@ -1,5 +1,6 @@
 package com.ys.speedotransferapp.ui.transaction
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,6 +23,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
@@ -47,7 +49,11 @@ import com.ys.speedotransferapp.ui.theme.P50
 fun TransactionScreen(
     navController: NavController,
     transactionID: Long,
-    viewModel: TransactionViewModel = TransactionViewModel(transactionID)
+    viewModel: TransactionViewModel = TransactionViewModel(
+        transactionID,
+        LocalContext.current.getSharedPreferences("auth_data", Context.MODE_PRIVATE)
+            .getString("token", "")!!
+    )
 ) {
     val transaction by viewModel.transaction.collectAsState()
     transaction?.let {
@@ -139,7 +145,7 @@ fun TransactionScreen(
                 }
             }
         }
-    }?: run{
+    } ?: run {
         LoadingScreen()
     }
 }

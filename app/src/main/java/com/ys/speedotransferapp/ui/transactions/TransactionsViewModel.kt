@@ -17,7 +17,9 @@ import com.ys.speedotransferapp.ui.theme.Red
 import com.ys.speedotransferapp.ui_model.Transaction
 import kotlinx.coroutines.flow.Flow
 
-class TransactionsViewModel : ViewModel() {
+class TransactionsViewModel(
+    private val token: String
+) : ViewModel() {
 
     private var switchIcon = false
 
@@ -27,7 +29,7 @@ class TransactionsViewModel : ViewModel() {
             initialLoadSize = 10,
             enablePlaceholders = false
         ),
-        pagingSourceFactory = { TransactionsPagingSource(TransactionAPIService) }
+        pagingSourceFactory = { TransactionsPagingSource(token,TransactionAPIService) }
     ).flow.cachedIn(viewModelScope)
 
     fun getIcon(): Int {
