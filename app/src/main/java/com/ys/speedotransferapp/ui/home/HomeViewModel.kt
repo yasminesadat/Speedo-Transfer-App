@@ -20,9 +20,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
+    private val token: String,
     private val transactionApiService: TransactionAPICallable = TransactionAPIService.callable,
     private val userApiService: UserAPICallable = UserAPIService.callable,
-    private val token: String = "" //placeholder
 ) : ViewModel() {
     val services = ServicesSource().getServices()
 

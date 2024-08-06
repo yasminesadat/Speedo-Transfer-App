@@ -1,5 +1,6 @@
 package com.ys.speedotransferapp.ui.home
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,6 +32,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.toRect
 import androidx.compose.ui.graphics.Color.Companion.Unspecified
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
@@ -60,7 +62,8 @@ import com.ys.speedotransferapp.ui_model.Transaction
 fun HomeScreen(
     navController: NavController,
     onLogout: () -> Unit,
-    viewModel: HomeViewModel = HomeViewModel()
+    viewModel: HomeViewModel = HomeViewModel( LocalContext.current.getSharedPreferences("auth_data", Context.MODE_PRIVATE)
+        .getString("token", "")!!)
 ) {
     val userProfile = viewModel.userProfile.collectAsState().value
     val balance = viewModel.balance.collectAsState().value
