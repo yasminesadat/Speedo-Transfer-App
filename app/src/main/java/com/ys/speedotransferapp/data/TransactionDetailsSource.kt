@@ -1,5 +1,6 @@
 package com.ys.speedotransferapp.data
 
+import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.ui_model.TransactionDetails
 
 class TransactionDetailsSource {
@@ -13,6 +14,9 @@ class TransactionDetailsSource {
         amount = "175.00",
         currency = "USD",
         reference = 234567,
-        senderAccount = "Account xxxx1234"
+        senderAccount = "Account xxxx1234",
+        header="Failed Transaction",
+        largeIcon = R.drawable.failed,
+        smallIcon = R.drawable.failed_small
     )
 }

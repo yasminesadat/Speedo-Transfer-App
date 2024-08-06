@@ -4,6 +4,7 @@ object AppConstants {
     const val NUMBER = 1234
     const val EMAIL = "help@speedo.com"
     const val FAILED = "Failed"
+    const val BEARER = "Bearer "
 
     const val BASE_URL = "https://speedotransfer1-506cf0850222.herokuapp.com"
 
@@ -13,4 +14,5 @@ object AppConstants {
     const val LOGIN_ENDPOINT = "/api/auth/login"
     const val LOGOUT_ENDPOINT = "/api/auth/logout"
     const val BALANCE_ENDPOINT = "/api/balance"
+    const val NAME_ENDPOINT = "/api/name"
 }

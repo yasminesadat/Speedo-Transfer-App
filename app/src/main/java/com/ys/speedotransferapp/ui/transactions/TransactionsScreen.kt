@@ -1,5 +1,6 @@
 package com.ys.speedotransferapp.ui.transactions
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.material3.Card
@@ -24,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -32,7 +35,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -47,14 +49,13 @@ import com.ys.speedotransferapp.ui.theme.G900
 import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.P50
 import com.ys.speedotransferapp.ui_model.Transaction
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.paging.LoadState
 
 @Composable
 fun TransactionsScreen(
     navController: NavController,
-    viewModel: TransactionsViewModel = viewModel(),
+    viewModel: TransactionsViewModel = TransactionsViewModel(
+        LocalContext.current.getSharedPreferences("auth_data", Context.MODE_PRIVATE)
+        .getString("token", "")!!),
 ) {
     Column(
         modifier = Modifier
@@ -103,7 +104,7 @@ fun TransactionCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(4.dp)
-            .clickable { navController.navigate(TRANSACTION_ROUTE) }
+            .clickable { navController.navigate("$TRANSACTION_ROUTE/${transaction.reference}") }
     ) {
         Row(
             modifier = Modifier.padding(16.dp), horizontalArrangement = Arrangement.SpaceBetween

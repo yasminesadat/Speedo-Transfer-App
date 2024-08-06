@@ -9,11 +9,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.NavController
 import com.ys.speedotransferapp.constants.AppNavHost
-import com.ys.speedotransferapp.ui.navigation.MainScreen
-import com.ys.speedotransferapp.ui.signup.SignUpScreen
 import com.ys.speedotransferapp.ui.theme.SpeedoTransferAppTheme
 
 class MainActivity : ComponentActivity() {

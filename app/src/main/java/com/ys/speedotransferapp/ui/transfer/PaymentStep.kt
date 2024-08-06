@@ -1,5 +1,6 @@
 package com.ys.speedotransferapp.ui.transfer
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -48,7 +49,8 @@ fun PaymentStep(
 
     val context = LocalContext.current
     val viewModel = remember {
-        TransferScreenViewModel()
+        TransferScreenViewModel(context.getSharedPreferences("auth_data", Context.MODE_PRIVATE)
+            .getString("token", "")!!)
     }
     val currenciesViewModel = remember {
         CurrenciesViewModel()

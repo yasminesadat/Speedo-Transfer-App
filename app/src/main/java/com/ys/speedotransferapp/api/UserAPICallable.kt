@@ -2,10 +2,15 @@ package com.ys.speedotransferapp.api
 
 import com.ys.speedotransferapp.constants.AppConstants.BALANCE_ENDPOINT
 import com.ys.speedotransferapp.constants.AppConstants.LOGIN_ENDPOINT
-import com.ys.speedotransferapp.constants.AppConstants.LOGOUT_ENDPOINT
+import com.ys.speedotransferapp.constants.AppConstants.NAME_ENDPOINT
 import com.ys.speedotransferapp.constants.AppConstants.REGISTER_ENDPOINT
-import com.ys.speedotransferapp.data_model.*
-import retrofit2.Call
+import com.ys.speedotransferapp.data_model.BalanceResponse
+import com.ys.speedotransferapp.data_model.LoginRequest
+import com.ys.speedotransferapp.data_model.LoginResponse
+import com.ys.speedotransferapp.data_model.LogoutRequest
+import com.ys.speedotransferapp.data_model.LogoutResponse
+import com.ys.speedotransferapp.data_model.NameData
+import com.ys.speedotransferapp.data_model.RegisterRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -23,7 +28,7 @@ interface UserAPICallable {
         @Body loginRequest: LoginRequest
     ): LoginResponse
 
-    @POST(LOGOUT_ENDPOINT)
+    @POST(LOGIN_ENDPOINT)
     suspend fun logoutUser(
         @Body logoutRequest: LogoutRequest
     ): LogoutResponse
@@ -32,4 +37,9 @@ interface UserAPICallable {
     suspend fun getBalance(
         @Header("Authorization") token: String
     ): BalanceResponse
+
+    @GET(NAME_ENDPOINT)
+    suspend fun getName(
+        @Header("Authorization") token: String
+    ): NameData
 }

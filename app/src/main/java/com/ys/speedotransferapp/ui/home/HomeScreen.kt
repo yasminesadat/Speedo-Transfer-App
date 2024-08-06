@@ -1,5 +1,6 @@
 package com.ys.speedotransferapp.ui.home
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +25,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,6 +33,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.toRect
 import androidx.compose.ui.graphics.Color.Companion.Unspecified
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
@@ -42,7 +45,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.constants.AppRoutes.TRANSACTIONS_ROUTE
-import com.ys.speedotransferapp.data.ServicesSource
 import com.ys.speedotransferapp.ui.theme.G0
 import com.ys.speedotransferapp.ui.theme.G10
 import com.ys.speedotransferapp.ui.theme.G100
@@ -53,14 +55,23 @@ import com.ys.speedotransferapp.ui.theme.G900
 import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.P50
 import com.ys.speedotransferapp.ui.theme.S400
+import com.ys.speedotransferapp.ui_model.Profile
 import com.ys.speedotransferapp.ui_model.ServiceItem
+import com.ys.speedotransferapp.ui_model.Transaction
 
 @Composable
 fun HomeScreen(
     navController: NavController,
     onLogout: () -> Unit,
-    viewModel: HomeViewModel = HomeViewModel()
+    viewModel: HomeViewModel = HomeViewModel( LocalContext.current.getSharedPreferences("auth_data", Context.MODE_PRIVATE)
+        .getString("token", "")!!)
 ) {
+    val userProfile = viewModel.userProfile.collectAsState().value
+    val balance = viewModel.balance.collectAsState().value
+    val transactions = viewModel.transactions.collectAsState().value
+    LaunchedEffect(Unit) {
+
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -68,26 +79,27 @@ fun HomeScreen(
             .padding(horizontal = 12.dp)
             .verticalScroll(rememberScrollState())
     ) {
-        ScreenHeader(viewModel)
+        ScreenHeader(userProfile)
         Spacer(modifier = Modifier.height(8.dp))
         Card(
             colors = CardDefaults.cardColors(containerColor = P300),
             elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         ) {
             Text(
                 text = "Current Balance",
                 color = G0,
                 modifier = Modifier.padding(top = 24.dp, start = 12.dp, bottom = 4.dp)
             )
-            Text(
-                text = viewModel.profile.balance,
-                color = G0,
-                modifier = Modifier.padding(bottom = 24.dp, start = 12.dp),
-                fontWeight = FontWeight.Bold,
-                fontSize = 28.sp
-            )
+            balance?.let {
+                Text(
+                    text = it,
+                    color = G0,
+                    modifier = Modifier.padding(bottom = 24.dp, start = 12.dp),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 28.sp
+                )
+            }
         }
         Spacer(modifier = Modifier.height(8.dp))
         Card(
@@ -107,7 +119,7 @@ fun HomeScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp)
             ) {
-                for (service in ServicesSource().getServices())
+                for (service in viewModel.services)
                     Service(service)
             }
         }
@@ -132,49 +144,48 @@ fun HomeScreen(
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
-        TransactionList(viewModel)
+        TransactionList(transactions)
     }
 }
 
 @Composable
-fun ScreenHeader(viewModel: HomeViewModel) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
-        CircularText(viewModel.getInitials())
-        Spacer(modifier = Modifier.width(8.dp))
-        BasicText(
-            buildAnnotatedString {
-                withStyle(style = ParagraphStyle(lineHeight = 24.sp)) {
-                    withStyle(SpanStyle(color = P300)) {
-                        append("Welcome back,")
-                    }
-                    append("\n")
-                    withStyle(
-                        SpanStyle(
-                            fontWeight = FontWeight.Medium,
-                            color = G900,
-                            fontSize = 16.sp
-                        )
-                    ) {
-                        append(viewModel.profile.firstAndSurname)
+fun ScreenHeader(userProfile: Profile?) {
+    userProfile?.let {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            CircularText(it.initials)
+            Spacer(modifier = Modifier.width(8.dp))
+            BasicText(
+                buildAnnotatedString {
+                    withStyle(style = ParagraphStyle(lineHeight = 24.sp)) {
+                        withStyle(SpanStyle(color = P300)) {
+                            append("Welcome back,")
+                        }
+                        append("\n")
+                        withStyle(
+                            SpanStyle(
+                                fontWeight = FontWeight.Medium,
+                                color = G900,
+                                fontSize = 16.sp
+                            )
+                        ) {
+                            append(it.name)
+                        }
                     }
                 }
-            }
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        Icon(
-            imageVector = ImageVector.vectorResource(R.drawable.notifications),
-            tint = Unspecified,
-            contentDescription = "notification icon",
-            modifier = Modifier
-                .size(32.dp)
-        )
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Icon(
+                imageVector = ImageVector.vectorResource(R.drawable.notifications),
+                tint = Unspecified,
+                contentDescription = "notification icon",
+                modifier = Modifier.size(32.dp)
+            )
+        }
     }
 }
-
 
 @Composable
 fun CircularText(text: String) {
@@ -200,8 +211,7 @@ fun CircularText(text: String) {
 fun Service(service: ServiceItem) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .padding(top = 8.dp, bottom = 4.dp)
+        modifier = Modifier.padding(top = 8.dp, bottom = 4.dp)
     ) {
         Box(
             modifier = Modifier
@@ -233,15 +243,14 @@ fun Service(service: ServiceItem) {
 }
 
 @Composable
-fun TransactionList(viewModel: HomeViewModel) {
+fun TransactionList(transactions: List<Transaction>) {
     Card(
         colors = CardDefaults.cardColors(containerColor = G0),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
-        val transactions = viewModel.transactions.collectAsState()
         Column {
-            for (transaction in transactions.value.take(3)) {
+            for (transaction in transactions.take(3)) {
                 Column {
                     Row(
                         modifier = Modifier
@@ -282,11 +291,11 @@ fun TransactionList(viewModel: HomeViewModel) {
                                 )
                             }
                             Text(
-                                text = transaction.paymentProcessor + " . " + transaction.recipientDigits,
+                                text = "${transaction.paymentProcessor} . ${transaction.recipientDigits}",
                                 color = G700
                             )
                             Text(
-                                text = transaction.dateTime + " - " + transaction.status,
+                                text = "${transaction.dateTime} - ${transaction.status}",
                                 color = G100
                             )
                         }

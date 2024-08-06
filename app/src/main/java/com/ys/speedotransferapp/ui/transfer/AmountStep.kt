@@ -72,7 +72,9 @@ import com.ys.speedotransferapp.ui.common.LoadingScreen
 
 @Composable
 fun AmountStep(navController: NavController): Boolean {
-    val viewModel = remember { TransferScreenViewModel() }
+    val context = LocalContext.current
+    val viewModel = remember { TransferScreenViewModel( context.getSharedPreferences("auth_data", Context.MODE_PRIVATE)
+        .getString("token", "")!!) }
     val viewModelFav = remember { FavouriteViewModel() }
     val currenciesViewModel = remember { CurrenciesViewModel() }
     val currenciesViewModel1 = remember { CurrenciesViewModel() }
@@ -82,7 +84,6 @@ fun AmountStep(navController: NavController): Boolean {
     val error by viewModel.amountError.collectAsState()
     val recNameError by viewModel.recNameError.collectAsState()
     val recAccountError by viewModel.recAccountError.collectAsState()
-    val context = LocalContext.current
     val sharedPreferences = context.getSharedPreferences("transfer_data", Context.MODE_PRIVATE)
     val editor = sharedPreferences.edit()
     val isLoading = remember { mutableStateOf(true) }
@@ -283,7 +284,8 @@ fun AmountStep(navController: NavController): Boolean {
             Spacer(modifier = Modifier.size(16.dp))
         }
     }
-    return viewModel.validateFields(context, HomeViewModel())
+    return viewModel.validateFields(context, HomeViewModel( context.getSharedPreferences("auth_data", Context.MODE_PRIVATE)
+        .getString("token", "")!!))
 }
 
 
