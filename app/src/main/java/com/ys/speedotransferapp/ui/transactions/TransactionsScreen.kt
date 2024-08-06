@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.material3.Card
@@ -47,9 +48,6 @@ import com.ys.speedotransferapp.ui.theme.G900
 import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.P50
 import com.ys.speedotransferapp.ui_model.Transaction
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.paging.LoadState
 
 @Composable
 fun TransactionsScreen(
@@ -103,7 +101,7 @@ fun TransactionCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(4.dp)
-            .clickable { navController.navigate(TRANSACTION_ROUTE) }
+            .clickable { navController.navigate("$TRANSACTION_ROUTE/${transaction.reference}") }
     ) {
         Row(
             modifier = Modifier.padding(16.dp), horizontalArrangement = Arrangement.SpaceBetween

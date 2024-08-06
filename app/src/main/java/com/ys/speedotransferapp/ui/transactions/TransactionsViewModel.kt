@@ -16,7 +16,6 @@ import com.ys.speedotransferapp.ui.theme.LightRed
 import com.ys.speedotransferapp.ui.theme.Red
 import com.ys.speedotransferapp.ui_model.Transaction
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asStateFlow
 
 class TransactionsViewModel : ViewModel() {
 
@@ -25,29 +24,11 @@ class TransactionsViewModel : ViewModel() {
      val transactions: Flow<PagingData<Transaction>> = Pager(
         config = PagingConfig(
             pageSize = 10,
+            initialLoadSize = 10,
             enablePlaceholders = false
         ),
         pagingSourceFactory = { TransactionsPagingSource(TransactionAPIService) }
     ).flow.cachedIn(viewModelScope)
-    //val transactions = _transactions.asStateFlow()
-
-   // private val mapper = TransactionMapper()
-
-//    init {
-//        getTransactions()
-//    }
-//
-//    private fun getTransactions() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            try {
-//                val fetchedTransactions =
-//                    TransactionAPIService.callable.getTransactions(1, 3, "Bearer token")
-//                _transactions.update { mapper.mapToView(fetchedTransactions) }
-//            } catch (e: Exception) {
-//                Log.e("TAG", "Exception occurred", e)
-//            }
-//        }
-//    }
 
     fun getIcon(): Int {
         switchIcon = !switchIcon

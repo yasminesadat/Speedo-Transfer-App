@@ -9,7 +9,6 @@ import com.ys.speedotransferapp.constants.AppRoutes.FAVOURITES_ROUTE
 import com.ys.speedotransferapp.constants.AppRoutes.HOME_ROUTE
 import com.ys.speedotransferapp.constants.AppRoutes.MORE_ROUTE
 import com.ys.speedotransferapp.constants.AppRoutes.TRANSACTIONS_ROUTE
-import com.ys.speedotransferapp.constants.AppRoutes.TRANSACTION_ROUTE
 import com.ys.speedotransferapp.constants.AppRoutes.TRANSFER_ROUTE
 
 class MainViewModel : ViewModel() {
@@ -26,10 +25,10 @@ class MainViewModel : ViewModel() {
         val selectedIndex = when (currentRoute) {
             HOME_ROUTE -> 0
             TRANSFER_ROUTE -> 1
-            TRANSACTIONS_ROUTE, TRANSACTION_ROUTE -> 2
+            TRANSACTIONS_ROUTE-> 2
             CARDS_ROUTE -> 3
             MORE_ROUTE, FAVOURITES_ROUTE -> 4
-            else -> 0
+            else -> 2 //handle favourite
         }
        selectedItemIndex = selectedIndex
     }
