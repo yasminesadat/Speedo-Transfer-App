@@ -283,7 +283,7 @@ fun AmountStep(navController: NavController): Boolean {
             Spacer(modifier = Modifier.size(16.dp))
         }
     }
-    return viewModel.validateFields(HomeViewModel())
+    return viewModel.validateFields(context, HomeViewModel())
 }
 
 

@@ -1,6 +1,5 @@
 package com.ys.speedotransferapp.ui.transfer
 
-
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
@@ -25,17 +24,14 @@ class TransferScreenViewModel : ViewModel() {
     private val _state = MutableStateFlow(TransferState())
     val state: StateFlow<TransferState> = _state.asStateFlow()
 
-
     private val _amount_sending = MutableStateFlow("")
     val amount_sending = _amount_sending.asStateFlow()
-
 
     private val _recName = MutableStateFlow("")
     val recName = _recName.asStateFlow()
 
     private val _recAccount = MutableStateFlow("")
     val recAccount = _recAccount.asStateFlow()
-
 
     private val _amountError = MutableStateFlow<String?>(null)
     val amountError: StateFlow<String?> get() = _amountError
@@ -50,12 +46,17 @@ class TransferScreenViewModel : ViewModel() {
         return balance.replace(",", "").toDoubleOrNull() ?: 0.0
     }
 
+    private fun convertToLE(amount: Double, currency: String, currenciesViewModel: CurrenciesViewModel = CurrenciesViewModel()): Double {
+        // Assuming CurrienciesSource has a method to get the conversion rate
+        val conversionRate = currenciesViewModel.getExchangeRate(currency, "EGP")
+        return amount * conversionRate
+    }
 
     fun onAmountSendChange(amount: String) {
         _amount_sending.value = amount
     }
 
-    fun validateAmountField(viewModel: HomeViewModel): Boolean {
+    fun validateAmountField(context: Context, viewModel: HomeViewModel, currenciesViewModel: CurrenciesViewModel = CurrenciesViewModel()): Boolean {
         var isValid = true
 
         // Validate amount
@@ -63,13 +64,20 @@ class TransferScreenViewModel : ViewModel() {
         val maxAmount = 5000.0
         val userBalance = viewModel.profile.balance // Replace with actual method to get the user's balance
 
+        // Assuming the currency is stored in the profile or another field
+        currenciesViewModel.loadSelectedCurrencyOption(context, "selected_option_index_1")
+        val currency = currenciesViewModel.selectedOption.value.curr_code
+        Log.d("TransferViewModel", "Currency: $currency")
+        // Convert amount to LE
+        val amountInLE = if (amount != null) convertToLE(amount, currency) else null
+
         // Check if amount is null or empty
-        if (amount == null || amount <= 0) {
+        if (amountInLE == null || amountInLE <= 0) {
             _amountError.value = "Amount cannot be empty or zero."
             isValid = false
         }
         // Check if amount exceeds the maximum limit
-        else if (amount > maxAmount) {
+        else if (amountInLE > maxAmount) {
             _amountError.value = "Invalid amount. Must be less than or equal to $maxAmount LE."
             isValid = false
         }
@@ -79,22 +87,19 @@ class TransferScreenViewModel : ViewModel() {
             isValid = false
         }
         // Check if amount exceeds the user's balance
-        else if (amount > convertBalanceStringToDouble(userBalance)) {
+        else if (amountInLE > convertBalanceStringToDouble(userBalance)) {
             _amountError.value = "Amount exceeds your available balance."
             isValid = false
         } else {
             _amountError.value = null
         }
 
-        // You can add additional validation for other fields here
-
         return isValid
     }
 
-    fun validateFields(viewModel: HomeViewModel): Boolean {
-        val isAmountFieldValid = validateAmountField(viewModel)
+    fun validateFields(context: Context, viewModel: HomeViewModel): Boolean {
+        val isAmountFieldValid = validateAmountField(context, viewModel)
         var isValid = true
-        // Validate amount
 
         // Validate recipient name
         if (_recName.value.isBlank()) {
@@ -115,8 +120,6 @@ class TransferScreenViewModel : ViewModel() {
         return isValid && isAmountFieldValid
     }
 
-
-
     fun onRecNameChange(newText: String) {
         _recName.value = newText
     }
@@ -128,7 +131,6 @@ class TransferScreenViewModel : ViewModel() {
     fun setAmount(amount: Double) {
         _state.update { it.copy(amount = amount, currentStep = TransferStep.CONFIRMATION) }
     }
-
 
     fun loadTransferDetails(context: Context) {
         val sharedPreferences = context.getSharedPreferences("transfer_data", Context.MODE_PRIVATE)
@@ -142,13 +144,13 @@ class TransferScreenViewModel : ViewModel() {
 
         Log.d("TransferViewModel", "Loaded: Amount=$loadedAmount, Name=$loadedName, Account=$loadedAccount")
     }
+
     fun clearTransferDetails(context: Context) {
         val editor = context.getSharedPreferences("transfer_data", Context.MODE_PRIVATE).edit()
         editor.clear()
         editor.apply()
         Log.d("TransferViewModel", "Cleared all transfer details from SharedPreferences")
     }
-
 
     fun confirmTransfer() {
         _state.update { it.copy(currentStep = TransferStep.PAYMENT) }
@@ -190,8 +192,6 @@ class TransferScreenViewModel : ViewModel() {
             )
         }
     }
-
-
 
     fun resetTransfer() {
         _state.value = TransferState()
