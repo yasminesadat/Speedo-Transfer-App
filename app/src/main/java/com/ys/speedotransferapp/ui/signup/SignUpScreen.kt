@@ -1,5 +1,6 @@
 package com.ys.speedotransferapp.ui.signup
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -26,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -47,35 +50,49 @@ import com.ys.speedotransferapp.ui.theme.P300
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = SignUpViewModel(), modifier: Modifier = Modifier) {
+fun SignUpScreen(
+    navController: NavController,
+    viewModel: SignUpViewModel = SignUpViewModel(),
+    modifier: Modifier = Modifier
+) {
     val fullName by viewModel.fullName.collectAsState()
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
     var isPassError: Boolean = false
     val view_model = remember { CommonComposableViewModel() }
+    val context = LocalContext.current
+    val sharedPreferences = context.getSharedPreferences("sign_up_data", Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+
+
+
+
+
     Scaffold(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .background(
                 brush = Brush.linearGradient(
                     colors = listOf(G0, P20)
                 )
             ),
         topBar = {
-            TopAppBar(title = {
-                Text(
-                    text = "Sign up",
-                    modifier
-                        .fillMaxWidth()
-                        .padding(end = 16.dp), textAlign = TextAlign.Center
-                )
-            },
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "Sign up",
+                        modifier
+                            .fillMaxWidth()
+                            .padding(end = 16.dp), textAlign = TextAlign.Center
+                    )
+                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.Transparent,
                 )
             )
         },
         containerColor = Color.Transparent
-        ) { innerPadding ->
+    ) { innerPadding ->
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -92,7 +109,11 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = Sign
                 label = "Full Name",
                 fieldId = "fullName",
                 hint = "Enter your Full Name",
-                onValueChanged = { viewModel.setFullName(it) },
+                onValueChanged = {
+                    viewModel.setFullName(it)
+                    editor.putString("fullName", fullName)
+                    editor.apply()
+                },
                 trailingIcon = R.drawable.user,
                 iconDescription = "User icon",
             )
@@ -103,7 +124,11 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = Sign
                 label = "Email",
                 fieldId = "email",
                 hint = "Enter your email address",
-                onValueChanged = { viewModel.setEmail(it) },
+                onValueChanged = {
+                    viewModel.setEmail(it)
+                    editor.putString("email", email)
+                    editor.apply()
+                },
                 trailingIcon = R.drawable.email,
                 iconDescription = "Email icon"
             )
@@ -114,14 +139,21 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = Sign
                 label = "Password",
                 fieldId = "password",
                 hint = "Enter your password",
-                onValueChanged = { viewModel.setPassword(it) },
+                onValueChanged = { viewModel.setPassword(it)
+                    editor.putString("password", password)
+                    editor.apply()},
                 isPassword = true,
                 trailingIcon = R.drawable.close_eye,
                 iconDescription = "User icon"
             )
             Spacer(modifier = Modifier.padding(8.dp))
             Button(
-                onClick = { if(view_model.errorMessages["password"] == null) navController.navigate(AppRoutes.EXTRA_SIGN_UP_ROUTE)},
+                onClick = {
+                    if (view_model.errorMessages["password"] == null) navController.navigate(
+                        AppRoutes.EXTRA_SIGN_UP_ROUTE
+                    )
+
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
@@ -150,7 +182,9 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = Sign
                     color = Color(0xff898886),
                     lineHeight = 9.38.em,
                     style = TextStyle(
-                        fontSize = 16.sp))
+                        fontSize = 16.sp
+                    )
+                )
                 Text(
                     text = "Sign In",
                     color = Color(0xff871e35),
@@ -158,13 +192,13 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = Sign
                     lineHeight = 8.12.em,
                     style = TextStyle(
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium),
+                        fontWeight = FontWeight.Medium
+                    ),
                     modifier = Modifier.clickable { navController.navigate(AppRoutes.SIGN_IN_ROUTE) })
             }
         }
-        }
     }
-
+}
 
 
 @Preview(showBackground = true)

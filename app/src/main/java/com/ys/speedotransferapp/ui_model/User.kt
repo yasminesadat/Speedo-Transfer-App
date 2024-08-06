@@ -1,6 +1,4 @@
-package com.ys.speedotransferapp.model
-
-import com.ys.speedotransferapp.ui_model.TransactionItem
+package com.ys.speedotransferapp.ui_model
 
 data class User(
 
@@ -10,6 +8,6 @@ data class User(
     val country: String,
     val birthDate: String,
     val favourites: List<String>,
-    val transactions: List<TransactionItem>
+    val transactions: List<Transaction>
 ) {
 }

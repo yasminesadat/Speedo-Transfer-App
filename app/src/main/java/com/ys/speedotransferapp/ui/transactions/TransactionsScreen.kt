@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.material3.Card
@@ -22,7 +20,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.constants.AppRoutes.TRANSACTION_ROUTE
 import com.ys.speedotransferapp.ui.common.Header
@@ -48,7 +46,10 @@ import com.ys.speedotransferapp.ui.theme.G700
 import com.ys.speedotransferapp.ui.theme.G900
 import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.theme.P50
-import com.ys.speedotransferapp.ui_model.TransactionItem
+import com.ys.speedotransferapp.ui_model.Transaction
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.paging.LoadState
 
 @Composable
 fun TransactionsScreen(
@@ -78,20 +79,21 @@ fun TransactionsScreen(
                     .padding(bottom = 8.dp)
             )
         }
-        val transactions = viewModel.transactions.collectAsState().value
+        val transactions = viewModel.transactions.collectAsLazyPagingItems()
         LazyColumn {
-            items(transactions) { transactionItem ->
-                TransactionCard(transactionItem, viewModel, navController)
-                Spacer(modifier = Modifier.height(8.dp))
+            items(transactions.itemCount) {
+                TransactionCard(transactions[it]!!, viewModel, navController)
             }
         }
-
     }
 }
 
+
+
+
 @Composable
 fun TransactionCard(
-    transaction: TransactionItem,
+    transaction: Transaction,
     viewModel: TransactionsViewModel,
     navController: NavController
 ) {
@@ -144,8 +146,7 @@ fun TransactionCard(
                             )
                         ) {
                             append(
-                                transaction.paymentProcessor + " . " +
-                                        transaction.recipientDigits
+                                viewModel.getCardDetails(transaction)
                             )
                         }
                         append("\n")

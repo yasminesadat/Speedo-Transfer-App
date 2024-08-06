@@ -2,7 +2,8 @@ package com.ys.speedotransferapp.ui_model
 
 import androidx.annotation.DrawableRes
 
-data class TransactionItem(
+data class Transaction(
+    val reference: Long,
     val recipientName: String,
     val recipientDigits: String,
     val dateTime: String,

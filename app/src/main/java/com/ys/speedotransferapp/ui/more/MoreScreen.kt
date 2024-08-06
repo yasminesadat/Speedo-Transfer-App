@@ -98,6 +98,7 @@ fun Option(
     navController: NavController,
     viewModel: MoreViewModel
 ) {
+    val token = viewModel.loadToken(LocalContext.current)
     Column {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -112,7 +113,7 @@ fun Option(
                             viewModel.showHelpBottomSheet(true)
                         }
 
-                        "logout" -> {onLogout()}
+                        "logout" -> {onLogout(); viewModel.logout(token!!)}
                     }
                 }
         ) {
@@ -226,7 +227,7 @@ fun ShowHelp(
                     .weight(1f)
                     .clickable {
                         val intent = Intent(Intent.ACTION_DIAL).apply {
-                            data = Uri.parse("tel: $NUMBER")
+                            data = Uri.parse("tel:$NUMBER")
                         }
                         context.startActivity(intent)
                     },

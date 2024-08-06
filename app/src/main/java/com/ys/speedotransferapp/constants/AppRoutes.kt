@@ -1,6 +1,6 @@
 package com.ys.speedotransferapp.constants
 
-import UserPreferences
+import com.ys.speedotransferapp.database.UserPreferences
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -12,9 +12,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.ys.speedotransferapp.constants.AppRoutes.AMOUNT_STEP_ROUTE
+import com.ys.speedotransferapp.constants.AppRoutes.CONFIRMATION_STEP_ROUTE
 import com.ys.speedotransferapp.constants.AppRoutes.EXTRA_SIGN_UP_ROUTE
 import com.ys.speedotransferapp.constants.AppRoutes.HOME_ROUTE
 import com.ys.speedotransferapp.constants.AppRoutes.LANDINGS_ROUTE
+import com.ys.speedotransferapp.constants.AppRoutes.PAYMENT_STEP_ROUTE
 import com.ys.speedotransferapp.constants.AppRoutes.SIGN_IN_ROUTE
 import com.ys.speedotransferapp.constants.AppRoutes.SIGN_UP_ROUTE
 import com.ys.speedotransferapp.ui.common.LoadingScreen
@@ -23,6 +26,9 @@ import com.ys.speedotransferapp.ui.navigation.MainScreen
 import com.ys.speedotransferapp.ui.signin.SignInScreen
 import com.ys.speedotransferapp.ui.signup.ExtraSignUpScreen
 import com.ys.speedotransferapp.ui.signup.SignUpScreen
+import com.ys.speedotransferapp.ui.transfer.AmountStep
+import com.ys.speedotransferapp.ui.transfer.ConfirmationStep
+import com.ys.speedotransferapp.ui.transfer.PaymentStep
 import kotlinx.coroutines.launch
 
 object AppRoutes {
@@ -37,6 +43,9 @@ object AppRoutes {
     const val SIGN_UP_ROUTE = "sign up"
     const val EXTRA_SIGN_UP_ROUTE = "extra sign up"
     const val SIGN_IN_ROUTE = "sign in"
+    const val AMOUNT_STEP_ROUTE = "amount step"
+    const val CONFIRMATION_STEP_ROUTE = "confirmation step"
+    const val PAYMENT_STEP_ROUTE = "payment step"
 }
 
 
@@ -90,6 +99,18 @@ fun AppNavHost() {
                         popUpTo(HOME_ROUTE) { inclusive = true }
                     }
                 })
+            }
+
+            composable(route = AMOUNT_STEP_ROUTE){
+                AmountStep(navController)
+            }
+
+            composable(route = CONFIRMATION_STEP_ROUTE){
+                ConfirmationStep(navController)
+            }
+
+            composable(route = PAYMENT_STEP_ROUTE){
+                PaymentStep(navController)
             }
         }
     }

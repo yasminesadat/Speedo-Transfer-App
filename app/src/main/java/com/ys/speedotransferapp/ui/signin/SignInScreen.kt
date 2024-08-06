@@ -1,33 +1,13 @@
 package com.ys.speedotransferapp.ui.signin
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SnackbarResult
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -45,7 +25,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.constants.AppRoutes
-import com.ys.speedotransferapp.data.UserSource
 import com.ys.speedotransferapp.ui.common.CommonComposableViewModel
 import com.ys.speedotransferapp.ui.common.InputField
 import com.ys.speedotransferapp.ui.common.SpeedoTransferText
@@ -58,18 +37,23 @@ import kotlinx.coroutines.launch
 @Composable
 fun SignInScreen(
     navController: NavController,
-    viewModel: SignInViewModel = SignInViewModel(UserSource()),
+    viewModel: SignInViewModel = SignInViewModel(),
     onLoginSuccess: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
+
+    viewModel.loadSignInDetails(context)
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
-    val isUserValid by viewModel.isUserValid.collectAsState()
-    var isPassError: Boolean = false
+    val loginResult by viewModel.loginResult.collectAsState()
     val view_model = remember { CommonComposableViewModel() }
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
+    var token = viewModel.loadToken(context)
+    val sharedPreferences = context.getSharedPreferences("sign_up_data", Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+
 
     Scaffold(
         modifier = Modifier
@@ -98,13 +82,27 @@ fun SignInScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
 
+        LaunchedEffect(loginResult) {
+            Log.d("SignInScreen", "loginResult: $loginResult")
+            loginResult?.let {
+                if (it.isSuccess) {
+                    onLoginSuccess()
+                } else {
+                    coroutineScope.launch {
+                        snackbarHostState.showSnackbar(
+                            message = it.exceptionOrNull()?.message ?: "Login failed"
+                        )
+                    }
+                }
+            }
+        }
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceAround,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(innerPadding)
-
         ) {
             SpeedoTransferText()
             Spacer(modifier = Modifier.padding(8.dp))
@@ -114,18 +112,26 @@ fun SignInScreen(
                 fieldId = "email",
                 label = "Email",
                 hint = "Enter your email address",
-                onValueChanged = { viewModel.setEmail(it) },
+                onValueChanged = {
+                    viewModel.setEmail(it)
+                    editor.putString("email", email)
+                    editor.apply()
+                },
                 trailingIcon = R.drawable.email,
                 iconDescription = "Email icon"
             )
             Spacer(modifier = Modifier.padding(8.dp))
-            isPassError = InputField(
+            val isPassError = InputField(
                 viewModel = view_model,
                 value = password,
                 fieldId = "password_signin",
                 label = "Password",
                 hint = "Enter your password",
-                onValueChanged = { viewModel.setPassword(it) },
+                onValueChanged = {
+                    viewModel.setPassword(it)
+                    editor.putString("password", password)
+                    editor.apply()
+                },
                 isPassword = true,
                 trailingIcon = R.drawable.close_eye,
                 iconDescription = "User icon"
@@ -133,15 +139,10 @@ fun SignInScreen(
             Spacer(modifier = Modifier.padding(8.dp))
             Button(
                 onClick = {
-                    if (viewModel.verifyUser()) {
-                        onLoginSuccess()
-                    } else {
-                        coroutineScope.launch {
-                            snackbarHostState.showSnackbar(
-                                message = "Invalid account"
-                            )
-                        }
-                    }
+                    viewModel.loginUser(context)
+                    Log.d("SignInScreen", "token: $token")
+
+
                 },
                 modifier = Modifier
                     .fillMaxWidth()

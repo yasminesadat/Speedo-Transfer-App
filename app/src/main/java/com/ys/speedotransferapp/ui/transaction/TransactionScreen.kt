@@ -115,7 +115,7 @@ fun TransactionScreen(
         ) {
             RowEntry(
                 field = "Reference",
-                value = viewModel.transaction.reference,
+                value = viewModel.transaction.reference.toString(),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
