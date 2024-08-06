@@ -2,7 +2,6 @@ package com.ys.speedotransferapp.mapper
 
 import com.ys.speedotransferapp.R
 import com.ys.speedotransferapp.data_model.TransactionDTO
-import com.ys.speedotransferapp.data_model.TransactionResponse
 import com.ys.speedotransferapp.ui_model.Transaction
 import java.text.NumberFormat
 import java.time.LocalDate
@@ -10,11 +9,11 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Currency
 
-class TransactionMapper {
+object TransactionMapper {
 
     // Convert data model to UI model
-    private fun mapToView(transactionDTO: TransactionDTO): Transaction {
-        return Transaction(
+    private fun mapToView(transactionDTO: TransactionDTO) =
+        Transaction(
             reference = transactionDTO.id,
             recipientName = transactionDTO.recipientName,
             recipientDigits = transactionDTO.recipientAccountNumber,
@@ -24,11 +23,10 @@ class TransactionMapper {
             paymentProcessor = transactionDTO.cardType,
             amount = formatAmount(transactionDTO.amount, transactionDTO.currency)
         )
-    }
 
     // Convert list of data models to list of UI models
-    fun mapToView(response: TransactionResponse): List<Transaction> {
-        return response.transactions.map { mapToView(it) }
+    fun mapToView(response: List<TransactionDTO>): List<Transaction> {
+        return response.map { mapToView(it) }
     }
 
     private fun formatAmount(amount: Double, currencyCode: String): String {
