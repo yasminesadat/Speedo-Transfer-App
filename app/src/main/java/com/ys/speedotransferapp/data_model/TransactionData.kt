@@ -12,7 +12,3 @@ data class TransactionDTO(
     val cardType: String,
     val status: String
 )
-
-data class TransactionResponse(
-    val transactions: List<TransactionDTO>
-)

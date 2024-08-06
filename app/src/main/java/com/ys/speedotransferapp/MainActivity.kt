@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setContent {
             SpeedoTransferAppTheme {
-                AppNavHost()
+                MainScreen(){}
             }
         }
     }

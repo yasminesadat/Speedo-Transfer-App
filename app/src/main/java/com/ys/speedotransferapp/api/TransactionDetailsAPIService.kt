@@ -1,12 +1,13 @@
 package com.ys.speedotransferapp.api
 
+
 import com.ys.speedotransferapp.mock.TransactionInterceptor
 import com.ys.speedotransferapp.constants.AppConstants.BASE_URL
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object TransactionAPIService {
+object TransactionDetailsAPIService {
 
     private val client: OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(TransactionInterceptor()) // Add the interceptor
@@ -19,8 +20,8 @@ object TransactionAPIService {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val callable: TransactionAPICallable by lazy {
-        retrofit.create(TransactionAPICallable::class.java)
+    val callable: TransactionDetailsAPICallable by lazy {
+        retrofit.create(TransactionDetailsAPICallable::class.java)
     }
 
 }
