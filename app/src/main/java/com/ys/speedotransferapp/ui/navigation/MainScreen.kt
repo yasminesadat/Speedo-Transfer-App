@@ -49,7 +49,7 @@ import com.ys.speedotransferapp.ui.theme.P20
 import com.ys.speedotransferapp.ui.theme.P300
 import com.ys.speedotransferapp.ui.transaction.TransactionScreen
 import com.ys.speedotransferapp.ui.transactions.TransactionsScreen
-import com.ys.speedotransferapp.ui.transfer.TransferScreen
+//import com.ys.speedotransferapp.ui.transfer.TransferScreen
 
 @Composable
 fun MainScreen(
@@ -119,7 +119,7 @@ fun MainScreen(
                 startDestination = HOME_ROUTE,
             ) {
                 composable(HOME_ROUTE) { HomeScreen(navController, {}) }
-                composable(TRANSFER_ROUTE) { TransferScreen(navController) }
+              //  composable(TRANSFER_ROUTE) { TransferScreen(navController) }
                 composable(MORE_ROUTE) { MoreScreen(navController, onLogout) }
                 composable(FAVOURITES_ROUTE) { FavouriteScreen(navController) }
                 composable(TRANSACTIONS_ROUTE) { TransactionsScreen(navController) }

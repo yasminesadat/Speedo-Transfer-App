@@ -26,9 +26,9 @@ import com.ys.speedotransferapp.ui.navigation.MainScreen
 import com.ys.speedotransferapp.ui.signin.SignInScreen
 import com.ys.speedotransferapp.ui.signup.ExtraSignUpScreen
 import com.ys.speedotransferapp.ui.signup.SignUpScreen
-import com.ys.speedotransferapp.ui.transfer.AmountStep
-import com.ys.speedotransferapp.ui.transfer.ConfirmationStep
-import com.ys.speedotransferapp.ui.transfer.PaymentStep
+//import com.ys.speedotransferapp.ui.transfer.AmountStep
+//import com.ys.speedotransferapp.ui.transfer.ConfirmationStep
+//import com.ys.speedotransferapp.ui.transfer.PaymentStep
 import kotlinx.coroutines.launch
 
 object AppRoutes {
@@ -101,17 +101,6 @@ fun AppNavHost() {
                 })
             }
 
-            composable(route = AMOUNT_STEP_ROUTE){
-                AmountStep(navController)
-            }
-
-            composable(route = CONFIRMATION_STEP_ROUTE){
-                ConfirmationStep(navController)
-            }
-
-            composable(route = PAYMENT_STEP_ROUTE){
-                PaymentStep(navController)
-            }
         }
     }
 }

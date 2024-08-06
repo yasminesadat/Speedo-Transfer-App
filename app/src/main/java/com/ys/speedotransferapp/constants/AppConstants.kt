@@ -14,4 +14,5 @@ object AppConstants {
     const val LOGIN_ENDPOINT = "/api/auth/login"
     const val LOGOUT_ENDPOINT = "/api/auth/logout"
     const val BALANCE_ENDPOINT = "/api/balance"
+    const val NAME_ENDPOINT = "/api/name"
 }
