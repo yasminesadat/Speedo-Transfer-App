@@ -9,7 +9,7 @@ import okhttp3.ResponseBody
 import java.io.InputStreamReader
 import java.nio.charset.Charset
 
-class MockTransactionInterceptor : Interceptor {
+class TransactionInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
