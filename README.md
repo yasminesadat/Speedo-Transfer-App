@@ -1,7 +1,6 @@
 # Speedo Transfer App
 
-**Speedo Transfer App** is a Kotlin-based mobile application that allows users to transfer and manage amounts between bank accounts with ease. Developed with modern Android practices, the app utilizes Jetpack Compose for the UI, follows the MVVM (Model-View-ViewModel) architecture, and integrates Retrofit for network operations. Coroutines are used for asynchronous operations, and Shared Preferences are employed for local data storage.
-
+**Speedo Transfer App** is a Kotlin-based mobile application that allows users to transfer and manage amounts between bank accounts with ease. Developed with modern Android practices, the app utilizes Jetpack Compose for the UI, follows the MVVM (Model-View-ViewModel) architecture, and integrates Retrofit for network operations. Coroutines are used for asynchronous operations, and Shared Preferences are employed for local data storage. Additionally, the app sends a notification to the user upon a successful transfer.
 ## Features
 
 - **Transfer Funds**: Securely transfer money between different bank accounts.
@@ -9,6 +8,7 @@
 - **Transaction History**: Keep track of all past transactions.
 - **User Authentication**: Secure login and registration system.
 - **Real-time Updates**: Real-time updates on account balances and transaction statuses.
+- **Notifications**: Receive notifications after a successful transfer.
 
 ## Tech Stack
 
@@ -19,13 +19,11 @@
 - **Coroutines**: For managing asynchronous tasks efficiently.
 - **Shared Preferences**: For lightweight data storage, such as user settings and preferences.
 
-## Getting Started
+## Demo
 
-### Prerequisites
 
-- **Android Studio**: Ensure you have the latest version of Android Studio installed.
-- **Kotlin**: The app is written entirely in Kotlin.
-- **API Keys**: Obtain necessary API keys from the respective banking services.
+https://github.com/user-attachments/assets/8e27158a-6960-473e-a538-d0371415c933
+
 
 ---
 
